@@ -1,0 +1,31 @@
+# https://editorconfig.org
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.json]
+indent_size = 4
+indent_style = space
+
+[*.md]
+indent_size = 4
+indent_style = tab
+
+[*.py]
+indent_size = 4
+indent_style = space
+
+[*.{yml,yaml}]
+indent_size = 2
+indent_style = space
+
+[Dockerfile]
+indent_size = 4
+indent_style = space
+
+[Makefile,makefile]
+indent_size = 4
+indent_style = tab
