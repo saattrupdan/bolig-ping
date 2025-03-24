@@ -28,8 +28,9 @@ def scrape_results(search_query: SearchQuery) -> list[Flat]:
         HTTPError:
             If there was an error in the HTTP request.
     """
-    logger.info("Fetching website...")
-    webdriver = Webdriver().load(url=search_query.get_url())
+    url = search_query.get_url()
+    logger.info(f"Fetching URL {url!r}...")
+    webdriver = Webdriver().load(url=url)
 
     # Close the cookie banner
     logger.info("Closing cookie banner...")
@@ -38,6 +39,7 @@ def scrape_results(search_query: SearchQuery) -> list[Flat]:
     )
 
     # Get the number of pages
+    logger.info("Getting number of results...")
     try:
         num_results_elt = webdriver.find_element(
             "//h1[contains(concat(' ', normalize-space(@class), ' '), ' text-xl ')]"
@@ -53,6 +55,7 @@ def scrape_results(search_query: SearchQuery) -> list[Flat]:
     num_results = int(num_results_match.group())
 
     # Extract the flats from the first page
+    logger.info("Scraping first page...")
     results = webdriver.find_elements(
         "//div[@data-testid='case-list-card' and "
         "contains(concat(' ', normalize-space(@class), ' '), ' shadow-card ')]"
