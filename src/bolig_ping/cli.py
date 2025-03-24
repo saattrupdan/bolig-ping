@@ -4,8 +4,9 @@ import logging
 
 import click
 
-from bolig_ping.data_models import SearchQuery
-from bolig_ping.scraper import scrape_results
+from .data_models import SearchQuery
+from .email import send_flats
+from .scraper import scrape_results
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s ⋅ %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
@@ -21,6 +22,13 @@ logger = logging.getLogger("jinn")
     multiple=True,
     required=True,
     help="The area to search for apartments in.",
+)
+@click.option(
+    "--email",
+    "-e",
+    type=str,
+    required=True,
+    help="Email address to send the notification to.",
 )
 @click.option(
     "--max-price",
@@ -41,9 +49,6 @@ logger = logging.getLogger("jinn")
     help="The minimum size of the apartment, in square meters.",
 )
 @click.option("--query", "-q", multiple=True, help="A query to filter the results by.")
-@click.option(
-    "--email", type=str, default="", help="Email address to send the notification to."
-)
 def main(
     area: list[str],
     max_price: int,
@@ -77,6 +82,11 @@ def main(
     )
     results = scrape_results(search_query=search_query)
     logger.info(f"Found {len(results)} flats that satisfy the search query.")
+
+    if email is not None:
+        logger.info(f"Sending the results to {email}...")
+        send_flats(to_email=email, flats=results)
+        logger.info("Email sent successfully.")
 
 
 if __name__ == "__main__":

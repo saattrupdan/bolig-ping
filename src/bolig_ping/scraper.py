@@ -3,12 +3,13 @@
 import logging
 import re
 
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from tqdm.auto import tqdm
 
-from bolig_ping.data_models import Flat, SearchQuery
-from bolig_ping.webdriver import Webdriver
+from .data_models import Flat, SearchQuery
+from .webdriver import Webdriver
 
 logger = logging.getLogger("bolig_ping")
 
@@ -48,7 +49,7 @@ def scrape_results(search_query: SearchQuery) -> list[Flat]:
     # Extract the flats from the first page
     results = webdriver.find_elements(
         "//div[@data-testid='case-list-card' and "
-        "contains(concat(' ', normalize-space(@class), ' '), ' flex ')]"
+        "contains(concat(' ', normalize-space(@class), ' '), ' shadow-card ')]"
     )
     flats = [get_flat_from_result(result=result) for result in results]
 
@@ -78,8 +79,10 @@ def scrape_results(search_query: SearchQuery) -> list[Flat]:
             while len(flats) == num_flats:
                 # Get the results
                 results = webdriver.find_elements(
-                    "//div[@data-testid='case-list-card' "
-                    "and @class='h-full flex flex-col']"
+                    "//div["
+                    "@data-testid='case-list-card' and contains("
+                    "concat(' ', normalize-space(@class), ' '), ' shadow-card ')"
+                    "]"
                 )
                 new_flats = [get_flat_from_result(result=result) for result in results]
                 flats.extend(new_flats)
@@ -112,6 +115,7 @@ def get_flat_from_result(result: WebElement) -> Flat:
         ValueError:
             If the result could not be parsed.
     """
+    # Extract URL
     candidate_urls = [
         url.get_attribute("href") or ""
         for url in result.find_elements(By.XPATH, ".//a")
@@ -119,10 +123,26 @@ def get_flat_from_result(result: WebElement) -> Flat:
     ]
     if len(candidate_urls) == 0:
         raise ValueError("Could not find URL in result.")
-    url = "https://boligsiden.dk" + candidate_urls[0].split("?")[0]
+    url = candidate_urls[0].split("?")[0]
+    if not url.startswith("https"):
+        url = "https://boligsiden.dk" + url
 
+    # Extract address
+    try:
+        address = result.find_element(
+            By.XPATH,
+            ".//div["
+            "contains(concat(' ', normalize-space(@class), ' '), ' bg-black ')"
+            "]//div["
+            "contains(concat(' ', normalize-space(@class), ' '), ' font-black ')"
+            "]",
+        ).text.replace("\n", " ")
+    except NoSuchElementException:
+        raise ValueError(f"Could not find address in result: {result.text}")
+
+    # Extract span values
     all_span_values = {span.text for span in result.find_elements(By.XPATH, ".//span")}
-    regexes = dict(
+    span_regexes = dict(
         price=r"kr\.$",
         size=r"[0-9]+ m²",
         monthly_fee=r"Ejerudg.*kr\.?/md",
@@ -130,11 +150,11 @@ def get_flat_from_result(result: WebElement) -> Flat:
     )
     values = dict()
     for span_value in all_span_values:
-        for name, regex in regexes.items():
+        for name, regex in span_regexes.items():
             if re.search(pattern=regex, string=span_value) is not None:
                 values[name] = extract_number(span_value)
 
-    return Flat(url=url, **values)
+    return Flat(url=url, address=address, **values)
 
 
 def extract_number(monthly_fee: str) -> int | None:

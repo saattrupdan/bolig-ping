@@ -14,9 +14,11 @@ dependencies = [
     "beautifulsoup4>=4.13.3",
     "click>=8.1.8",
     "pydantic>=2.10.6",
+    "python-dotenv>=1.0.1",
     "requests>=2.32.3",
     "selenium>=4.30.0",
     "tqdm>=4.67.1",
+    "yagmail>=0.15.293",
 ]
 
 [project.urls]

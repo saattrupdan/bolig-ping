@@ -36,6 +36,7 @@ class Flat(BaseModel):
     """A flat listing."""
 
     url: str
+    address: str
     price: int | None
     size: int | None
     monthly_fee: int | None
@@ -48,3 +49,20 @@ class Flat(BaseModel):
             The hash of the flat.
         """
         return hash(self.url)
+
+    def to_html(self) -> str:
+        """Get the flat as an HTML string.
+
+        Returns:
+            The flat as an HTML string.
+        """
+        html = "\n".join(
+            [
+                f"<a href='{self.url}'>{self.address}</a>",
+                f"Price: {self.price:,} kr.",
+                f"Size: {self.size} m²",
+                f"Monthly fee: {self.monthly_fee} kr./md",
+                f"Year built: {self.year}",
+            ]
+        )
+        return html

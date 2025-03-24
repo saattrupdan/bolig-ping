@@ -16,7 +16,22 @@ Developer:
 
 # Installation
 
-Missing.
+To install the package, simply run the following command:
+
+```bash
+pip install bolig-ping
+```
+
+To be able to send emails, you have to create a [Google app
+password](https://myaccount.google.com/apppasswords), and store both your Gmail email
+address and the app password in the environment variables `GMAIL_EMAIL` and
+`GMAIL_PASSWORD`, respectively. You can also simply store these in a `.env` file, as
+follows:
+
+```bash
+GMAIL_EMAIL=<your-email>@gmail.com
+GMAIL_PASSWORD=<your-app-password>
+```
 
 
 # Quickstart
