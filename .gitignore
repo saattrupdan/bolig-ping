@@ -113,3 +113,6 @@ models/*
 
 # Mkdocs compiled documentation
 site/
+
+# Cache
+.boligping_cache/
