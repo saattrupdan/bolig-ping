@@ -4,6 +4,7 @@ import logging
 
 import click
 
+from .cache import remove_cached_flats, store_to_cache
 from .data_models import SearchQuery
 from .email import send_flats
 from .scraper import scrape_results
@@ -51,11 +52,11 @@ logger = logging.getLogger("jinn")
 @click.option("--query", "-q", multiple=True, help="A query to filter the results by.")
 def main(
     area: list[str],
+    email: str,
     max_price: int,
     min_rooms: int,
     min_size: int,
     query: list[str],
-    email: str | None,
 ) -> None:
     """Search for flats in a given area of Denmark.
 
@@ -80,13 +81,13 @@ def main(
         min_size=min_size,
         queries=query,
     )
-    results = scrape_results(search_query=search_query)
-    logger.info(f"Found {len(results)} flats that satisfy the search query.")
+    flats = scrape_results(search_query=search_query)
+    flats = remove_cached_flats(flats=flats, email=email)
+    logger.info(f"Found {len(flats)} new flats that satisfy the search query.")
 
-    if email is not None:
-        logger.info(f"Sending the results to {email}...")
-        send_flats(to_email=email, flats=results)
-        logger.info("Email sent successfully.")
+    send_flats(to_email=email, flats=flats)
+    store_to_cache(flats=flats, email=email)
+    logger.info(f"Sent the flats to {email}.")
 
 
 if __name__ == "__main__":
