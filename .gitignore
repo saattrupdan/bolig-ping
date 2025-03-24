@@ -115,4 +115,4 @@ models/*
 site/
 
 # Cache
-.boligping_cache/
+.boligping_cache
