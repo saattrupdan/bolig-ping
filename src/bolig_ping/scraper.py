@@ -38,9 +38,15 @@ def scrape_results(search_query: SearchQuery) -> list[Flat]:
     )
 
     # Get the number of pages
-    num_results_elt = webdriver.find_element(
-        "//h1[contains(concat(' ', normalize-space(@class), ' '), ' text-xl ')]"
-    )
+    try:
+        num_results_elt = webdriver.find_element(
+            "//h1[contains(concat(' ', normalize-space(@class), ' '), ' text-xl ')]"
+        )
+    except NoSuchElementException:
+        raise ValueError(
+            f"Could not find number of results for search query: {search_query}"
+        )
+
     num_results_match = re.search(r"[0-9]+", num_results_elt.text)
     if num_results_match is None:
         raise ValueError("Could not find number of results.")
