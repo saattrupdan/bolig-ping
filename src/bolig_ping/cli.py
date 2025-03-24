@@ -85,9 +85,10 @@ def main(
     flats = remove_cached_flats(flats=flats, email=email)
     logger.info(f"Found {len(flats)} new flats that satisfy the search query.")
 
-    send_flats(to_email=email, flats=flats)
-    store_to_cache(flats=flats, email=email)
-    logger.info(f"Sent the flats to {email}.")
+    if flats:
+        send_flats(to_email=email, flats=flats)
+        store_to_cache(flats=flats, email=email)
+        logger.info(f"Sent the flats to {email}.")
 
 
 if __name__ == "__main__":
