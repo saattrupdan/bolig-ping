@@ -38,6 +38,7 @@ class Flat(BaseModel):
     url: str
     address: str
     price: int | None
+    num_rooms: int | None
     size: int | None
     monthly_fee: int | None
     year: int | None
@@ -60,6 +61,7 @@ class Flat(BaseModel):
             [
                 f"<a href='{self.url}'>{self.address}</a>",
                 f"Price: {self.price:,} kr.",
+                f"Number of rooms: {self.num_rooms}",
                 f"Size: {self.size} m²",
                 f"Monthly fee: {self.monthly_fee:,} kr./md",
                 f"Year built: {self.year}",

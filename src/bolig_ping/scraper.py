@@ -145,6 +145,7 @@ def get_flat_from_result(result: WebElement) -> Flat:
     span_regexes = dict(
         price=r"kr\.$",
         size=r"[0-9]+ m²",
+        num_rooms=r"[0-9]+ Vær",
         monthly_fee=r"Ejerudg.*kr\.?/md",
         year=r"Opført.*[0-9]{4}",
     )
