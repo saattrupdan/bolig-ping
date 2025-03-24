@@ -9,8 +9,6 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
-from .exceptions import MaximumRetriesReached
-
 logger = logging.getLogger(__package__)
 
 
@@ -93,8 +91,8 @@ class Webdriver:
                 The URL of the web page.
 
         Raises:
-            MaximumRetriesReached:
-                If the maximum number of attempts to get the page was reached.
+            ConnectionError:
+                If the page couldn't load.
         """
         for _ in range(self.num_attempts):
             try:
@@ -109,7 +107,7 @@ class Webdriver:
                 sleep(self.sleep_time)
                 return self
         else:
-            raise MaximumRetriesReached(url=url)
+            raise ConnectionError(f"Could not load website {url}.")
 
     def find_element(self, xpath: str) -> WebElement:
         """Find an element by XPath.

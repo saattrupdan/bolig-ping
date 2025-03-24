@@ -3,7 +3,7 @@
 import logging
 import re
 
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from tqdm.auto import tqdm
@@ -47,6 +47,11 @@ def scrape_results(search_query: SearchQuery) -> list[Flat]:
     except NoSuchElementException:
         raise ValueError(
             f"Could not find number of results for search query: {search_query}"
+        )
+    except TimeoutException:
+        raise TimeoutError(
+            "Timed out while trying to fetch number of results for search query: "
+            f"{search_query}."
         )
 
     num_results_match = re.search(r"[0-9]+", num_results_elt.text)
