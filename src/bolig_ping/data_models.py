@@ -6,7 +6,7 @@ from pydantic import BaseModel
 class SearchQuery(BaseModel):
     """A flat search query."""
 
-    areas: list[str]
+    cities: list[str]
     max_price: int
     min_rooms: int
     min_size: int
@@ -19,7 +19,7 @@ class SearchQuery(BaseModel):
             The URL for the search query.
         """
         url = "https://www.boligsiden.dk/by/{}/tilsalg/ejerlejlighed".format(
-            ",".join(self.areas)
+            ",".join(self.cities)
         )
         arguments: dict[str, str | int] = dict(
             priceMax=self.max_price,

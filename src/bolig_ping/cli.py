@@ -17,12 +17,12 @@ logger = logging.getLogger("jinn")
 
 @click.command("bolig_ping")
 @click.option(
-    "--area",
-    "-a",
+    "--city",
+    "-c",
     type=str,
     multiple=True,
     required=True,
-    help="The area to search for apartments in.",
+    help="The city to search for apartments in.",
 )
 @click.option(
     "--email",
@@ -51,18 +51,18 @@ logger = logging.getLogger("jinn")
 )
 @click.option("--query", "-q", multiple=True, help="A query to filter the results by.")
 def main(
-    area: list[str],
+    city: list[str],
     email: str,
     max_price: int,
     min_rooms: int,
     min_size: int,
     query: list[str],
 ) -> None:
-    """Search for flats in a given area of Denmark.
+    """Search for flats in Denmark.
 
     Args:
-        area:
-            The area to search for apartments in.
+        city:
+            The city to search for apartments in.
         max_price:
             The maximum price of the apartment, in DKK, or None for no limit.
         min_rooms:
@@ -74,8 +74,16 @@ def main(
         email:
             Email address to send the notification to, or None to print to stdout.
     """
+    cities = [
+        c.replace(" ", "-")
+        .replace("ø", "oe")
+        .replace("æ", "ae")
+        .replace("å", "aa")
+        .lower()
+        for c in city
+    ]
     search_query = SearchQuery(
-        areas=area,
+        cities=cities,
         max_price=max_price,
         min_rooms=min_rooms,
         min_size=min_size,
