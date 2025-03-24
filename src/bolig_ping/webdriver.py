@@ -103,7 +103,7 @@ class Webdriver:
                 return self
             except (WebDriverException, TimeoutException) as e:
                 logger.error(
-                    f"{type(e)} occurred while fetching the web page {url!r}. "
+                    f"{type(e).__name__} occurred while fetching the web page {url!r}. "
                     f"Retrying..."
                 )
                 sleep(self.sleep_time)
