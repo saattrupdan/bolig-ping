@@ -169,7 +169,7 @@ def extract_number(monthly_fee: str) -> int | None:
         The monthly fee of the flat, or None if the monthly fee could not be
         extracted.
     """
-    match = re.search(r"[0-9][0-9\.]+", monthly_fee)
+    match = re.search(r"[0-9][0-9\.]*", monthly_fee)
     if match is None:
         return None
     match_str = match.group().replace(".", "")
