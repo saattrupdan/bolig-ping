@@ -11,8 +11,12 @@ maintainers = [
 ]
 requires-python = ">=3.11,<4.0"
 dependencies = [
+    "beautifulsoup4>=4.13.3",
     "click>=8.1.8",
+    "pydantic>=2.10.6",
     "requests>=2.32.3",
+    "selenium>=4.30.0",
+    "tqdm>=4.67.1",
 ]
 
 [project.urls]
@@ -39,6 +43,9 @@ dev-dependencies = [
     "mkapi>=3.0.22",
     "pip>=24.3.1",
 ]
+
+[project.scripts]
+bolig_ping = "bolig_ping.cli:main"
 
 [tool.ruff]
 target-version = "py311"
@@ -73,6 +80,12 @@ select = [
     "ANN",
     # Pyflakes
     "F",
+]
+ignore = [
+    # Type annotations for "self" arguments
+    "ANN101",
+    # Type annotations for **kwargs
+    "ANN003",
 ]
 
 [tool.ruff.lint.extend-per-file-ignores]

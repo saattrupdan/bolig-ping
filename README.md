@@ -1,6 +1,6 @@
 # Bolig Ping
 
-Get a ping when your dream flat becomes available.
+Get a ping when your dream flat in Denmark becomes available on BoligSiden.
 
 ______________________________________________________________________
 [![Code Coverage](https://img.shields.io/badge/Coverage-0%25-red.svg)](https://github.com/saattrupdan/bolig_ping/tree/main/tests)
