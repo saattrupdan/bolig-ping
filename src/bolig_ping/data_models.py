@@ -61,7 +61,7 @@ class Flat(BaseModel):
                 f"<a href='{self.url}'>{self.address}</a>",
                 f"Price: {self.price:,} kr.",
                 f"Size: {self.size} m²",
-                f"Monthly fee: {self.monthly_fee} kr./md",
+                f"Monthly fee: {self.monthly_fee:,} kr./md",
                 f"Year built: {self.year}",
             ]
         )
