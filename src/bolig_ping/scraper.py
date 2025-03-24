@@ -11,7 +11,7 @@ from tqdm.auto import tqdm
 from .data_models import Flat, SearchQuery
 from .webdriver import Webdriver
 
-logger = logging.getLogger("bolig_ping")
+logger = logging.getLogger(__package__)
 
 
 def scrape_results(search_query: SearchQuery) -> list[Flat]:
