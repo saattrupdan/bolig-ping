@@ -5,7 +5,11 @@ from time import sleep
 
 from selenium import webdriver
 from selenium.common import WebDriverException
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import (
+    NoSuchElementException,
+    SessionNotCreatedException,
+    TimeoutException,
+)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
@@ -78,9 +82,18 @@ class Webdriver:
         if self.headless:
             options.add_argument("--headless=new")
 
-        driver = webdriver.Chrome(options=options)
-        driver.set_page_load_timeout(time_to_wait=self.timeout)
+        attempts = 3
+        for _ in range(attempts):
+            try:
+                driver = webdriver.Chrome(options=options)
+                break
+            except SessionNotCreatedException:
+                logger.error("Could not create a new session. Trying again...")
+                sleep(3)
+        else:
+            raise ConnectionError("Could not create a new session.")
 
+        driver.set_page_load_timeout(time_to_wait=self.timeout)
         return driver
 
     def load(self, url: str) -> "Webdriver":
