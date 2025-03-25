@@ -19,7 +19,8 @@ def store_to_cache(flats: list[Flat], email: str) -> None:
     cache_path = Path(".boligping_cache")
     with cache_path.open("a") as file:
         for flat in flats:
-            flat_json = json.dumps(dict(url=flat.url, email=email))
+            flat_id = flat.url.split("/")[-1]
+            flat_json = json.dumps(dict(id=flat_id, email=email))
             file.write(f"{flat_json}\n")
 
 
@@ -41,5 +42,7 @@ def remove_cached_flats(flats: list[Flat], email: str) -> list[Flat]:
         for line in file:
             json_data = json.loads(line)
             if json_data["email"] == email:
-                flats = [flat for flat in flats if flat.url != json_data["url"]]
+                flats = [
+                    flat for flat in flats if flat.url.split("/")[-1] != json_data["id"]
+                ]
     return flats
