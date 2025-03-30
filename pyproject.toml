@@ -1,6 +1,6 @@
 [project]
 name = "bolig_ping"
-version = "1.0.0"
+version = "1.0.0.dev"
 description = "Get a ping when your dream flat becomes available."
 readme = "README.md"
 authors = [
