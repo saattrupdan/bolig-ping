@@ -105,3 +105,45 @@ type-check:  ## Type-check the project
 		--check-untyped-defs
 
 check: lint format type-check  ## Lint, format, and type-check the code
+
+bump-major:
+	@uv run python -m src.scripts.versioning --major
+	@echo "Bumped major version!"
+
+bump-minor:
+	@uv run python -m src.scripts.versioning --minor
+	@echo "Bumped minor version!"
+
+bump-patch:
+	@uv run python -m src.scripts.versioning --patch
+	@echo "Bumped patch version!"
+
+add-dev-version:
+	@if [ $$(uname) = "Darwin" ]; then \
+		sed -i '' 's/^version = "\(.*\)"/version = "\1.dev"/' pyproject.toml; \
+	else \
+		sed -i 's/^version = "\(.*\)"/version = "\1.dev"/' pyproject.toml; \
+	fi
+	@uv lock
+	@git add pyproject.toml uv.lock
+	@git commit -m "chore: Add '.dev' suffix to the version number"
+	@git push
+	@echo "Added '.dev' suffix to the version number."
+
+publish:
+	@if [ ${PYPI_API_TOKEN} = "" ]; then \
+		echo "No PyPI API token specified in the '.env' file, so cannot publish."; \
+	else \
+		echo "Publishing to PyPI..."; \
+		$(MAKE) --quiet check \
+			&& rm -rf build dist \
+			&& uv build \
+			&& uv publish --username "__token__" --password ${PYPI_API_TOKEN} \
+			&& echo "Published!"; \
+	fi
+
+publish-major: bump-major publish  ## Publish a major version
+
+publish-minor: bump-minor publish  ## Publish a minor version
+
+publish-patch: bump-patch publish  ## Publish a patch version
