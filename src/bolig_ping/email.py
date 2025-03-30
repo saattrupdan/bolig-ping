@@ -1,7 +1,5 @@
 """Sending emails with flat listings."""
 
-import os
-
 import yagmail
 from dotenv import load_dotenv
 
@@ -10,34 +8,30 @@ from .data_models import Flat
 load_dotenv()
 
 
-def send_flats(to_email: str, flats: list[Flat]) -> None:
-    """Send an email with the found flats.
+def compose_email(flats: list[Flat]) -> tuple[str, str]:
+    """Compose an email with the given flats.
 
     Args:
-        to_email:
-            The email to send the email to.
         flats:
-            The flats to send in the email.
+            The flats to compose the email with.
+
+    Returns:
+        A pair (subject, contents) for the email.
     """
     match len(flats):
         case 0:
-            return
+            raise ValueError("Cannot compose an email with no flats.")
         case 1:
             subject = "[BoligPing] Found a new flat!"
+            contents = "Hi,\n\nI found a new flat that you might be interested in:\n\n"
         case _:
             subject = f"[BoligPing] Found {len(flats)} new flats!"
-
-    contents = "Hi,\n\nI found some new flats that you might be interested in:\n\n"
+            contents = (
+                "Hi,\n\nI found some new flats that you might be interested in:\n\n"
+            )
     contents += "\n\n".join(flat.to_html() for flat in flats)
     contents += "\n\nHave a splendid day!\n\nBest regards,\nBoligPing"
-
-    send_email(
-        from_email=os.environ["GMAIL_EMAIL"],
-        password=os.environ["GMAIL_PASSWORD"],
-        to_email=to_email,
-        subject=subject,
-        contents=contents,
-    )
+    return subject, contents
 
 
 def send_email(

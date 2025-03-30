@@ -1,12 +1,13 @@
 """Command line interface for the project."""
 
 import logging
+import os
 
 import click
 
 from .cache import remove_cached_flats, store_to_cache
 from .data_models import SearchQuery
-from .email import send_flats
+from .email import compose_email, send_email
 from .scraper import scrape_results
 
 logging.basicConfig(
@@ -26,10 +27,10 @@ logger = logging.getLogger(__package__)
 )
 @click.option(
     "--email",
-    "-e",
     type=str,
-    required=True,
-    help="Email address to send the notification to.",
+    default=None,
+    show_default=True,
+    help="Email address to send the notification to, or None to print to stdout.",
 )
 @click.option(
     "--min-price",
@@ -62,7 +63,7 @@ logger = logging.getLogger(__package__)
 @click.option("--query", "-q", multiple=True, help="A query to filter the results by.")
 def main(
     city: list[str],
-    email: str,
+    email: str | None,
     min_price: int,
     max_price: int,
     min_rooms: int,
@@ -74,6 +75,8 @@ def main(
     Args:
         city:
             The city to search for apartments in.
+        email:
+            Email address to send the notification to, or None to print to stdout.
         min_price:
             The minimum price of the apartment, in DKK.
         max_price:
@@ -84,8 +87,6 @@ def main(
             The minimum size of the apartment, in square meters.
         query:
             A query to filter the results by.
-        email:
-            Email address to send the notification to, or None to print to stdout.
     """
     cities = [
         c.replace(" ", "-")
@@ -104,12 +105,25 @@ def main(
         queries=query,
     )
     flats = scrape_results(search_query=search_query)
-    flats = remove_cached_flats(flats=flats, email=email)
+    flats = remove_cached_flats(flats=flats, email=email or "no-email")
     logger.info(f"Found {len(flats)} new flats that satisfy the search query.")
     if flats:
-        send_flats(to_email=email, flats=flats)
-        store_to_cache(flats=flats, email=email)
-        logger.info(f"Sent the flats to {email}.")
+        if email is not None:
+            subject, contents = compose_email(flats=flats)
+            send_email(
+                from_email=os.environ["GMAIL_EMAIL"],
+                password=os.environ["GMAIL_PASSWORD"],
+                to_email=email,
+                subject=subject,
+                contents=contents,
+            )
+            logger.info(f"Sent the flats to {email}.")
+        else:
+            logger.info(
+                "No email provided, so printing the flats here:\n\n"
+                + "\n\n".join(flat.to_html() for flat in flats)
+            )
+        store_to_cache(flats=flats, email=email or "no-email")
 
 
 if __name__ == "__main__":
