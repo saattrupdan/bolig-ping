@@ -7,6 +7,7 @@ class SearchQuery(BaseModel):
     """A flat search query."""
 
     cities: list[str]
+    min_price: int
     max_price: int
     min_rooms: int
     min_size: int
@@ -22,6 +23,7 @@ class SearchQuery(BaseModel):
             ",".join(self.cities)
         )
         arguments: dict[str, str | int] = dict(
+            priceMin=self.min_price,
             priceMax=self.max_price,
             numberOfRoomsMin=self.min_rooms,
             areaMin=self.min_size,

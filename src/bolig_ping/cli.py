@@ -32,27 +32,38 @@ logger = logging.getLogger(__package__)
     help="Email address to send the notification to.",
 )
 @click.option(
+    "--min-price",
+    type=int,
+    default=0,
+    show_default=True,
+    help="The minimum price of the apartment, in DKK.",
+)
+@click.option(
     "--max-price",
     type=int,
     default=int(1e9),
+    show_default=True,
     help="The maximum price of the apartment, in DKK.",
 )
 @click.option(
     "--min-rooms",
     type=int,
     default=1,
+    show_default=True,
     help="The minimum number of rooms in the apartment.",
 )
 @click.option(
     "--min-size",
     type=int,
     default=0,
+    show_default=True,
     help="The minimum size of the apartment, in square meters.",
 )
 @click.option("--query", "-q", multiple=True, help="A query to filter the results by.")
 def main(
     city: list[str],
     email: str,
+    min_price: int,
     max_price: int,
     min_rooms: int,
     min_size: int,
@@ -63,6 +74,8 @@ def main(
     Args:
         city:
             The city to search for apartments in.
+        min_price:
+            The minimum price of the apartment, in DKK.
         max_price:
             The maximum price of the apartment, in DKK, or None for no limit.
         min_rooms:
@@ -84,6 +97,7 @@ def main(
     ]
     search_query = SearchQuery(
         cities=cities,
+        min_price=min_price,
         max_price=max_price,
         min_rooms=min_rooms,
         min_size=min_size,
