@@ -61,7 +61,6 @@ class Webdriver:
             The WebDriver options.
         """
         options = webdriver.ChromeOptions()
-        options.add_extension("i-dont-care-about-cookies.crx")
 
         chrome_arguments = [
             "--no-sandbox",
