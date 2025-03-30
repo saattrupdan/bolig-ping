@@ -172,18 +172,17 @@ def get_flat_from_result(result: WebElement) -> Flat:
     return Flat(url=url, address=address, **values)
 
 
-def extract_number(monthly_fee: str) -> int | None:
-    """Extract the monthly fee from a string.
+def extract_number(text: str) -> int | None:
+    """Extract the number from a string.
 
     Args:
-        monthly_fee:
-            The monthly fee string.
+        text:
+            The string containing the number.
 
     Returns:
-        The monthly fee of the flat, or None if the monthly fee could not be
-        extracted.
+        The number, or None if no number was found.
     """
-    match = re.search(r"[0-9][0-9\.]*", monthly_fee)
+    match = re.search(r"[0-9][0-9\.]*", text)
     if match is None:
         return None
     match_str = match.group().replace(".", "")
