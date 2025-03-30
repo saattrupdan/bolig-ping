@@ -3,7 +3,7 @@
 Get a ping when your dream flat in Denmark becomes available on BoligSiden.
 
 ______________________________________________________________________
-[![Code Coverage](https://img.shields.io/badge/Coverage-0%25-red.svg)](https://github.com/saattrupdan/bolig_ping/tree/main/tests)
+[![Code Coverage](https://img.shields.io/badge/Coverage-75%25-yellowgreen.svg)](https://github.com/saattrupdan/bolig_ping/tree/main/tests)
 [![Documentation](https://img.shields.io/badge/docs-passing-green)](https://saattrupdan.github.io/bolig_ping)
 [![License](https://img.shields.io/github/license/saattrupdan/bolig_ping)](https://github.com/saattrupdan/bolig_ping/blob/main/LICENSE)
 [![LastCommit](https://img.shields.io/github/last-commit/saattrupdan/bolig_ping)](https://github.com/saattrupdan/bolig_ping/commits/main)

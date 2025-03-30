@@ -1,1 +1,1 @@
-"""Test suite for the bolig_ping package."""
+"""Test suite for the `bolig_ping` package."""
