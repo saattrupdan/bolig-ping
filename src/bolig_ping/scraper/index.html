@@ -1,0 +1,983 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.10">
+    
+    
+      
+        <title>bolig_ping.scraper - Bolig Ping</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.4af4bdda.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/mkapi-common.css">
+    
+      <link rel="stylesheet" href="../../../css/mkapi-material.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bolig_ping.scraper" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Bolig Ping" class="md-header__button md-logo" aria-label="Bolig Ping" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bolig Ping
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              bolig_ping.scraper
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Bolig Ping" class="md-nav__button md-logo" aria-label="Bolig Ping" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Bolig Ping
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Bolig Ping
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    bolig_ping
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            bolig_ping
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/bolig_ping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bolig_ping
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/bolig_ping/cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bolig_ping.cache
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/bolig_ping/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bolig_ping.cli
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/bolig_ping/data_models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bolig_ping.data_models
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/bolig_ping/email/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bolig_ping.email
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/bolig_ping/scraper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bolig_ping.scraper
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/bolig_ping/webdriver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bolig_ping.webdriver
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#bolig_ping.scraper.scrape_results" class="md-nav__link">
+    <span class="md-ellipsis">
+      scrape_results
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bolig_ping.scraper.get_flat_from_result" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_flat_from_result
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bolig_ping.scraper.extract_number" class="md-nav__link">
+    <span class="md-ellipsis">
+      extract_number
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 style="display: none;">bolig_ping.scraper</h1><p class="mkapi-object mkapi-page-object" id="bolig_ping.scraper">
+<span class="mkapi-object-link">
+
+
+<a href="../../../api/bolig_ping/scraper/#bolig_ping.scraper" title="Go to docs">docs</a>
+<span class="mkapi-document-toggle" title="Toggle all docs">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span><span class="mkapi-object-kind">module</span>
+<span class="mkapi-object-name"><a href="./#bolig_ping.scraper" title="bolig_ping.scraper">bolig_ping.scraper</a></span>
+</p>
+<div class="mkapi-source no-copy highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
+<span class="normal">  2</span>
+<span class="normal">  3</span>
+<span class="normal">  4</span>
+<span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Scraping flats available satisfying the given criteria.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">selenium.common.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoSuchElementException</span><span class="p">,</span> <span class="n">TimeoutException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">selenium.webdriver.common.by</span><span class="w"> </span><span class="kn">import</span> <span class="n">By</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">selenium.webdriver.remote.webelement</span><span class="w"> </span><span class="kn">import</span> <span class="n">WebElement</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm.auto</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.data_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flat</span><span class="p">,</span> <span class="n">SearchQuery</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.webdriver</span><span class="w"> </span><span class="kn">import</span> <span class="n">Webdriver</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__package__</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">scrape_results</span><span class="p">(</span><span class="n">search_query</span><span class="p">:</span> <span class="n">SearchQuery</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Flat</span><span class="p">]:</span><div class="mkapi-source-link" id="bolig_ping.scraper.scrape_results"><a href="../../../api/bolig_ping/scraper/#bolig_ping.scraper.scrape_results" title="Go to docs">docs</a></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Scrape the results of a flat search query.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        search_query:</span>
+<span class="sd">            The search query to scrape results for.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of flats that satisfy the search query.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        HTTPError:</span>
+<span class="sd">            If there was an error in the HTTP request.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">search_query</span><span class="o">.</span><span class="n">get_url</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fetching URL </span><span class="si">{</span><span class="n">url</span><span class="si">!r}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="n">webdriver</span> <span class="o">=</span> <span class="n">Webdriver</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="c1"># Close the cookie banner</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Closing cookie banner...&quot;</span><span class="p">)</span>
+    <span class="n">webdriver</span><span class="o">.</span><span class="n">click_element_or_ignore</span><span class="p">(</span>
+        <span class="n">xpath</span><span class="o">=</span><span class="s2">&quot;//button[@id=&#39;didomi-notice-disagree-button&#39;]&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Get the number of pages</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Getting number of results...&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">num_results_elt</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span>
+            <span class="s2">&quot;//h1[contains(concat(&#39; &#39;, normalize-space(@class), &#39; &#39;), &#39; text-xl &#39;)]&quot;</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="n">NoSuchElementException</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Could not find number of results for search query: </span><span class="si">{</span><span class="n">search_query</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="n">TimeoutException</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TimeoutError</span><span class="p">(</span>
+            <span class="s2">&quot;Timed out while trying to fetch number of results for search query: &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">search_query</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">num_results_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[0-9]+&quot;</span><span class="p">,</span> <span class="n">num_results_elt</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">num_results_match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not find number of results.&quot;</span><span class="p">)</span>
+    <span class="n">num_results</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_results_match</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+
+    <span class="c1"># Extract the flats from the first page</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Scraping first page...&quot;</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span>
+        <span class="s2">&quot;//div[@data-testid=&#39;case-list-card&#39; and &quot;</span>
+        <span class="s2">&quot;contains(concat(&#39; &#39;, normalize-space(@class), &#39; &#39;), &#39; shadow-card &#39;)]&quot;</span>
+    <span class="p">)</span>
+    <span class="n">flats</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_flat_from_result</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+
+    <span class="c1"># Scrape the remaining pages</span>
+    <span class="k">with</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Scraping pages&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">pbar</span><span class="p">:</span>
+        <span class="c1"># Update the progress bar</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">num_results</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">flats</span><span class="p">))</span>
+
+        <span class="c1"># Calculate the number of pages</span>
+        <span class="n">num_pages</span> <span class="o">=</span> <span class="n">num_results</span> <span class="o">//</span> <span class="mi">50</span>
+        <span class="k">if</span> <span class="n">num_results</span> <span class="o">%</span> <span class="mi">50</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">num_pages</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># Iterate over the remaining pages</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_pages</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="c1"># Go to next page page</span>
+            <span class="n">webdriver</span><span class="o">.</span><span class="n">click_element_or_ignore</span><span class="p">(</span>
+                <span class="n">xpath</span><span class="o">=</span><span class="s2">&quot;//ul[@role=&#39;navigation&#39;]//a[@role=&#39;button&#39; and @rel=&#39;next&#39;]&quot;</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Get the results, where we keep trying in case the page hasn&#39;t changed</span>
+            <span class="c1"># correctly</span>
+            <span class="n">num_flats</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">flats</span><span class="p">)</span>
+            <span class="n">new_flats</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">num_attempts</span> <span class="o">=</span> <span class="mi">3</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">flats</span><span class="p">)</span> <span class="o">==</span> <span class="n">num_flats</span><span class="p">:</span>
+                <span class="c1"># Get the results</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span>
+                    <span class="s2">&quot;//div[&quot;</span>
+                    <span class="s2">&quot;@data-testid=&#39;case-list-card&#39; and contains(&quot;</span>
+                    <span class="s2">&quot;concat(&#39; &#39;, normalize-space(@class), &#39; &#39;), &#39; shadow-card &#39;)&quot;</span>
+                    <span class="s2">&quot;]&quot;</span>
+                <span class="p">)</span>
+                <span class="n">new_flats</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_flat_from_result</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+                <span class="n">flats</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">new_flats</span><span class="p">)</span>
+                <span class="n">flats</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">flats</span><span class="p">))</span>
+
+                <span class="c1"># Monitor the number of attempts and raise an error if we can&#39;t change</span>
+                <span class="c1"># the page</span>
+                <span class="n">num_attempts</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">num_attempts</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not change page.&quot;</span><span class="p">)</span>
+            <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_flats</span><span class="p">))</span>
+
+        <span class="c1"># Ensure that the progress bar is at 100% at the end</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">pbar</span><span class="o">.</span><span class="n">total</span>
+
+    <span class="k">return</span> <span class="n">flats</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_flat_from_result</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="n">WebElement</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Flat</span><span class="p">:</span><div class="mkapi-source-link" id="bolig_ping.scraper.get_flat_from_result"><a href="../../../api/bolig_ping/scraper/#bolig_ping.scraper.get_flat_from_result" title="Go to docs">docs</a></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a flat from a result.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        result:</span>
+<span class="sd">            The result to get the flat from.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The flat from the result.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError:</span>
+<span class="sd">            If the result could not be parsed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Extract URL</span>
+    <span class="n">candidate_urls</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">url</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s2">&quot;href&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span> <span class="s2">&quot;.//a&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;viderestilling&quot;</span> <span class="ow">in</span> <span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s2">&quot;href&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidate_urls</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not find URL in result.&quot;</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">candidate_urls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">url</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;https&quot;</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://boligsiden.dk&quot;</span> <span class="o">+</span> <span class="n">url</span>
+
+    <span class="c1"># Extract address</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">address</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span>
+            <span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span>
+            <span class="s2">&quot;.//div[&quot;</span>
+            <span class="s2">&quot;contains(concat(&#39; &#39;, normalize-space(@class), &#39; &#39;), &#39; bg-black &#39;)&quot;</span>
+            <span class="s2">&quot;]//div[&quot;</span>
+            <span class="s2">&quot;contains(concat(&#39; &#39;, normalize-space(@class), &#39; &#39;), &#39; font-black &#39;)&quot;</span>
+            <span class="s2">&quot;]&quot;</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">NoSuchElementException</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find address in result: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Extract span values</span>
+    <span class="n">all_span_values</span> <span class="o">=</span> <span class="p">{</span><span class="n">span</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span> <span class="s2">&quot;.//span&quot;</span><span class="p">)}</span>
+    <span class="n">span_regexes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">price</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;kr\.$&quot;</span><span class="p">,</span>
+        <span class="n">size</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;[0-9]+ m²&quot;</span><span class="p">,</span>
+        <span class="n">num_rooms</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;[0-9]+ Vær&quot;</span><span class="p">,</span>
+        <span class="n">monthly_fee</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Ejerudg.*kr\.?/md&quot;</span><span class="p">,</span>
+        <span class="n">year</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Opført.*[0-9]</span><span class="si">{4}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">span_value</span> <span class="ow">in</span> <span class="n">all_span_values</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">regex</span> <span class="ow">in</span> <span class="n">span_regexes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">regex</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">span_value</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">values</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">extract_number</span><span class="p">(</span><span class="n">span_value</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Flat</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">address</span><span class="o">=</span><span class="n">address</span><span class="p">,</span> <span class="o">**</span><span class="n">values</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_number</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span><div class="mkapi-source-link" id="bolig_ping.scraper.extract_number"><a href="../../../api/bolig_ping/scraper/#bolig_ping.scraper.extract_number" title="Go to docs">docs</a></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract the number from a string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text:</span>
+<span class="sd">            The string containing the number.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The number, or None if no number was found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[0-9][0-9\.]*&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">match_str</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match_str</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">match_str</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../../../javascript/mkapi.js"></script>
+      
+    
+  </body>
+</html>
