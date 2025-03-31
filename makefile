@@ -139,6 +139,7 @@ publish:
 			&& rm -rf build dist \
 			&& uv build \
 			&& uv publish --username "__token__" --password ${PYPI_API_TOKEN} \
+			&& $(MAKE) --quiet publish-docs \
 			&& $(MAKE) --quiet add-dev-version \
 			&& echo "Published!"; \
 	fi
