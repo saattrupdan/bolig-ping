@@ -18,7 +18,9 @@ class TestSearchQuery:
             min_price=100,
             max_price=200,
             min_rooms=3,
+            max_rooms=5,
             min_size=50,
+            max_size=100,
             queries=["badekar"],
         )
 
@@ -36,7 +38,8 @@ class TestSearchQuery:
         url = search_query.get_url()
         assert url == (
             "https://www.boligsiden.dk/by/københavn-n/tilsalg/ejerlejlighed"
-            "?priceMin=100&priceMax=200&numberOfRoomsMin=3&areaMin=50&text=badekar"
+            "?priceMin=100&priceMax=200&numberOfRoomsMin=3&numberOfRoomsMax=5"
+            "&areaMin=50&areaMax=100&text=badekar"
         )
 
 
