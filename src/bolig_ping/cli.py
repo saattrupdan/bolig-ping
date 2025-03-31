@@ -70,24 +70,7 @@ def main(
     min_size: int,
     query: list[str],
 ) -> None:
-    """Search for flats in Denmark.
-
-    Args:
-        city:
-            The city to search for apartments in.
-        email:
-            Email address to send the notification to, or None to print to stdout.
-        min_price:
-            The minimum price of the apartment, in DKK.
-        max_price:
-            The maximum price of the apartment, in DKK, or None for no limit.
-        min_rooms:
-            The minimum number of rooms in the apartment.
-        min_size:
-            The minimum size of the apartment, in square meters.
-        query:
-            A query to filter the results by.
-    """
+    """Search for flats in Denmark."""
     cities = [
         c.replace(" ", "-")
         .replace("ø", "oe")
