@@ -16,8 +16,9 @@ Developer:
 
 # Quickstart
 
-The easiest way to use the package is as a `uv` tool. You can simply start searching for
-flats using the following command:
+The easiest way to use the package is as a
+[uv](https://docs.astral.sh/uv/getting-started/installation/) tool. You can simply start
+searching for flats using the following command:
 
 ```bash
 uvx bolig-ping --city københavn
