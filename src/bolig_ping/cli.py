@@ -26,13 +26,6 @@ logger = logging.getLogger(__package__)
     help="The city to search for apartments in.",
 )
 @click.option(
-    "--email",
-    type=str,
-    default=None,
-    show_default=True,
-    help="Email address to send the notification to, or None to print to stdout.",
-)
-@click.option(
     "--min-price",
     type=int,
     default=0,
@@ -54,21 +47,44 @@ logger = logging.getLogger(__package__)
     help="The minimum number of rooms in the apartment.",
 )
 @click.option(
+    "--max-rooms",
+    type=int,
+    default=int(1e9),
+    show_default=True,
+    help="The maximum number of rooms in the apartment.",
+)
+@click.option(
     "--min-size",
     type=int,
     default=0,
     show_default=True,
     help="The minimum size of the apartment, in square meters.",
 )
+@click.option(
+    "--max-size",
+    type=int,
+    default=int(1e9),
+    show_default=True,
+    help="The maximum size of the apartment, in square meters.",
+)
+@click.option(
+    "--email",
+    type=str,
+    default=None,
+    show_default=True,
+    help="Email address to send the notification to, or None to print to stdout.",
+)
 @click.option("--query", "-q", multiple=True, help="A query to filter the results by.")
 def main(
     city: list[str],
-    email: str | None,
     min_price: int,
     max_price: int,
     min_rooms: int,
+    max_rooms: int,
     min_size: int,
+    max_size: int,
     query: list[str],
+    email: str | None,
 ) -> None:
     """Search for flats in Denmark."""
     cities = [
@@ -84,7 +100,9 @@ def main(
         min_price=min_price,
         max_price=max_price,
         min_rooms=min_rooms,
+        max_rooms=max_rooms,
         min_size=min_size,
+        max_size=max_size,
         queries=query,
     )
     flats = scrape_results(search_query=search_query)

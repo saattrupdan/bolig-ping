@@ -10,7 +10,9 @@ class SearchQuery(BaseModel):
     min_price: int
     max_price: int
     min_rooms: int
+    max_rooms: int
     min_size: int
+    max_size: int
     queries: list[str]
 
     def get_url(self) -> str:
@@ -26,7 +28,9 @@ class SearchQuery(BaseModel):
             priceMin=self.min_price,
             priceMax=self.max_price,
             numberOfRoomsMin=self.min_rooms,
+            numberOfRoomsMax=self.max_rooms,
             areaMin=self.min_size,
+            areaMax=self.max_size,
         )
         if self.queries:
             arguments["text"] = ",".join(self.queries)
