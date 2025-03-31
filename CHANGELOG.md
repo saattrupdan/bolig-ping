@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+
+
+
+## [v1.1.0] - 2025-03-31
 ### Added
 - Added support for `--max-rooms` and `--max-size`.
 
