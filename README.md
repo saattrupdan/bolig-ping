@@ -14,7 +14,7 @@ Developer:
 - Dan Saattrup Nielsen (saattrupdan@gmail.com)
 
 
-# Quickstart
+## Quickstart
 
 The easiest way to use the package is as a
 [uv](https://docs.astral.sh/uv/getting-started/installation/) tool. You can simply start
@@ -43,8 +43,15 @@ GMAIL_EMAIL=<your-email>@gmail.com
 GMAIL_PASSWORD=<your-app-password>
 ```
 
+To set up a recurring search, you can add the following line to your
+[crontab](https://linuxhandbook.com/crontab/) on a server, to run the search every hour:
 
-# All options
+```bash
+0 * * * * uvx bolig_ping <search-arguments>
+```
+
+
+## All options
 
 The following options are available:
 
