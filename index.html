@@ -204,6 +204,19 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Bolig Ping
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="." class="md-nav__link md-nav__link--active">
         
   
@@ -215,6 +228,43 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quickstart
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#all-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      All options
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -492,6 +542,32 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quickstart
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#all-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      All options
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -518,9 +594,10 @@
 <ul>
 <li>Dan Saattrup Nielsen (saattrupdan@gmail.com)</li>
 </ul>
-<h1 id="quickstart">Quickstart</h1>
-<p>The easiest way to use the package is as a <code>uv</code> tool. You can simply start searching for
-flats using the following command:</p>
+<h2 id="quickstart">Quickstart</h2>
+<p>The easiest way to use the package is as a
+<a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a> tool. You can simply start
+searching for flats using the following command:</p>
 <div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>bolig-ping<span class="w"> </span>--city<span class="w"> </span>københavn
 </code></pre></div>
 <p>This both installs the package and runs the command. All the available options are
@@ -535,7 +612,11 @@ follows:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">GMAIL_EMAIL</span><span class="o">=</span>&lt;your-email&gt;@gmail.com
 <span class="nv">GMAIL_PASSWORD</span><span class="o">=</span>&lt;your-app-password&gt;
 </code></pre></div>
-<h1 id="all-options">All options</h1>
+<p>To set up a recurring search, you can add the following line to your
+<a href="https://linuxhandbook.com/crontab/">crontab</a> on a server, to run the search every hour:</p>
+<div class="highlight"><pre><span></span><code><span class="m">0</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>uvx<span class="w"> </span>bolig_ping<span class="w"> </span>&lt;search-arguments&gt;
+</code></pre></div>
+<h2 id="all-options">All options</h2>
 <p>The following options are available:</p>
 <ul>
 <li><code>--city/-c</code> (required): The city you want to search in. This argument can be
