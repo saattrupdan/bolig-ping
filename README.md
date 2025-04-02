@@ -43,8 +43,16 @@ GMAIL_EMAIL=<your-email>@gmail.com
 GMAIL_PASSWORD=<your-app-password>
 ```
 
-To set up a recurring search, you can add the following line to your
-[crontab](https://linuxhandbook.com/crontab/) on a server, to run the search every hour:
+With this set up, you can now use the `--email` option to receive an email with new
+flats that match your search criteria:
+
+```bash
+uvx bolig-ping --city københavn --email <your-email>
+```
+
+You can also set up a recurring search if you have a server available. In this case, you
+can add the following line to your [crontab](https://linuxhandbook.com/crontab/) on a
+server, to run the search every hour:
 
 ```bash
 0 * * * * uvx bolig_ping <search-arguments>
