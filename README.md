@@ -21,14 +21,14 @@ The easiest way to use the package is as a
 searching for flats using the following command:
 
 ```bash
-uvx bolig-ping --city københavn
+uvx bolig_ping --city københavn
 ```
 
 This both installs the package and runs the command. All the available options are
 listed below, but you can always get these by running the following command:
 
 ```bash
-uvx bolig-ping --help
+uvx bolig_ping --help
 ```
 
 
@@ -47,7 +47,7 @@ With this set up, you can now use the `--email` option to receive an email with 
 flats that match your search criteria:
 
 ```bash
-uvx bolig-ping --city københavn --email <your-email>
+uvx bolig_ping --city københavn --email <your-email>
 ```
 
 You can also set up a recurring search if you have a server available. In this case, you
