@@ -5,8 +5,8 @@ Get a ping when your dream flat in Denmark becomes available on Boligsiden.dk.
 ______________________________________________________________________
 [![Code Coverage](https://img.shields.io/badge/Coverage-75%25-yellowgreen.svg)](https://github.com/saattrupdan/bolig-ping/tree/main/tests)
 [![Documentation](https://img.shields.io/badge/docs-passing-green)](https://saattrupdan.github.io/bolig-ping)
-[![License](https://img.shields.io/github/license/saattrupdan/bolig_ping)](https://github.com/saattrupdan/bolig-ping/blob/main/LICENSE)
-[![LastCommit](https://img.shields.io/github/last-commit/saattrupdan/bolig_ping)](https://github.com/saattrupdan/bolig-ping/commits/main)
+[![License](https://img.shields.io/github/license/saattrupdan/bolig-ping)](https://github.com/saattrupdan/bolig-ping/blob/main/LICENSE)
+[![LastCommit](https://img.shields.io/github/last-commit/saattrupdan/bolig-ping)](https://github.com/saattrupdan/bolig-ping/commits/main)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](https://github.com/saattrupdan/bolig-ping/blob/main/CODE_OF_CONDUCT.md)
 
 Developer:
