@@ -590,8 +590,8 @@
 <hr />
 <p><a href="https://github.com/saattrupdan/bolig-ping/tree/main/tests"><img alt="Code Coverage" src="https://img.shields.io/badge/Coverage-75%25-yellowgreen.svg" /></a>
 <a href="https://saattrupdan.github.io/bolig-ping"><img alt="Documentation" src="https://img.shields.io/badge/docs-passing-green" /></a>
-<a href="https://github.com/saattrupdan/bolig-ping/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/saattrupdan/bolig_ping" /></a>
-<a href="https://github.com/saattrupdan/bolig-ping/commits/main"><img alt="LastCommit" src="https://img.shields.io/github/last-commit/saattrupdan/bolig_ping" /></a>
+<a href="https://github.com/saattrupdan/bolig-ping/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/saattrupdan/bolig-ping" /></a>
+<a href="https://github.com/saattrupdan/bolig-ping/commits/main"><img alt="LastCommit" src="https://img.shields.io/github/last-commit/saattrupdan/bolig-ping" /></a>
 <a href="https://github.com/saattrupdan/bolig-ping/blob/main/CODE_OF_CONDUCT.md"><img alt="Contributor Covenant" src="https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg" /></a></p>
 <p>Developer:</p>
 <ul>
@@ -601,11 +601,11 @@
 <p>The easiest way to use the package is as a
 <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a> tool. You can simply start
 searching for flats using the following command:</p>
-<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>bolig_ping<span class="w"> </span>--city<span class="w"> </span>københavn
+<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>bolig-ping<span class="w"> </span>--city<span class="w"> </span>københavn
 </code></pre></div>
 <p>This both installs the package and runs the command. All the available options are
 listed below, but you can always get these by running the following command:</p>
-<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>bolig_ping<span class="w"> </span>--help
+<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>bolig-ping<span class="w"> </span>--help
 </code></pre></div>
 <p>To be able to send emails, you have to create a <a href="https://myaccount.google.com/apppasswords">Google app
 password</a>, and store both your Gmail email
@@ -617,13 +617,15 @@ follows:</p>
 </code></pre></div>
 <p>With this set up, you can now use the <code>--email</code> option to receive an email with new
 flats that match your search criteria:</p>
-<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>bolig_ping<span class="w"> </span>--city<span class="w"> </span>københavn<span class="w"> </span>--email<span class="w"> </span>&lt;your-email&gt;
+<div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>bolig-ping<span class="w"> </span>--city<span class="w"> </span>københavn<span class="w"> </span>--email<span class="w"> </span>&lt;your-email&gt;
 </code></pre></div>
 <p>You can also set up a recurring search if you have a server available. In this case, you
 can add the following line to your <a href="https://linuxhandbook.com/crontab/">crontab</a> on a
 server, to run the search every hour:</p>
-<div class="highlight"><pre><span></span><code><span class="m">0</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>uvx<span class="w"> </span>bolig_ping<span class="w"> </span>&lt;search-arguments&gt;
+<div class="highlight"><pre><span></span><code><span class="m">0</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>&lt;uvx-full-path&gt;<span class="w"> </span>bolig-ping<span class="w"> </span>&lt;search-arguments&gt;
 </code></pre></div>
+<p>Here <code>&lt;uvx-full-path&gt;</code> is the full path to the <code>uvx</code> command, which you can find by
+running <code>which uvx</code> in your terminal.</p>
 <h2 id="all-options">All options</h2>
 <p>The following options are available:</p>
 <ul>
