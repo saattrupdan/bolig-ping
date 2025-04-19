@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+
+
+
+## [v1.3.0] - 2025-04-19
 ### Added
 - Added the ability to search for different property types, with the new
   `--property-type` (`-t`) option. The available property types are `ejerlejlighed`,
