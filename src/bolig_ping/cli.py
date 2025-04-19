@@ -5,7 +5,7 @@ import os
 
 import click
 
-from .cache import remove_cached_flats, store_to_cache
+from .cache import remove_cached_homes, store_to_cache
 from .data_models import SearchQuery
 from .email import compose_email, send_email
 from .scraper import scrape_results
@@ -85,7 +85,16 @@ logger = logging.getLogger(__package__)
     "--query",
     "-q",
     multiple=True,
-    help="A keyword that the flat description must contain.",
+    help="A keyword that the home description must contain.",
+)
+@click.option(
+    "--property-type",
+    "-t",
+    type=click.Choice(["ejerlejlighed", "andelslejlighed", "house"]),
+    multiple=True,
+    default=None,
+    help="The type of property to search for. Default is only searching for "
+    "'ejerlejlighed'.",
 )
 @click.option(
     "--email",
@@ -98,7 +107,7 @@ logger = logging.getLogger(__package__)
     "--cache/--no-cache",
     default=True,
     show_default=True,
-    help="Whether to cache the flats that are found.",
+    help="Whether to cache the homes that are found.",
 )
 def main(
     city: list[str],
@@ -111,10 +120,11 @@ def main(
     min_size: int,
     max_size: int,
     query: list[str],
+    property_type: list[str],
     email: str | None,
     cache: bool,
 ) -> None:
-    """Search for flats in Denmark."""
+    """Search for homes in Denmark."""
     cities = [
         c.replace(" ", "-")
         .replace("ø", "oe")
@@ -134,16 +144,23 @@ def main(
         min_size=min_size,
         max_size=max_size,
         queries=query,
+        property_type=property_type or ["ejerlejlighed"],
     )
-    flats = scrape_results(search_query=search_query)
+    homes = scrape_results(search_query=search_query)
+    if homes is None:
+        logger.error(
+            "Could not find the city that you requested. Please double check the "
+            "spelling of the city name(s) and try again."
+        )
+        return
     if cache:
-        flats = remove_cached_flats(flats=flats, email=email or "no-email")
+        homes = remove_cached_homes(homes=homes, email=email or "no-email")
 
-    logger.info(f"Found {len(flats)} new flats that satisfy the search query.")
+    logger.info(f"Found {len(homes)} new homes that satisfy the search query.")
 
-    if flats:
+    if homes:
         if email is not None:
-            subject, contents = compose_email(flats=flats)
+            subject, contents = compose_email(homes=homes)
             send_email(
                 from_email=os.environ["GMAIL_EMAIL"],
                 password=os.environ["GMAIL_PASSWORD"],
@@ -151,14 +168,14 @@ def main(
                 subject=subject,
                 contents=contents,
             )
-            logger.info(f"Sent the flats to {email}.")
+            logger.info(f"Sent the homes to {email}.")
         else:
             logger.info(
-                "No email provided, so printing the flats here:\n\n"
-                + "\n\n".join(flat.to_text() for flat in flats)
+                "No email provided, so printing the homes here:\n\n"
+                + "\n\n".join(home.to_text() for home in homes)
             )
         if cache:
-            store_to_cache(flats=flats, email=email or "no-email")
+            store_to_cache(homes=homes, email=email or "no-email")
 
 
 if __name__ == "__main__":

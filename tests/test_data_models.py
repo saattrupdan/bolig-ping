@@ -4,7 +4,7 @@ from collections.abc import Generator
 
 import pytest
 
-from bolig_ping.data_models import Flat, SearchQuery
+from bolig_ping.data_models import Home, SearchQuery
 
 
 class TestSearchQuery:
@@ -24,6 +24,7 @@ class TestSearchQuery:
             min_size=50,
             max_size=100,
             queries=["badekar"],
+            property_type=["ejerlejlighed"],
         )
 
     def test_create_search_query(self, search_query: SearchQuery) -> None:
@@ -41,19 +42,19 @@ class TestSearchQuery:
         """Test the `get_url` method."""
         url = search_query.get_url()
         assert url == (
-            "https://www.boligsiden.dk/by/københavn-n/tilsalg/ejerlejlighed"
-            "?priceMin=100&priceMax=200&numberOfRoomsMin=3&numberOfRoomsMax=5"
-            "&areaMin=50&areaMax=100"
+            "https://www.boligsiden.dk/by/københavn-n/tilsalg/ejerlejlighed,"
+            "villalejlighed?priceMin=100&priceMax=200&numberOfRoomsMin=3"
+            "&numberOfRoomsMax=5&areaMin=50&areaMax=100"
         )
 
 
-class TestFlat:
-    """Tests for the `Flat` data model."""
+class TestHome:
+    """Tests for the `Home` data model."""
 
     @pytest.fixture(scope="class")
-    def flat(self) -> Generator[Flat, None, None]:
-        """Return a `Flat` instance."""
-        yield Flat(
+    def home(self) -> Generator[Home, None, None]:
+        """Return a `Home` instance."""
+        yield Home(
             url="https://some.url",
             address="Some address",
             price=1000,
@@ -63,16 +64,16 @@ class TestFlat:
             year=2000,
         )
 
-    def test_create_flat(self, flat: Flat) -> None:
-        """Test creating a `Flat` instance."""
-        assert flat.url == "https://some.url"
-        assert flat.address == "Some address"
-        assert flat.price == 1000
-        assert flat.num_rooms == 3
-        assert flat.size == 100
-        assert flat.monthly_fee == 100
-        assert flat.year == 2000
+    def test_create_home(self, home: Home) -> None:
+        """Test creating a `Home` instance."""
+        assert home.url == "https://some.url"
+        assert home.address == "Some address"
+        assert home.price == 1000
+        assert home.num_rooms == 3
+        assert home.size == 100
+        assert home.monthly_fee == 100
+        assert home.year == 2000
 
-    def test_hash(self, flat: Flat) -> None:
+    def test_hash(self, home: Home) -> None:
         """Test the `__hash__` method."""
-        assert hash(flat) == hash(flat.url)
+        assert hash(home) == hash(home.url)

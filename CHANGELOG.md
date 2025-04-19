@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+- Added the ability to search for different property types, with the new
+  `--property-type` (`-t`) option. The available property types are `ejerlejlighed`,
+  `andelslejlighed` and `house`. You can specify multiple property types with, e.g.,
+  `bolig-ping <other-arguments> -t ejerlejlighed -t house`. It defaults to
+  `ejerlejlighed`, which is the only type that was previously supported.
 - Added new `--min-monthly-fee` and `--max-monthly-fee` options to filter flats by
   monthly fee. The default is no minimum or maximum monthly fee.
 - Added new `--cache/--no-cache` flag, which allows you to disable the cache. The
@@ -20,6 +25,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   description of the flat, rather than use Boligsiden.dk's own keywords, since many
   flats do not use these keywords. Remember that you can specify multiple queries with,
   e.g., `bolig-ping <other-arguments> -q badekar -q altan`.
+
+### Fixed
+- Now catches when an invalid city name is provided, and returns a helpful error
+  message. Previously, it would just print the raw traceback.
 
 
 ## [v1.2.0] - 2025-04-04

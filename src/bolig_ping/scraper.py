@@ -1,4 +1,4 @@
-"""Scraping flats available satisfying the given criteria."""
+"""Scraping homes available satisfying the given criteria."""
 
 import logging
 import re
@@ -8,21 +8,21 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from tqdm.auto import tqdm
 
-from .data_models import Flat, SearchQuery
+from .data_models import Home, SearchQuery
 from .webdriver import Webdriver
 
 logger = logging.getLogger(__package__)
 
 
-def scrape_results(search_query: SearchQuery) -> list[Flat]:
-    """Scrape the results of a flat search query.
+def scrape_results(search_query: SearchQuery) -> list[Home] | None:
+    """Scrape the results of a home search query.
 
     Args:
         search_query:
             The search query to scrape results for.
 
     Returns:
-        A list of flats that satisfy the search query.
+        A list of homes that satisfy the search query, or None if no results were found.
 
     Raises:
         HTTPError:
@@ -31,6 +31,9 @@ def scrape_results(search_query: SearchQuery) -> list[Flat]:
     url = search_query.get_url()
     logger.info(f"Fetching URL {url!r}...")
     webdriver = Webdriver().load(url=url)
+
+    if "Siden findes ikke" in webdriver.html:
+        return None
 
     # Close the cookie banner
     logger.info("Closing cookie banner...")
@@ -59,19 +62,19 @@ def scrape_results(search_query: SearchQuery) -> list[Flat]:
         raise ValueError("Could not find number of results.")
     num_results = int(num_results_match.group())
 
-    # Extract the flats from the first page
+    # Extract the homes from the first page
     logger.info("Scraping first page...")
     results = webdriver.find_elements(
         "//div[@data-testid='case-list-card' and "
         "contains(concat(' ', normalize-space(@class), ' '), ' shadow-card ')]"
     )
-    flats = [get_flat_from_result(result=result) for result in results]
+    homes = [get_home_from_result(result=result) for result in results]
 
     # Scrape the remaining pages
     with tqdm(desc="Scraping pages") as pbar:
         # Update the progress bar
         pbar.total = num_results
-        pbar.update(len(flats))
+        pbar.update(len(homes))
 
         # Calculate the number of pages
         num_pages = num_results // 50
@@ -87,10 +90,10 @@ def scrape_results(search_query: SearchQuery) -> list[Flat]:
 
             # Get the results, where we keep trying in case the page hasn't changed
             # correctly
-            num_flats = len(flats)
-            new_flats = []
+            num_homes = len(homes)
+            new_homes = []
             num_attempts = 3
-            while len(flats) == num_flats:
+            while len(homes) == num_homes:
                 # Get the results
                 results = webdriver.find_elements(
                     "//div["
@@ -98,55 +101,55 @@ def scrape_results(search_query: SearchQuery) -> list[Flat]:
                     "concat(' ', normalize-space(@class), ' '), ' shadow-card ')"
                     "]"
                 )
-                new_flats = [get_flat_from_result(result=result) for result in results]
-                flats.extend(new_flats)
-                flats = list(set(flats))
+                new_homes = [get_home_from_result(result=result) for result in results]
+                homes.extend(new_homes)
+                homes = list(set(homes))
 
                 # Monitor the number of attempts and raise an error if we can't change
                 # the page
                 num_attempts -= 1
                 if num_attempts == 0:
                     raise ValueError("Could not change page.")
-            pbar.update(len(new_flats))
+            pbar.update(len(new_homes))
 
         # Ensure that the progress bar is at 100% at the end
         pbar.n = pbar.total
 
-    # Filter the flats based on the monthly fee
-    flats = [
-        flat
-        for flat in flats
-        if flat.monthly_fee is None
+    # Filter the homes based on the monthly fee
+    homes = [
+        home
+        for home in homes
+        if home.monthly_fee is None
         or (
-            flat.monthly_fee >= search_query.min_monthly_fee
-            and flat.monthly_fee <= search_query.max_monthly_fee
+            home.monthly_fee >= search_query.min_monthly_fee
+            and home.monthly_fee <= search_query.max_monthly_fee
         )
     ]
 
-    # Filter the flats if any keyword queries were given
+    # Filter the homes if any keyword queries were given
     if search_query.queries:
-        flats = [
-            flat
-            for flat in tqdm(iterable=flats, desc="Filtering flats based on keywords")
-            if flat.description is not None
+        homes = [
+            home
+            for home in tqdm(iterable=homes, desc="Filtering homes based on keywords")
+            if home.description is not None
             and any(
-                query.lower() in flat.description.lower()
+                query.lower() in home.description.lower()
                 for query in search_query.queries
             )
         ]
 
-    return flats
+    return homes
 
 
-def get_flat_from_result(result: WebElement) -> Flat:
-    """Get a flat from a result.
+def get_home_from_result(result: WebElement) -> Home:
+    """Get a home from a result.
 
     Args:
         result:
-            The result to get the flat from.
+            The result to get the home from.
 
     Returns:
-        The flat from the result.
+        The home from the result.
 
     Raises:
         ValueError:
@@ -192,7 +195,7 @@ def get_flat_from_result(result: WebElement) -> Flat:
             if re.search(pattern=regex, string=span_value) is not None:
                 values[name] = extract_number(span_value)
 
-    return Flat(url=url, address=address, **values)
+    return Home(url=url, address=address, **values)
 
 
 def extract_number(text: str) -> int | None:

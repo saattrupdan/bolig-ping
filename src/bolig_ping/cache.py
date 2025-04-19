@@ -1,58 +1,58 @@
-"""Cache to store already sent flats."""
+"""Cache to store already sent homes."""
 
 import json
 from pathlib import Path
 
-from .data_models import Flat
+from .data_models import Home
 
 
 def store_to_cache(
-    flats: list[Flat], email: str, cache_path: Path = Path(".boligping_cache")
+    homes: list[Home], email: str, cache_path: Path = Path(".boligping_cache")
 ) -> None:
-    """Store the flats to the cache.
+    """Store the homes to the cache.
 
     Args:
-        flats:
-            The flats to store in the cache.
+        homes:
+            The homes to store in the cache.
         email:
-            The receiver of the flats.
+            The receiver of the homes.
         cache_path (optional):
             The path to the cache file. Defaults to ".boligping_cache".
     """
-    flats = remove_cached_flats(flats=flats, email=email, cache_path=cache_path)
-    added_flats: set[tuple[str, str]] = set()
+    homes = remove_cached_homes(homes=homes, email=email, cache_path=cache_path)
+    added_homes: set[tuple[str, str]] = set()
     with cache_path.open("a") as file:
-        for flat in flats:
-            flat_id = flat.url.split("/")[-1]
-            if (flat_id, email) in added_flats:
+        for home in homes:
+            home_id = home.url.split("/")[-1]
+            if (home_id, email) in added_homes:
                 continue
-            flat_json = json.dumps(dict(id=flat_id, email=email))
-            file.write(f"{flat_json}\n")
-            added_flats.add((flat_id, email))
+            home_json = json.dumps(dict(id=home_id, email=email))
+            file.write(f"{home_json}\n")
+            added_homes.add((home_id, email))
 
 
-def remove_cached_flats(
-    flats: list[Flat], email: str, cache_path: Path = Path(".boligping_cache")
-) -> list[Flat]:
-    """Remove the cached flats from the list of flats.
+def remove_cached_homes(
+    homes: list[Home], email: str, cache_path: Path = Path(".boligping_cache")
+) -> list[Home]:
+    """Remove the cached homes from the list of homes.
 
     Args:
-        flats:
-            The flats to remove the cached flats from.
+        homes:
+            The homes to remove the cached homes from.
         email:
-            The receiver of the flats.
+            The receiver of the homes.
         cache_path (optional):
             The path to the cache file. Defaults to ".boligping_cache".
 
     Returns:
-        The flats without the cached flats.
+        The homes without the cached homes.
     """
     cache_path.touch(exist_ok=True)
     with cache_path.open() as file:
         for line in file:
             json_data = json.loads(line)
             if json_data["email"] == email:
-                flats = [
-                    flat for flat in flats if flat.url.split("/")[-1] != json_data["id"]
+                homes = [
+                    home for home in homes if home.url.split("/")[-1] != json_data["id"]
                 ]
-    return flats
+    return homes
