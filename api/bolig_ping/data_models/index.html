@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.4af4bdda.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.2afb09e1.min.css">
       
       
 
@@ -445,19 +445,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bolig_ping.data_models.Flat" class="md-nav__link">
+  <a href="#bolig_ping.data_models.Home" class="md-nav__link">
     <span class="md-ellipsis">
-      Flat
+      Home
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Flat">
+    <nav class="md-nav" aria-label="Home">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#bolig_ping.data_models.Flat.to_html" class="md-nav__link">
+  <a href="#bolig_ping.data_models.Home.description" class="md-nav__link">
+    <span class="md-ellipsis">
+      description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bolig_ping.data_models.Home.to_html" class="md-nav__link">
     <span class="md-ellipsis">
       to_html
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bolig_ping.data_models.Home.to_text" class="md-nav__link">
+    <span class="md-ellipsis">
+      to_text
     </span>
   </a>
   
@@ -612,19 +630,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bolig_ping.data_models.Flat" class="md-nav__link">
+  <a href="#bolig_ping.data_models.Home" class="md-nav__link">
     <span class="md-ellipsis">
-      Flat
+      Home
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Flat">
+    <nav class="md-nav" aria-label="Home">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#bolig_ping.data_models.Flat.to_html" class="md-nav__link">
+  <a href="#bolig_ping.data_models.Home.description" class="md-nav__link">
+    <span class="md-ellipsis">
+      description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bolig_ping.data_models.Home.to_html" class="md-nav__link">
     <span class="md-ellipsis">
       to_html
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bolig_ping.data_models.Home.to_text" class="md-nav__link">
+    <span class="md-ellipsis">
+      to_text
     </span>
   </a>
   
@@ -677,12 +713,12 @@
 <li>
 <p><span class="mkapi-item-name"><a href="./#bolig_ping.data_models.SearchQuery" title="bolig_ping.data_models.SearchQuery">SearchQuery</a></span>
  <span class="mkapi-dash">&mdash;</span>
-A flat search query.</p>
+A search query.</p>
 </li>
 <li>
-<p><span class="mkapi-item-name"><a href="./#bolig_ping.data_models.Flat" title="bolig_ping.data_models.Flat">Flat</a></span>
+<p><span class="mkapi-item-name"><a href="./#bolig_ping.data_models.Home" title="bolig_ping.data_models.Home">Home</a></span>
  <span class="mkapi-dash">&mdash;</span>
-A flat listing.</p>
+A property listing.</p>
 </li>
 </ul>
 </div>
@@ -696,12 +732,16 @@ A flat listing.</p>
 <i class="fa-regular fa-square-minus"></i>
 </span>
 </span><span class="mkapi-object-kind">class</span>
-<span class="mkapi-object-name"><a href="./#bolig_ping.data_models.SearchQuery" title="bolig_ping.data_models.SearchQuery">SearchQuery</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-paren">)</span></span>
+<span class="mkapi-object-name"><a href="./#bolig_ping.data_models.SearchQuery" title="bolig_ping.data_models.SearchQuery">SearchQuery</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-star">**</span><span class="mkapi-arg">data</span><span class="mkapi-colon">: </span><span class="mkapi-ann">Any</span><span class="mkapi-paren">)</span></span>
 </p>
 <div class="mkapi-document">
-<p><p class="mkapi-bases" markdown="1">Bases :
-<span class="mkapi-base"><span class="mkapi-tooltip" title="pydantic.main.BaseModel">BaseModel</span></span></p></p>
-<p>A flat search query.</p>
+<p class="mkapi-bases">Bases :
+<span class="mkapi-base"><span class="mkapi-tooltip" title="pydantic.main.BaseModel">BaseModel</span></span></p>
+<p>A search query.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p>
 <p class="mkapi-section">
 <span class="mkapi-object-link">
 <span class="mkapi-section-toggle" title="Toggle attributes">
@@ -780,21 +820,25 @@ The URL for the search query.</p>
 </ul>
 </div>
 </div>
-<p class="mkapi-object mkapi-page-source" id="bolig_ping.data_models.Flat">
+<p class="mkapi-object mkapi-page-source" id="bolig_ping.data_models.Home">
 <span class="mkapi-object-link">
 
 
-<a href="../../../src/bolig_ping/data_models/#bolig_ping.data_models.Flat" title="Go to source">source</a>
+<a href="../../../src/bolig_ping/data_models/#bolig_ping.data_models.Home" title="Go to source">source</a>
 <span class="mkapi-document-toggle" title="Toggle all docs">
 <i class="fa-regular fa-square-minus"></i>
 </span>
 </span><span class="mkapi-object-kind">class</span>
-<span class="mkapi-object-name"><a href="./#bolig_ping.data_models.Flat" title="bolig_ping.data_models.Flat">Flat</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-paren">)</span></span>
+<span class="mkapi-object-name"><a href="./#bolig_ping.data_models.Home" title="bolig_ping.data_models.Home">Home</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-star">**</span><span class="mkapi-arg">data</span><span class="mkapi-colon">: </span><span class="mkapi-ann">Any</span><span class="mkapi-paren">)</span></span>
 </p>
 <div class="mkapi-document">
-<p><p class="mkapi-bases" markdown="1">Bases :
-<span class="mkapi-base"><span class="mkapi-tooltip" title="pydantic.main.BaseModel">BaseModel</span></span></p></p>
-<p>A flat listing.</p>
+<p class="mkapi-bases">Bases :
+<span class="mkapi-base"><span class="mkapi-tooltip" title="pydantic.main.BaseModel">BaseModel</span></span></p>
+<p>A property listing.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>self</code> is explicitly positional-only to allow <code>self</code> as a field name.</p>
 <p class="mkapi-section">
 <span class="mkapi-object-link">
 <span class="mkapi-section-toggle" title="Toggle attributes">
@@ -820,6 +864,11 @@ Get extra fields set during validation.</p>
 <span class="mkapi-item-type">set[str]</span> <span class="mkapi-dash">&mdash;</span>
 Returns the set of fields that have been explicitly set on this model instance.</p>
 </li>
+<li>
+<p><span class="mkapi-item-name">description</span> : 
+<span class="mkapi-item-type">str | None</span> <span class="mkapi-dash">&mdash;</span>
+Get the description of the home.</p>
+</li>
 </ul>
 </div>
 <p class="mkapi-section">
@@ -833,29 +882,67 @@ Returns the set of fields that have been explicitly set on this model instance.<
 <div class="mkapi-section-content">
 <ul class="mkapi-item-list">
 <li>
-<p><span class="mkapi-item-name"><a href="./#bolig_ping.data_models.Flat.to_html" title="bolig_ping.data_models.Flat.to_html">to_html</a></span>
+<p><span class="mkapi-item-name"><a href="./#bolig_ping.data_models.Home.to_html" title="bolig_ping.data_models.Home.to_html">to_html</a></span>
  <span class="mkapi-dash">&mdash;</span>
-Get the flat as an HTML string.</p>
+Get the home as an HTML string.</p>
+</li>
+<li>
+<p><span class="mkapi-item-name"><a href="./#bolig_ping.data_models.Home.to_text" title="bolig_ping.data_models.Home.to_text">to_text</a></span>
+ <span class="mkapi-dash">&mdash;</span>
+Get the home as a text string.</p>
 </li>
 </ul>
 </div>
 </div>
-<p class="mkapi-object mkapi-page-source" id="bolig_ping.data_models.Flat.to_html">
+<p class="mkapi-object mkapi-page-source" id="bolig_ping.data_models.Home.description">
 <span class="mkapi-object-link">
 <span class="mkapi-parent-toggle" title="Toggle class names">
 <i class="fa-solid fa-square-plus"></i>
 </span>
 
-<a href="../../../src/bolig_ping/data_models/#bolig_ping.data_models.Flat.to_html" title="Go to source">source</a>
+<a href="../../../src/bolig_ping/data_models/#bolig_ping.data_models.Home.description" title="Go to source">source</a>
+<span class="mkapi-document-toggle" title="Toggle all docs">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span><span class="mkapi-object-kind">property</span>
+<span class="mkapi-object-parent">
+<a href="./#bolig_ping.data_models.Home" title="bolig_ping.data_models.Home">Home</a><span class="mkapi-dot">.</span></span><span class="mkapi-object-name"><a href="./#bolig_ping.data_models.Home.description" title="bolig_ping.data_models.Home.description">description</a></span><span class="mkapi-signature"><span class="mkapi-colon">: </span><span class="mkapi-return">str | None</span></span>
+</p>
+<div class="mkapi-document">
+<p>Get the description of the home.</p>
+<p class="mkapi-section">
+<span class="mkapi-object-link">
+<span class="mkapi-section-toggle" title="Toggle returns">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-section-name">Returns</span>
+</p>
+<div class="mkapi-section-content">
+<ul class="mkapi-item-list">
+<li>
+<p><span class="mkapi-item-type">str | None</span> <span class="mkapi-dash">&mdash;</span>
+The description of the home, or None if not available.</p>
+</li>
+</ul>
+</div>
+</div>
+<p class="mkapi-object mkapi-page-source" id="bolig_ping.data_models.Home.to_html">
+<span class="mkapi-object-link">
+<span class="mkapi-parent-toggle" title="Toggle class names">
+<i class="fa-solid fa-square-plus"></i>
+</span>
+
+<a href="../../../src/bolig_ping/data_models/#bolig_ping.data_models.Home.to_html" title="Go to source">source</a>
 <span class="mkapi-document-toggle" title="Toggle all docs">
 <i class="fa-regular fa-square-minus"></i>
 </span>
 </span><span class="mkapi-object-kind">method</span>
 <span class="mkapi-object-parent">
-<a href="./#bolig_ping.data_models.Flat" title="bolig_ping.data_models.Flat">Flat</a><span class="mkapi-dot">.</span></span><span class="mkapi-object-name"><a href="./#bolig_ping.data_models.Flat.to_html" title="bolig_ping.data_models.Flat.to_html">to_html</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">str</span></span>
+<a href="./#bolig_ping.data_models.Home" title="bolig_ping.data_models.Home">Home</a><span class="mkapi-dot">.</span></span><span class="mkapi-object-name"><a href="./#bolig_ping.data_models.Home.to_html" title="bolig_ping.data_models.Home.to_html">to_html</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">str</span></span>
 </p>
 <div class="mkapi-document">
-<p>Get the flat as an HTML string.</p>
+<p>Get the home as an HTML string.</p>
 <p class="mkapi-section">
 <span class="mkapi-object-link">
 <span class="mkapi-section-toggle" title="Toggle returns">
@@ -868,7 +955,40 @@ Get the flat as an HTML string.</p>
 <ul class="mkapi-item-list">
 <li>
 <p><span class="mkapi-item-type">str</span> <span class="mkapi-dash">&mdash;</span>
-The flat as an HTML string.</p>
+The home as an HTML string.</p>
+</li>
+</ul>
+</div>
+</div>
+<p class="mkapi-object mkapi-page-source" id="bolig_ping.data_models.Home.to_text">
+<span class="mkapi-object-link">
+<span class="mkapi-parent-toggle" title="Toggle class names">
+<i class="fa-solid fa-square-plus"></i>
+</span>
+
+<a href="../../../src/bolig_ping/data_models/#bolig_ping.data_models.Home.to_text" title="Go to source">source</a>
+<span class="mkapi-document-toggle" title="Toggle all docs">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span><span class="mkapi-object-kind">method</span>
+<span class="mkapi-object-parent">
+<a href="./#bolig_ping.data_models.Home" title="bolig_ping.data_models.Home">Home</a><span class="mkapi-dot">.</span></span><span class="mkapi-object-name"><a href="./#bolig_ping.data_models.Home.to_text" title="bolig_ping.data_models.Home.to_text">to_text</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">str</span></span>
+</p>
+<div class="mkapi-document">
+<p>Get the home as a text string.</p>
+<p class="mkapi-section">
+<span class="mkapi-object-link">
+<span class="mkapi-section-toggle" title="Toggle returns">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-section-name">Returns</span>
+</p>
+<div class="mkapi-section-content">
+<ul class="mkapi-item-list">
+<li>
+<p><span class="mkapi-item-type">str</span> <span class="mkapi-dash">&mdash;</span>
+The home as a text string.</p>
 </li>
 </ul>
 </div>

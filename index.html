@@ -14,7 +14,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.4af4bdda.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.2afb09e1.min.css">
       
       
 
@@ -586,9 +586,9 @@
 
 
 <h1 id="bolig-ping">Bolig Ping</h1>
-<p>Get a ping when your dream flat in Denmark becomes available on Boligsiden.dk.</p>
+<p>Get a ping when your dream home in Denmark becomes available on Boligsiden.dk.</p>
 <hr />
-<p><a href="https://github.com/saattrupdan/bolig-ping/tree/main/tests"><img alt="Code Coverage" src="https://img.shields.io/badge/Coverage-75%25-yellowgreen.svg" /></a>
+<p><a href="https://github.com/saattrupdan/bolig-ping/tree/main/tests"><img alt="Code Coverage" src="https://img.shields.io/badge/Coverage-73%25-yellow.svg" /></a>
 <a href="https://saattrupdan.github.io/bolig-ping"><img alt="Documentation" src="https://img.shields.io/badge/docs-passing-green" /></a>
 <a href="https://github.com/saattrupdan/bolig-ping/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/saattrupdan/bolig-ping" /></a>
 <a href="https://github.com/saattrupdan/bolig-ping/commits/main"><img alt="LastCommit" src="https://img.shields.io/github/last-commit/saattrupdan/bolig-ping" /></a>
@@ -600,7 +600,7 @@
 <h2 id="quickstart">Quickstart</h2>
 <p>The easiest way to use the package is as a
 <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a> tool. You can simply start
-searching for flats using the following command:</p>
+searching for properties using the following command:</p>
 <div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>bolig-ping<span class="w"> </span>--city<span class="w"> </span>københavn
 </code></pre></div>
 <p>This both installs the package and runs the command. All the available options are
@@ -616,7 +616,7 @@ follows:</p>
 <span class="nv">GMAIL_PASSWORD</span><span class="o">=</span>&lt;your-app-password&gt;
 </code></pre></div>
 <p>With this set up, you can now use the <code>--email</code> option to receive an email with new
-flats that match your search criteria:</p>
+properties that match your search criteria:</p>
 <div class="highlight"><pre><span></span><code>uvx<span class="w"> </span>bolig-ping<span class="w"> </span>--city<span class="w"> </span>københavn<span class="w"> </span>--email<span class="w"> </span>&lt;your-email&gt;
 </code></pre></div>
 <p>You can also set up a recurring search if you have a server available. In this case, you
@@ -631,20 +631,34 @@ running <code>which uvx</code> in your terminal.</p>
 <ul>
 <li><code>--city/-c</code> (required): The city you want to search in. This argument can be
   used several times to search in multiple cities, e.g., <code>-c aarhus -c odense</code>.</li>
-<li><code>--min-price</code>: The minimum price of the flat, in DKK. Default is no minimum price.</li>
-<li><code>--max-price</code>: The maximum price of the flat, in DKK. Default is no maximum price.</li>
-<li><code>--min-rooms</code>: The minimum number of rooms in the flat. Default is no minimum number
-  of rooms.</li>
-<li><code>--max-rooms</code>: The maximum number of rooms in the flat. Default is no maximum number
-  of rooms.</li>
-<li><code>--min-size</code>: The minimum size of the flat, in square meters. Default is no minimum
-  size.</li>
-<li><code>--max-size</code>: The maximum size of the flat, in square meters. Default is no maximum
-  size.</li>
+<li><code>--min-price</code>: The minimum price of the property, in DKK. Default is no minimum price.</li>
+<li><code>--max-price</code>: The maximum price of the property, in DKK. Default is no maximum price.</li>
+<li><code>--min-monthly-fee</code>: The minimum monthly fee of the property, in DKK. Default is no
+  minimum monthly fee.</li>
+<li><code>--max-monthly-fee</code>: The maximum monthly fee of the property, in DKK. Default is no
+  maximum monthly fee.</li>
+<li><code>--min-rooms</code>: The minimum number of rooms in the property. Default is no minimum
+  number of rooms.</li>
+<li><code>--max-rooms</code>: The maximum number of rooms in the property. Default is no maximum
+  number of rooms.</li>
+<li><code>--min-size</code>: The minimum size of the property, in square meters. Default is no
+  minimum size.</li>
+<li><code>--max-size</code>: The maximum size of the property, in square meters. Default is no
+  maximum size.</li>
+<li><code>--query/-q</code>: The query to search for in the property description. This argument can
+  be used several times to search for multiple queries, e.g., <code>-q badekar -q altan</code>.</li>
+<li><code>--property-type/-t</code>: The type of property to search for. The available property
+  types are <code>ejerlejlighed</code>, <code>andelslejlighed</code> and <code>house</code>. This argument can be used
+  several times to search for multiple property types, e.g., <code>-t ejerlejlighed -t house</code>.
+  Default is only searching for <code>ejerlejlighed</code>.</li>
 <li><code>--email</code>: The email address you want to receive the ping on. Note that this needs to
   have the <code>GMAIL_EMAIL</code> and <code>GMAIL_PASSWORD</code> environment variables set, as described
-  above. Default is to use no email address, and instead print the flats to the
+  above. Default is to use no email address, and instead print the properties to the
   console.</li>
+<li><code>--cache/--no-cache</code>: Whether to use the cache or not. Default is to use the cache,
+  but you can disable it by using the <code>--no-cache</code> flag. This is useful if you want to
+  see all the results, and not just the new ones. The cache is stored in the
+  <code>.boligping_cache</code> file in the current directory.</li>
 </ul>
 
 

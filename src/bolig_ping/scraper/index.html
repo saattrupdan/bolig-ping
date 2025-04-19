@@ -12,7 +12,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
     
     
       
@@ -20,7 +20,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.4af4bdda.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.2afb09e1.min.css">
       
       
 
@@ -499,9 +499,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bolig_ping.scraper.get_flat_from_result" class="md-nav__link">
+  <a href="#bolig_ping.scraper.get_home_from_result" class="md-nav__link">
     <span class="md-ellipsis">
-      get_flat_from_result
+      get_home_from_result
     </span>
   </a>
   
@@ -733,7 +733,33 @@
 <span class="normal">188</span>
 <span class="normal">189</span>
 <span class="normal">190</span>
-<span class="normal">191</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Scraping flats available satisfying the given criteria.&quot;&quot;&quot;</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Scraping homes available satisfying the given criteria.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
@@ -743,21 +769,21 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">selenium.webdriver.remote.webelement</span><span class="w"> </span><span class="kn">import</span> <span class="n">WebElement</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tqdm.auto</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.data_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flat</span><span class="p">,</span> <span class="n">SearchQuery</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.data_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Home</span><span class="p">,</span> <span class="n">SearchQuery</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.webdriver</span><span class="w"> </span><span class="kn">import</span> <span class="n">Webdriver</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__package__</span><span class="p">)</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">scrape_results</span><span class="p">(</span><span class="n">search_query</span><span class="p">:</span> <span class="n">SearchQuery</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Flat</span><span class="p">]:</span><div class="mkapi-source-link" id="bolig_ping.scraper.scrape_results"><a href="../../../api/bolig_ping/scraper/#bolig_ping.scraper.scrape_results" title="Go to docs">docs</a></div>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Scrape the results of a flat search query.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">scrape_results</span><span class="p">(</span><span class="n">search_query</span><span class="p">:</span> <span class="n">SearchQuery</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Home</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span><div class="mkapi-source-link" id="bolig_ping.scraper.scrape_results"><a href="../../../api/bolig_ping/scraper/#bolig_ping.scraper.scrape_results" title="Go to docs">docs</a></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Scrape the results of a home search query.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        search_query:</span>
 <span class="sd">            The search query to scrape results for.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        A list of flats that satisfy the search query.</span>
+<span class="sd">        A list of homes that satisfy the search query, or None if no results were found.</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        HTTPError:</span>
@@ -766,6 +792,9 @@
     <span class="n">url</span> <span class="o">=</span> <span class="n">search_query</span><span class="o">.</span><span class="n">get_url</span><span class="p">()</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fetching URL </span><span class="si">{</span><span class="n">url</span><span class="si">!r}</span><span class="s2">...&quot;</span><span class="p">)</span>
     <span class="n">webdriver</span> <span class="o">=</span> <span class="n">Webdriver</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s2">&quot;Siden findes ikke&quot;</span> <span class="ow">in</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">html</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
 
     <span class="c1"># Close the cookie banner</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Closing cookie banner...&quot;</span><span class="p">)</span>
@@ -794,19 +823,19 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not find number of results.&quot;</span><span class="p">)</span>
     <span class="n">num_results</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_results_match</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
 
-    <span class="c1"># Extract the flats from the first page</span>
+    <span class="c1"># Extract the homes from the first page</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Scraping first page...&quot;</span><span class="p">)</span>
     <span class="n">results</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span>
         <span class="s2">&quot;//div[@data-testid=&#39;case-list-card&#39; and &quot;</span>
         <span class="s2">&quot;contains(concat(&#39; &#39;, normalize-space(@class), &#39; &#39;), &#39; shadow-card &#39;)]&quot;</span>
     <span class="p">)</span>
-    <span class="n">flats</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_flat_from_result</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+    <span class="n">homes</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_home_from_result</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
 
     <span class="c1"># Scrape the remaining pages</span>
     <span class="k">with</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Scraping pages&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">pbar</span><span class="p">:</span>
         <span class="c1"># Update the progress bar</span>
         <span class="n">pbar</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">num_results</span>
-        <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">flats</span><span class="p">))</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">homes</span><span class="p">))</span>
 
         <span class="c1"># Calculate the number of pages</span>
         <span class="n">num_pages</span> <span class="o">=</span> <span class="n">num_results</span> <span class="o">//</span> <span class="mi">50</span>
@@ -822,10 +851,10 @@
 
             <span class="c1"># Get the results, where we keep trying in case the page hasn&#39;t changed</span>
             <span class="c1"># correctly</span>
-            <span class="n">num_flats</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">flats</span><span class="p">)</span>
-            <span class="n">new_flats</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">num_homes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">homes</span><span class="p">)</span>
+            <span class="n">new_homes</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">num_attempts</span> <span class="o">=</span> <span class="mi">3</span>
-            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">flats</span><span class="p">)</span> <span class="o">==</span> <span class="n">num_flats</span><span class="p">:</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">homes</span><span class="p">)</span> <span class="o">==</span> <span class="n">num_homes</span><span class="p">:</span>
                 <span class="c1"># Get the results</span>
                 <span class="n">results</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span>
                     <span class="s2">&quot;//div[&quot;</span>
@@ -833,32 +862,55 @@
                     <span class="s2">&quot;concat(&#39; &#39;, normalize-space(@class), &#39; &#39;), &#39; shadow-card &#39;)&quot;</span>
                     <span class="s2">&quot;]&quot;</span>
                 <span class="p">)</span>
-                <span class="n">new_flats</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_flat_from_result</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
-                <span class="n">flats</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">new_flats</span><span class="p">)</span>
-                <span class="n">flats</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">flats</span><span class="p">))</span>
+                <span class="n">new_homes</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_home_from_result</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+                <span class="n">homes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">new_homes</span><span class="p">)</span>
+                <span class="n">homes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">homes</span><span class="p">))</span>
 
                 <span class="c1"># Monitor the number of attempts and raise an error if we can&#39;t change</span>
                 <span class="c1"># the page</span>
                 <span class="n">num_attempts</span> <span class="o">-=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="n">num_attempts</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not change page.&quot;</span><span class="p">)</span>
-            <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_flats</span><span class="p">))</span>
+            <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">new_homes</span><span class="p">))</span>
 
         <span class="c1"># Ensure that the progress bar is at 100% at the end</span>
         <span class="n">pbar</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">pbar</span><span class="o">.</span><span class="n">total</span>
 
-    <span class="k">return</span> <span class="n">flats</span>
+    <span class="c1"># Filter the homes based on the monthly fee</span>
+    <span class="n">homes</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">home</span>
+        <span class="k">for</span> <span class="n">home</span> <span class="ow">in</span> <span class="n">homes</span>
+        <span class="k">if</span> <span class="n">home</span><span class="o">.</span><span class="n">monthly_fee</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="ow">or</span> <span class="p">(</span>
+            <span class="n">home</span><span class="o">.</span><span class="n">monthly_fee</span> <span class="o">&gt;=</span> <span class="n">search_query</span><span class="o">.</span><span class="n">min_monthly_fee</span>
+            <span class="ow">and</span> <span class="n">home</span><span class="o">.</span><span class="n">monthly_fee</span> <span class="o">&lt;=</span> <span class="n">search_query</span><span class="o">.</span><span class="n">max_monthly_fee</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Filter the homes if any keyword queries were given</span>
+    <span class="k">if</span> <span class="n">search_query</span><span class="o">.</span><span class="n">queries</span><span class="p">:</span>
+        <span class="n">homes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">home</span>
+            <span class="k">for</span> <span class="n">home</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">iterable</span><span class="o">=</span><span class="n">homes</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Filtering homes based on keywords&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">home</span><span class="o">.</span><span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span>
+                <span class="n">query</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">home</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">search_query</span><span class="o">.</span><span class="n">queries</span>
+            <span class="p">)</span>
+        <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">homes</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">get_flat_from_result</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="n">WebElement</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Flat</span><span class="p">:</span><div class="mkapi-source-link" id="bolig_ping.scraper.get_flat_from_result"><a href="../../../api/bolig_ping/scraper/#bolig_ping.scraper.get_flat_from_result" title="Go to docs">docs</a></div>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a flat from a result.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_home_from_result</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="n">WebElement</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Home</span><span class="p">:</span><div class="mkapi-source-link" id="bolig_ping.scraper.get_home_from_result"><a href="../../../api/bolig_ping/scraper/#bolig_ping.scraper.get_home_from_result" title="Go to docs">docs</a></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a home from a result.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        result:</span>
-<span class="sd">            The result to get the flat from.</span>
+<span class="sd">            The result to get the home from.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        The flat from the result.</span>
+<span class="sd">        The home from the result.</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError:</span>
@@ -904,7 +956,7 @@
             <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">regex</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">span_value</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">values</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">extract_number</span><span class="p">(</span><span class="n">span_value</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">Flat</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">address</span><span class="o">=</span><span class="n">address</span><span class="p">,</span> <span class="o">**</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Home</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">address</span><span class="o">=</span><span class="n">address</span><span class="p">,</span> <span class="o">**</span><span class="n">values</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">extract_number</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span><div class="mkapi-source-link" id="bolig_ping.scraper.extract_number"><a href="../../../api/bolig_ping/scraper/#bolig_ping.scraper.extract_number" title="Go to docs">docs</a></div>
