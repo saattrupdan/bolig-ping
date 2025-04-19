@@ -40,6 +40,20 @@ logger = logging.getLogger(__package__)
     help="The maximum price of the apartment, in DKK.",
 )
 @click.option(
+    "--min-monthly-fee",
+    type=int,
+    default=0,
+    show_default=True,
+    help="The minimum monthly fee of the apartment, in DKK.",
+)
+@click.option(
+    "--max-monthly-fee",
+    type=int,
+    default=int(1e9),
+    show_default=True,
+    help="The maximum monthly fee of the apartment, in DKK.",
+)
+@click.option(
     "--min-rooms",
     type=int,
     default=1,
@@ -90,6 +104,8 @@ def main(
     city: list[str],
     min_price: int,
     max_price: int,
+    min_monthly_fee: int,
+    max_monthly_fee: int,
     min_rooms: int,
     max_rooms: int,
     min_size: int,
@@ -111,6 +127,8 @@ def main(
         cities=cities,
         min_price=min_price,
         max_price=max_price,
+        min_monthly_fee=min_monthly_fee,
+        max_monthly_fee=max_monthly_fee,
         min_rooms=min_rooms,
         max_rooms=max_rooms,
         min_size=min_size,

@@ -16,6 +16,8 @@ class SearchQuery(BaseModel):
     cities: list[str]
     min_price: int
     max_price: int
+    min_monthly_fee: int
+    max_monthly_fee: int
     min_rooms: int
     max_rooms: int
     min_size: int

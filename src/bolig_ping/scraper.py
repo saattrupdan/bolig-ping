@@ -112,6 +112,17 @@ def scrape_results(search_query: SearchQuery) -> list[Flat]:
         # Ensure that the progress bar is at 100% at the end
         pbar.n = pbar.total
 
+    # Filter the flats based on the monthly fee
+    flats = [
+        flat
+        for flat in flats
+        if flat.monthly_fee is None
+        or (
+            flat.monthly_fee >= search_query.min_monthly_fee
+            and flat.monthly_fee <= search_query.max_monthly_fee
+        )
+    ]
+
     # Filter the flats if any keyword queries were given
     if search_query.queries:
         flats = [
