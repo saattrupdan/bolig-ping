@@ -39,7 +39,7 @@ class TestSearchQuery:
         assert url == (
             "https://www.boligsiden.dk/by/københavn-n/tilsalg/ejerlejlighed"
             "?priceMin=100&priceMax=200&numberOfRoomsMin=3&numberOfRoomsMax=5"
-            "&areaMin=50&areaMax=100&text=badekar"
+            "&areaMin=50&areaMax=100"
         )
 
 

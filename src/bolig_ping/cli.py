@@ -74,7 +74,12 @@ logger = logging.getLogger(__package__)
     show_default=True,
     help="Email address to send the notification to, or None to print to stdout.",
 )
-@click.option("--query", "-q", multiple=True, help="A query to filter the results by.")
+@click.option(
+    "--query",
+    "-q",
+    multiple=True,
+    help="A keyword that the flat description must contain.",
+)
 def main(
     city: list[str],
     min_price: int,
@@ -122,7 +127,7 @@ def main(
         else:
             logger.info(
                 "No email provided, so printing the flats here:\n\n"
-                + "\n\n".join(flat.to_html() for flat in flats)
+                + "\n\n".join(flat.to_text() for flat in flats)
             )
         store_to_cache(flats=flats, email=email or "no-email")
 
