@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+### Added
+- Added new `--cache/--no-cache` flag, which allows you to disable the cache. The
+  default behaviour is still to use the cache, but you can disable it by using the
+  `--no-cache` flag. This is useful if you want to see all the results, and not just the
+  new ones. The cache is stored in the `.boligping_cache` file in the current directory.
+
 ### Changed
 - Changed the `--query` (`-q`) option to now search for the selected keywords in the
   description of the flat, rather than use Boligsiden.dk's own keywords, since many

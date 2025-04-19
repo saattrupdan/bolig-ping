@@ -68,6 +68,12 @@ logger = logging.getLogger(__package__)
     help="The maximum size of the apartment, in square meters.",
 )
 @click.option(
+    "--query",
+    "-q",
+    multiple=True,
+    help="A keyword that the flat description must contain.",
+)
+@click.option(
     "--email",
     type=str,
     default=None,
@@ -75,10 +81,10 @@ logger = logging.getLogger(__package__)
     help="Email address to send the notification to, or None to print to stdout.",
 )
 @click.option(
-    "--query",
-    "-q",
-    multiple=True,
-    help="A keyword that the flat description must contain.",
+    "--cache/--no-cache",
+    default=True,
+    show_default=True,
+    help="Whether to cache the flats that are found.",
 )
 def main(
     city: list[str],
@@ -90,6 +96,7 @@ def main(
     max_size: int,
     query: list[str],
     email: str | None,
+    cache: bool,
 ) -> None:
     """Search for flats in Denmark."""
     cities = [
@@ -111,8 +118,11 @@ def main(
         queries=query,
     )
     flats = scrape_results(search_query=search_query)
-    flats = remove_cached_flats(flats=flats, email=email or "no-email")
+    if cache:
+        flats = remove_cached_flats(flats=flats, email=email or "no-email")
+
     logger.info(f"Found {len(flats)} new flats that satisfy the search query.")
+
     if flats:
         if email is not None:
             subject, contents = compose_email(flats=flats)
@@ -129,7 +139,8 @@ def main(
                 "No email provided, so printing the flats here:\n\n"
                 + "\n\n".join(flat.to_text() for flat in flats)
             )
-        store_to_cache(flats=flats, email=email or "no-email")
+        if cache:
+            store_to_cache(flats=flats, email=email or "no-email")
 
 
 if __name__ == "__main__":
