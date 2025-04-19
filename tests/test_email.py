@@ -2,16 +2,16 @@
 
 import pytest
 
-from bolig_ping.data_models import Flat
+from bolig_ping.data_models import Home
 from bolig_ping.email import compose_email
 
 
 @pytest.mark.parametrize(
-    argnames=["flats", "expected"],
+    argnames=["homes", "expected"],
     argvalues=[
         (
             [
-                Flat(
+                Home(
                     url="https://some.url",
                     address="Some address",
                     price=1000,
@@ -22,8 +22,8 @@ from bolig_ping.email import compose_email
                 )
             ],
             (
-                "[BoligPing] Found a new flat!",
-                "Hi,\n\nI found a new flat that you might be interested in:\n\n"
+                "[BoligPing] Found a new home!",
+                "Hi,\n\nI found a new home that you might be interested in:\n\n"
                 "<a href='https://some.url'>Some address</a>\n"
                 "Price: 1,000 kr.\n"
                 "Number of rooms: 3\n"
@@ -35,7 +35,7 @@ from bolig_ping.email import compose_email
         ),
         (
             [
-                Flat(
+                Home(
                     url="https://some.url",
                     address="Some address",
                     price=1000,
@@ -44,7 +44,7 @@ from bolig_ping.email import compose_email
                     monthly_fee=100,
                     year=2000,
                 ),
-                Flat(
+                Home(
                     url="https://another.url",
                     address="Another address",
                     price=2000,
@@ -55,8 +55,8 @@ from bolig_ping.email import compose_email
                 ),
             ],
             (
-                "[BoligPing] Found 2 new flats!",
-                "Hi,\n\nI found some new flats that you might be interested in:\n\n"
+                "[BoligPing] Found 2 new homes!",
+                "Hi,\n\nI found some new homes that you might be interested in:\n\n"
                 "<a href='https://some.url'>Some address</a>\n"
                 "Price: 1,000 kr.\n"
                 "Number of rooms: 3\n"
@@ -73,9 +73,9 @@ from bolig_ping.email import compose_email
             ),
         ),
     ],
-    ids=["one_flat", "two_flats"],
+    ids=["one_home", "two_homes"],
 )
-def test_compose_email(flats: list[Flat], expected: str) -> None:
+def test_compose_email(homes: list[Home], expected: str) -> None:
     """Test that an email is composed."""
-    email = compose_email(flats=flats)
+    email = compose_email(homes=homes)
     assert email == expected

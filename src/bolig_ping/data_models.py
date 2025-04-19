@@ -11,7 +11,7 @@ logger = logging.getLogger(__package__)
 
 
 class SearchQuery(BaseModel):
-    """A flat search query."""
+    """A search query."""
 
     cities: list[str]
     min_price: int
@@ -23,6 +23,7 @@ class SearchQuery(BaseModel):
     min_size: int
     max_size: int
     queries: list[str]
+    property_type: list[str]
 
     def get_url(self) -> str:
         """Get the URL for the search query.
@@ -30,8 +31,17 @@ class SearchQuery(BaseModel):
         Returns:
             The URL for the search query.
         """
-        url = "https://www.boligsiden.dk/by/{}/tilsalg/ejerlejlighed".format(
-            ",".join(self.cities)
+        property_type_names: list[str] = []
+        if "ejerlejlighed" in self.property_type:
+            property_type_names.extend(["ejerlejlighed", "villalejlighed"])
+        if "andelslejlighed" in self.property_type:
+            property_type_names.append("andelslejlighed")
+        if "house" in self.property_type:
+            property_type_names.extend(["raekkehus", "villa", "landejendom"])
+        property_type_names = list(set(property_type_names))
+
+        url = "https://www.boligsiden.dk/by/{}/tilsalg/{}".format(
+            ",".join(self.cities), ",".join(property_type_names)
         )
         arguments: dict[str, str | int] = dict(
             priceMin=self.min_price,
@@ -45,8 +55,8 @@ class SearchQuery(BaseModel):
         return url
 
 
-class Flat(BaseModel):
-    """A flat listing."""
+class Home(BaseModel):
+    """A property listing."""
 
     url: str
     address: str
@@ -58,10 +68,10 @@ class Flat(BaseModel):
 
     @cached_property
     def description(self) -> str | None:
-        """Get the description of the flat.
+        """Get the description of the home.
 
         Returns:
-            The description of the flat, or None if not available.
+            The description of the home, or None if not available.
         """
         response = requests.get(url=self.url)
         if response.ok:
@@ -72,24 +82,24 @@ class Flat(BaseModel):
                 return "\n".join(long_lines)
             else:
                 logger.warning(
-                    f"Could not find description for flat {self.url}. The longest line "
-                    f"was {max(len(line) for line in lines)} characters long."
+                    f"Could not find description for property {self.url}. The longest "
+                    f"line was {max(len(line) for line in lines)} characters long."
                 )
         return None
 
     def __hash__(self) -> int:
-        """Get the hash of the flat.
+        """Get the hash of the home.
 
         Returns:
-            The hash of the flat.
+            The hash of the home.
         """
         return hash(self.url)
 
     def to_html(self) -> str:
-        """Get the flat as an HTML string.
+        """Get the home as an HTML string.
 
         Returns:
-            The flat as an HTML string.
+            The home as an HTML string.
         """
         html = "\n".join(
             [
@@ -104,10 +114,10 @@ class Flat(BaseModel):
         return html
 
     def to_text(self) -> str:
-        """Get the flat as a text string.
+        """Get the home as a text string.
 
         Returns:
-            The flat as a text string.
+            The home as a text string.
         """
         text = "\n".join(
             [

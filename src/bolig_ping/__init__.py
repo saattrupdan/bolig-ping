@@ -1,1 +1,1 @@
-"""Get a ping when your dream flat becomes available."""
+"""Get a ping when your dream home becomes available."""
