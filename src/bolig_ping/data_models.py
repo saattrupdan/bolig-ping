@@ -1,8 +1,13 @@
 """Data models used in the project."""
 
+import logging
+from functools import cached_property
+
 import requests
 from bs4 import BeautifulSoup
 from pydantic import BaseModel
+
+logger = logging.getLogger(__package__)
 
 
 class SearchQuery(BaseModel):
@@ -49,7 +54,7 @@ class Flat(BaseModel):
     monthly_fee: int | None
     year: int | None
 
-    @property
+    @cached_property
     def description(self) -> str | None:
         """Get the description of the flat.
 
@@ -63,6 +68,11 @@ class Flat(BaseModel):
             long_lines = [line.strip() for line in lines if len(line.strip()) > 200]
             if long_lines:
                 return "\n".join(long_lines)
+            else:
+                logger.warning(
+                    f"Could not find description for flat {self.url}. The longest line "
+                    f"was {max(len(line) for line in lines)} characters long."
+                )
         return None
 
     def __hash__(self) -> int:
