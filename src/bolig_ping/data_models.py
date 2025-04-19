@@ -38,7 +38,7 @@ class SearchQuery(BaseModel):
             property_type_names.append("andelslejlighed")
         if "house" in self.property_type:
             property_type_names.extend(["raekkehus", "villa", "landejendom"])
-        property_type_names = list(set(property_type_names))
+        property_type_names = sorted(set(property_type_names))
 
         url = "https://www.boligsiden.dk/by/{}/tilsalg/{}".format(
             ",".join(self.cities), ",".join(property_type_names)
