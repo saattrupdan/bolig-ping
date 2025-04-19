@@ -1,6 +1,13 @@
 """Data models used in the project."""
 
+import logging
+from functools import cached_property
+
+import requests
+from bs4 import BeautifulSoup
 from pydantic import BaseModel
+
+logger = logging.getLogger(__package__)
 
 
 class SearchQuery(BaseModel):
@@ -9,6 +16,8 @@ class SearchQuery(BaseModel):
     cities: list[str]
     min_price: int
     max_price: int
+    min_monthly_fee: int
+    max_monthly_fee: int
     min_rooms: int
     max_rooms: int
     min_size: int
@@ -32,8 +41,6 @@ class SearchQuery(BaseModel):
             areaMin=self.min_size,
             areaMax=self.max_size,
         )
-        if self.queries:
-            arguments["text"] = ",".join(self.queries)
         url += "?" + "&".join(f"{key}={value}" for key, value in arguments.items())
         return url
 
@@ -48,6 +55,27 @@ class Flat(BaseModel):
     size: int | None
     monthly_fee: int | None
     year: int | None
+
+    @cached_property
+    def description(self) -> str | None:
+        """Get the description of the flat.
+
+        Returns:
+            The description of the flat, or None if not available.
+        """
+        response = requests.get(url=self.url)
+        if response.ok:
+            soup = BeautifulSoup(response.content, "html.parser")
+            lines = soup.text.split("\n")
+            long_lines = [line.strip() for line in lines if len(line.strip()) > 200]
+            if long_lines:
+                return "\n".join(long_lines)
+            else:
+                logger.warning(
+                    f"Could not find description for flat {self.url}. The longest line "
+                    f"was {max(len(line) for line in lines)} characters long."
+                )
+        return None
 
     def __hash__(self) -> int:
         """Get the hash of the flat.
@@ -74,3 +102,22 @@ class Flat(BaseModel):
             ]
         )
         return html
+
+    def to_text(self) -> str:
+        """Get the flat as a text string.
+
+        Returns:
+            The flat as a text string.
+        """
+        text = "\n".join(
+            [
+                f"URL: {self.url}",
+                f"Address: {self.address}",
+                f"Price: {self.price:,} kr.",
+                f"Number of rooms: {self.num_rooms}",
+                f"Size: {self.size} m²",
+                f"Monthly fee: {self.monthly_fee:,} kr./md",
+                f"Year built: {self.year}",
+            ]
+        )
+        return text

@@ -17,6 +17,8 @@ class TestSearchQuery:
             cities=["københavn-n"],
             min_price=100,
             max_price=200,
+            min_monthly_fee=100,
+            max_monthly_fee=200,
             min_rooms=3,
             max_rooms=5,
             min_size=50,
@@ -29,6 +31,8 @@ class TestSearchQuery:
         assert search_query.cities == ["københavn-n"]
         assert search_query.min_price == 100
         assert search_query.max_price == 200
+        assert search_query.min_monthly_fee == 100
+        assert search_query.max_monthly_fee == 200
         assert search_query.min_rooms == 3
         assert search_query.min_size == 50
         assert search_query.queries == ["badekar"]
@@ -39,7 +43,7 @@ class TestSearchQuery:
         assert url == (
             "https://www.boligsiden.dk/by/københavn-n/tilsalg/ejerlejlighed"
             "?priceMin=100&priceMax=200&numberOfRoomsMin=3&numberOfRoomsMax=5"
-            "&areaMin=50&areaMax=100&text=badekar"
+            "&areaMin=50&areaMax=100"
         )
 
 

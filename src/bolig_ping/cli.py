@@ -40,6 +40,20 @@ logger = logging.getLogger(__package__)
     help="The maximum price of the apartment, in DKK.",
 )
 @click.option(
+    "--min-monthly-fee",
+    type=int,
+    default=0,
+    show_default=True,
+    help="The minimum monthly fee of the apartment, in DKK.",
+)
+@click.option(
+    "--max-monthly-fee",
+    type=int,
+    default=int(1e9),
+    show_default=True,
+    help="The maximum monthly fee of the apartment, in DKK.",
+)
+@click.option(
     "--min-rooms",
     type=int,
     default=1,
@@ -68,23 +82,37 @@ logger = logging.getLogger(__package__)
     help="The maximum size of the apartment, in square meters.",
 )
 @click.option(
+    "--query",
+    "-q",
+    multiple=True,
+    help="A keyword that the flat description must contain.",
+)
+@click.option(
     "--email",
     type=str,
     default=None,
     show_default=True,
     help="Email address to send the notification to, or None to print to stdout.",
 )
-@click.option("--query", "-q", multiple=True, help="A query to filter the results by.")
+@click.option(
+    "--cache/--no-cache",
+    default=True,
+    show_default=True,
+    help="Whether to cache the flats that are found.",
+)
 def main(
     city: list[str],
     min_price: int,
     max_price: int,
+    min_monthly_fee: int,
+    max_monthly_fee: int,
     min_rooms: int,
     max_rooms: int,
     min_size: int,
     max_size: int,
     query: list[str],
     email: str | None,
+    cache: bool,
 ) -> None:
     """Search for flats in Denmark."""
     cities = [
@@ -99,6 +127,8 @@ def main(
         cities=cities,
         min_price=min_price,
         max_price=max_price,
+        min_monthly_fee=min_monthly_fee,
+        max_monthly_fee=max_monthly_fee,
         min_rooms=min_rooms,
         max_rooms=max_rooms,
         min_size=min_size,
@@ -106,8 +136,11 @@ def main(
         queries=query,
     )
     flats = scrape_results(search_query=search_query)
-    flats = remove_cached_flats(flats=flats, email=email or "no-email")
+    if cache:
+        flats = remove_cached_flats(flats=flats, email=email or "no-email")
+
     logger.info(f"Found {len(flats)} new flats that satisfy the search query.")
+
     if flats:
         if email is not None:
             subject, contents = compose_email(flats=flats)
@@ -122,9 +155,10 @@ def main(
         else:
             logger.info(
                 "No email provided, so printing the flats here:\n\n"
-                + "\n\n".join(flat.to_html() for flat in flats)
+                + "\n\n".join(flat.to_text() for flat in flats)
             )
-        store_to_cache(flats=flats, email=email or "no-email")
+        if cache:
+            store_to_cache(flats=flats, email=email or "no-email")
 
 
 if __name__ == "__main__":
