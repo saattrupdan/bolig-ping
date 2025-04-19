@@ -14,7 +14,7 @@ from .webdriver import Webdriver
 logger = logging.getLogger(__package__)
 
 
-def scrape_results(search_query: SearchQuery) -> list[Home]:
+def scrape_results(search_query: SearchQuery) -> list[Home] | None:
     """Scrape the results of a home search query.
 
     Args:
@@ -22,7 +22,7 @@ def scrape_results(search_query: SearchQuery) -> list[Home]:
             The search query to scrape results for.
 
     Returns:
-        A list of homes that satisfy the search query.
+        A list of homes that satisfy the search query, or None if no results were found.
 
     Raises:
         HTTPError:
@@ -31,6 +31,9 @@ def scrape_results(search_query: SearchQuery) -> list[Home]:
     url = search_query.get_url()
     logger.info(f"Fetching URL {url!r}...")
     webdriver = Webdriver().load(url=url)
+
+    if "Siden findes ikke" in webdriver.html:
+        return None
 
     # Close the cookie banner
     logger.info("Closing cookie banner...")

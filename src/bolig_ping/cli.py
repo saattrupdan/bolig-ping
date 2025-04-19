@@ -147,6 +147,12 @@ def main(
         property_type=property_type or ["ejerlejlighed"],
     )
     homes = scrape_results(search_query=search_query)
+    if homes is None:
+        logger.error(
+            "Could not find the city that you requested. Please double check the "
+            "spelling of the city name(s) and try again."
+        )
+        return
     if cache:
         homes = remove_cached_homes(homes=homes, email=email or "no-email")
 
