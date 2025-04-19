@@ -90,7 +90,7 @@ The following options are available:
   Default is only searching for `ejerlejlighed`.
 - `--email`: The email address you want to receive the ping on. Note that this needs to
   have the `GMAIL_EMAIL` and `GMAIL_PASSWORD` environment variables set, as described
-  above. Default is to use no email address, and instead print the propertys to the
+  above. Default is to use no email address, and instead print the properties to the
   console.
 - `--cache/--no-cache`: Whether to use the cache or not. Default is to use the cache,
   but you can disable it by using the `--no-cache` flag. This is useful if you want to
