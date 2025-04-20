@@ -73,7 +73,7 @@ def scrape_results(search_query: SearchQuery, headless: bool) -> list[Home] | No
     homes = [get_home_from_result(result=result) for result in results]
 
     # Scrape the remaining pages
-    with tqdm(desc="Scraping pages", total=num_results) as pbar:
+    with tqdm(desc="Scraping homes from boligsiden.dk", total=num_results) as pbar:
         # Update the progress bar
         pbar.update(len(homes))
 
