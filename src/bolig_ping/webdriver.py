@@ -168,3 +168,8 @@ class Webdriver:
             sleep(3)
         except NoSuchElementException:
             pass
+
+    def __del__(self) -> None:
+        """Close the WebDriver."""
+        self.driver.quit()
+        del self
