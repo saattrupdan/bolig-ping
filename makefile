@@ -131,18 +131,40 @@ add-dev-version:
 	@echo "Added '.dev' suffix to the version number."
 
 publish:
-	@if [ ${PYPI_API_TOKEN} = "" ]; then \
-		echo "No PyPI API token specified in the '.env' file, so cannot publish."; \
+	@if [ ${BOLIG_PING_PYPI_API_TOKEN} = "" ]; then \
+		echo "No Bolig-Ping PyPI API token specified in the '.env' file, so cannot publish."; \
+	elif [ ${BOLIGPING_PYPI_API_TOKEN} = "" ]; then \
+		echo "No BoligPing PyPI API token specified in the '.env' file, so cannot publish."; \
 	else \
 		echo "Publishing to PyPI..."; \
-		$(MAKE) --quiet check \
-			&& rm -rf build dist \
-			&& uv build \
-			&& uv publish --username "__token__" --password ${PYPI_API_TOKEN} \
+		$(MAKE) --quiet publish-bolig-ping \
+			&& $(MAKE) --quiet publish-boligping \
 			&& $(MAKE) --quiet publish-docs \
 			&& $(MAKE) --quiet add-dev-version \
 			&& echo "Published!"; \
 	fi
+
+publish-bolig-ping:
+	@rm -rf build/ dist/
+	@uv build
+	@uv publish --username "__token__" --password ${BOLIG_PING_PYPI_API_TOKEN}
+
+publish-boligping:
+	@if [ $$(uname) = "Darwin" ]; then \
+		sed -i '' 's/^name = "bolig_ping"/name = "boligping"/' pyproject.toml; \
+	else \
+		sed -i 's/^name = "bolig_ping"/name = "boligping"/' pyproject.toml; \
+	fi
+	@mv src/bolig_ping src/boligping
+	@rm -rf build/ dist/
+	@uv build
+	@uv publish --username "__token__" --password ${BOLIGPING_PYPI_API_TOKEN}
+	@if [ $$(uname) = "Darwin" ]; then \
+		sed -i '' 's/^name = "boligping"/name = "bolig_ping"/' pyproject.toml; \
+	else \
+		sed -i 's/^name = "boligping"/name = "bolig_ping"/' pyproject.toml; \
+	fi
+	@mv src/boligping src/bolig_ping
 
 publish-major: bump-major publish  ## Publish a major version
 
