@@ -49,7 +49,6 @@ dev-dependencies = [
 [project.scripts]
 bolig_ping = "bolig_ping.cli:main"
 bolig-ping = "bolig_ping.cli:main"
-boligping = "bolig_ping.cli:main"
 
 [tool.ruff]
 target-version = "py311"
