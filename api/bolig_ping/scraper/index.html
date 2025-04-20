@@ -659,7 +659,7 @@ Extract the number from a string.</p>
 <i class="fa-regular fa-square-minus"></i>
 </span>
 </span>
-<span class="mkapi-object-name"><a href="./#bolig_ping.scraper.scrape_results" title="bolig_ping.scraper.scrape_results">scrape_results</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">search_query</span><span class="mkapi-colon">: </span><span class="mkapi-ann"><a href="../data_models/#bolig_ping.data_models.SearchQuery" title="bolig_ping.data_models.SearchQuery">SearchQuery</a></span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">list[<a href="../data_models/#bolig_ping.data_models.Home" title="bolig_ping.data_models.Home">Home</a>] | None</span></span>
+<span class="mkapi-object-name"><a href="./#bolig_ping.scraper.scrape_results" title="bolig_ping.scraper.scrape_results">scrape_results</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">search_query</span><span class="mkapi-colon">: </span><span class="mkapi-ann"><a href="../data_models/#bolig_ping.data_models.SearchQuery" title="bolig_ping.data_models.SearchQuery">SearchQuery</a></span><span class="mkapi-comma">, </span><span class="mkapi-arg">headless</span><span class="mkapi-colon">: </span><span class="mkapi-ann">bool</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">list[<a href="../data_models/#bolig_ping.data_models.Home" title="bolig_ping.data_models.Home">Home</a>] | None</span></span>
 </p>
 <div class="mkapi-document">
 <p>Scrape the results of a home search query.</p>
@@ -677,6 +677,11 @@ Extract the number from a string.</p>
 <p><span class="mkapi-item-name">search_query</span> : 
 <span class="mkapi-item-type"><a href="../data_models/#bolig_ping.data_models.SearchQuery" title="bolig_ping.data_models.SearchQuery">SearchQuery</a></span> <span class="mkapi-dash">&mdash;</span>
 The search query to scrape results for.</p>
+</li>
+<li>
+<p><span class="mkapi-item-name">headless</span> : 
+<span class="mkapi-item-type">bool</span> <span class="mkapi-dash">&mdash;</span>
+Whether to run the WebDriver in headless mode.</p>
 </li>
 </ul>
 </div>
