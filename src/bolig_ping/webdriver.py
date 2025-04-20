@@ -171,5 +171,7 @@ class Webdriver:
 
     def __del__(self) -> None:
         """Close the WebDriver."""
-        self.driver.quit()
+        if hasattr(self, "driver"):
+            self.driver.quit()
+            del self.driver
         del self
