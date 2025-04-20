@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
-
+### Fixed
+- Better detection of when the inputted city name is invalid.
 
 
 ## [v1.3.0] - 2025-04-19

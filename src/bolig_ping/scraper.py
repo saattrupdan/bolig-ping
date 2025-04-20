@@ -32,7 +32,7 @@ def scrape_results(search_query: SearchQuery) -> list[Home] | None:
     logger.info(f"Fetching URL {url!r}...")
     webdriver = Webdriver().load(url=url)
 
-    if "Siden findes ikke" in webdriver.html:
+    if "Siden findes ikke" in webdriver.text:
         return None
 
     # Close the cookie banner

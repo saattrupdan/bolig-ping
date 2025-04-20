@@ -3,6 +3,7 @@
 import logging
 from time import sleep
 
+from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.common import WebDriverException
 from selenium.common.exceptions import (
@@ -53,6 +54,16 @@ class Webdriver:
             The HTML of the current page.
         """
         return self.driver.page_source
+
+    @property
+    def text(self) -> str:
+        """Get the text of the current page.
+
+        Returns:
+            The text of the current page.
+        """
+        soup = BeautifulSoup(self.html, "html.parser")
+        return soup.text
 
     def get_driver(self) -> webdriver.Chrome:
         """Get the WebDriver options.
