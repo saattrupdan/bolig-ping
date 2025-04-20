@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+### Added
+- Added `--headless/--no-headless` flag, which is mostly used for debugging.
+
 ### Changed
 - No requirement of the `--city` argument now; it defaults to all cities in Denmark.
 - All arguments now defaults to None, meaning that the default behaviour of

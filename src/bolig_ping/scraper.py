@@ -14,12 +14,14 @@ from .webdriver import Webdriver
 logger = logging.getLogger(__package__)
 
 
-def scrape_results(search_query: SearchQuery) -> list[Home] | None:
+def scrape_results(search_query: SearchQuery, headless: bool) -> list[Home] | None:
     """Scrape the results of a home search query.
 
     Args:
         search_query:
             The search query to scrape results for.
+        headless:
+            Whether to run the WebDriver in headless mode.
 
     Returns:
         A list of homes that satisfy the search query, or None if no results were found.
@@ -30,7 +32,7 @@ def scrape_results(search_query: SearchQuery) -> list[Home] | None:
     """
     url = search_query.get_url()
     logger.info(f"Fetching URL {url!r}...")
-    webdriver = Webdriver().load(url=url)
+    webdriver = Webdriver(headless=headless).load(url=url)
 
     if "Siden findes ikke" in webdriver.text:
         return None
@@ -57,10 +59,10 @@ def scrape_results(search_query: SearchQuery) -> list[Home] | None:
             f"{search_query}."
         )
 
-    num_results_match = re.search(r"[0-9]+", num_results_elt.text)
+    num_results_match = re.search(r"[0-9\.]+", num_results_elt.text)
     if num_results_match is None:
         raise ValueError("Could not find number of results.")
-    num_results = int(num_results_match.group())
+    num_results = int(num_results_match.group().replace(".", ""))
 
     # Extract the homes from the first page
     logger.info("Scraping first page...")

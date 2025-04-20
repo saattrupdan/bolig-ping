@@ -13,7 +13,7 @@ logger = logging.getLogger(__package__)
 class SearchQuery(BaseModel):
     """A search query."""
 
-    cities: list[str] | None = Field(default=None)
+    cities: list[str] = Field(default_factory=list)
     min_price: int | None = Field(default=None, ge=0)
     max_price: int | None = Field(default=None, ge=0)
     min_monthly_fee: int | None = Field(default=None, ge=0)
@@ -24,6 +24,22 @@ class SearchQuery(BaseModel):
     max_size: int | None = Field(default=None, ge=1)
     queries: list[str] = Field(default_factory=list)
     property_type: list[str] | None = Field(default=None)
+
+    def is_empty(self) -> bool:
+        """Check if the search query is empty.
+
+        Returns:
+            True if the search query is empty, False otherwise.
+        """
+        return (
+            not self.cities
+            and self.min_price is None
+            and self.max_price is None
+            and self.min_rooms is None
+            and self.max_rooms is None
+            and self.min_size is None
+            and self.max_size is None
+        )
 
     def get_url(self) -> str:
         """Get the URL for the search query.

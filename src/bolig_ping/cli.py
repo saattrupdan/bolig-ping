@@ -18,12 +18,7 @@ logger = logging.getLogger(__package__)
 
 @click.command("bolig_ping")
 @click.option(
-    "--city",
-    "-c",
-    type=str,
-    default=None,
-    multiple=True,
-    help="The city to search for homes in.",
+    "--city", "-c", type=str, multiple=True, help="The city to search for homes in."
 )
 @click.option(
     "--min-price", type=int, default=None, help="The minimum price of the home, in DKK."
@@ -96,6 +91,12 @@ logger = logging.getLogger(__package__)
     show_default=True,
     help="Whether to cache the homes that are found.",
 )
+@click.option(
+    "--headless/--no-headless",
+    default=True,
+    show_default=True,
+    help="Whether to run the scraper in headless mode. Mostly used for debugging.",
+)
 def main(
     city: list[str],
     min_price: int | None,
@@ -110,6 +111,7 @@ def main(
     property_type: list[str] | None,
     email: str | None,
     cache: bool,
+    headless: bool,
 ) -> None:
     """Search for homes in Denmark."""
     cities = [
@@ -133,7 +135,15 @@ def main(
         queries=query,
         property_type=property_type,
     )
-    homes = scrape_results(search_query=search_query)
+
+    if search_query.is_empty():
+        logger.warning(
+            "No search filters provided. This will return all homes in Denmark! If "
+            "this is not what you want, please provide an additional argument. See all "
+            "the arguments with `bolig-ping --help`."
+        )
+
+    homes = scrape_results(search_query=search_query, headless=headless)
     if homes is None:
         logger.error(
             "Could not find the city that you requested. Please double check the "
