@@ -73,11 +73,11 @@ class Home(BaseModel):
 
     url: str
     address: str
-    price: int | None
-    num_rooms: int | None
-    size: int | None
-    monthly_fee: int | None
-    year: int | None
+    price: int | None = Field(default=None, ge=0)
+    num_rooms: int | None = Field(default=None, ge=1)
+    size: int | None = Field(default=None, ge=1)
+    monthly_fee: int | None = Field(default=None, ge=0)
+    year: int | None = Field(default=None, ge=0)
 
     @cached_property
     def description(self) -> str | None:
