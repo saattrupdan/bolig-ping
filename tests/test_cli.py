@@ -9,10 +9,19 @@ from bolig_ping.cli import main
 @pytest.mark.parametrize(
     argnames=["cli_args"],
     argvalues=[
+        ("--city københavn-n",),
+        ("--city københavn-n --city brøndby",),
         ("--city københavn-n --max-price 100",),
         ("--city københavn-n --city brøndby --max-price 100",),
+        ("",),
     ],
-    ids=["One city", "Multiple cities"],
+    ids=[
+        "city",
+        "multiple-cities",
+        "city-and-max-price",
+        "multiple-cities-and-max-price",
+        "no-arguments",
+    ],
 )
 def test_main(cli_args: str) -> None:
     """Test the main function."""

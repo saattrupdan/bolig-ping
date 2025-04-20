@@ -5,7 +5,7 @@ from functools import cached_property
 
 import requests
 from bs4 import BeautifulSoup
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__package__)
 
@@ -13,17 +13,17 @@ logger = logging.getLogger(__package__)
 class SearchQuery(BaseModel):
     """A search query."""
 
-    cities: list[str]
-    min_price: int
-    max_price: int
-    min_monthly_fee: int
-    max_monthly_fee: int
-    min_rooms: int
-    max_rooms: int
-    min_size: int
-    max_size: int
-    queries: list[str]
-    property_type: list[str]
+    cities: list[str] | None = Field(default=None)
+    min_price: int | None = Field(default=None, ge=0)
+    max_price: int | None = Field(default=None, ge=0)
+    min_monthly_fee: int | None = Field(default=None, ge=0)
+    max_monthly_fee: int | None = Field(default=None, ge=0)
+    min_rooms: int | None = Field(default=None, ge=1)
+    max_rooms: int | None = Field(default=None, ge=1)
+    min_size: int | None = Field(default=None, ge=1)
+    max_size: int | None = Field(default=None, ge=1)
+    queries: list[str] = Field(default_factory=list)
+    property_type: list[str] | None = Field(default=None)
 
     def get_url(self) -> str:
         """Get the URL for the search query.
@@ -31,19 +31,25 @@ class SearchQuery(BaseModel):
         Returns:
             The URL for the search query.
         """
-        property_type_names: list[str] = []
-        if "ejerlejlighed" in self.property_type:
-            property_type_names.extend(["ejerlejlighed", "villalejlighed"])
-        if "andelslejlighed" in self.property_type:
-            property_type_names.append("andelslejlighed")
-        if "house" in self.property_type:
-            property_type_names.extend(["raekkehus", "villa", "landejendom"])
-        property_type_names = sorted(set(property_type_names))
+        if self.cities is not None:
+            url = "https://www.boligsiden.dk/by/{}/tilsalg".format(
+                ",".join(self.cities)
+            )
+        else:
+            url = "https://www.boligsiden.dk/tilsalg"
 
-        url = "https://www.boligsiden.dk/by/{}/tilsalg/{}".format(
-            ",".join(self.cities), ",".join(property_type_names)
-        )
-        arguments: dict[str, str | int] = dict(
+        if self.property_type is not None:
+            property_type_names: list[str] = []
+            if "ejerlejlighed" in self.property_type:
+                property_type_names.extend(["ejerlejlighed", "villalejlighed"])
+            if "andelslejlighed" in self.property_type:
+                property_type_names.append("andelslejlighed")
+            if "house" in self.property_type:
+                property_type_names.extend(["raekkehus", "villa", "landejendom"])
+            property_type_names = sorted(set(property_type_names))
+            url += "/" + ",".join(property_type_names)
+
+        arguments: dict[str, str | int | None] = dict(
             priceMin=self.min_price,
             priceMax=self.max_price,
             numberOfRoomsMin=self.min_rooms,
@@ -51,7 +57,14 @@ class SearchQuery(BaseModel):
             areaMin=self.min_size,
             areaMax=self.max_size,
         )
-        url += "?" + "&".join(f"{key}={value}" for key, value in arguments.items())
+        non_trivial_arguments = {
+            key: value for key, value in arguments.items() if value is not None
+        }
+        if non_trivial_arguments:
+            url += "?" + "&".join(
+                f"{key}={value}" for key, value in non_trivial_arguments.items()
+            )
+
         return url
 
 

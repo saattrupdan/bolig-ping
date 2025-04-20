@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+### Changed
+- No requirement of the `--city` argument now; it defaults to all cities in Denmark.
+- All arguments now defaults to None, meaning that the default behaviour of
+  Boligsiden.dk is used, which currently is exactly the same as the previous behaviour.
+
 ### Fixed
 - Better detection of when the inputted city name is invalid.
 

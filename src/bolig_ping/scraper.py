@@ -71,9 +71,8 @@ def scrape_results(search_query: SearchQuery) -> list[Home] | None:
     homes = [get_home_from_result(result=result) for result in results]
 
     # Scrape the remaining pages
-    with tqdm(desc="Scraping pages") as pbar:
+    with tqdm(desc="Scraping pages", total=num_results) as pbar:
         # Update the progress bar
-        pbar.total = num_results
         pbar.update(len(homes))
 
         # Calculate the number of pages
@@ -121,8 +120,14 @@ def scrape_results(search_query: SearchQuery) -> list[Home] | None:
         for home in homes
         if home.monthly_fee is None
         or (
-            home.monthly_fee >= search_query.min_monthly_fee
-            and home.monthly_fee <= search_query.max_monthly_fee
+            (
+                search_query.min_monthly_fee is None
+                or home.monthly_fee >= search_query.min_monthly_fee
+            )
+            and (
+                search_query.max_monthly_fee is None
+                or home.monthly_fee <= search_query.max_monthly_fee
+            )
         )
     ]
 

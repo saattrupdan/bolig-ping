@@ -18,90 +18,72 @@ logger = logging.getLogger(__package__)
 
 @click.command("bolig_ping")
 @click.option(
-    "--city",
-    "-c",
-    type=str,
-    multiple=True,
-    required=True,
-    help="The city to search for apartments in.",
+    "--city", "-c", type=str, multiple=True, help="The city to search for homes in."
 )
 @click.option(
-    "--min-price",
-    type=int,
-    default=0,
-    show_default=True,
-    help="The minimum price of the apartment, in DKK.",
+    "--min-price", type=int, default=None, help="The minimum price of the home, in DKK."
 )
 @click.option(
-    "--max-price",
-    type=int,
-    default=int(1e9),
-    show_default=True,
-    help="The maximum price of the apartment, in DKK.",
+    "--max-price", type=int, default=None, help="The maximum price of the home, in DKK."
 )
 @click.option(
     "--min-monthly-fee",
     type=int,
-    default=0,
-    show_default=True,
-    help="The minimum monthly fee of the apartment, in DKK.",
+    default=None,
+    help="The minimum monthly fee of the home, in DKK.",
 )
 @click.option(
     "--max-monthly-fee",
     type=int,
-    default=int(1e9),
-    show_default=True,
-    help="The maximum monthly fee of the apartment, in DKK.",
+    default=None,
+    help="The maximum monthly fee of the home, in DKK.",
 )
 @click.option(
     "--min-rooms",
     type=int,
-    default=1,
-    show_default=True,
-    help="The minimum number of rooms in the apartment.",
+    default=None,
+    help="The minimum number of rooms in the home.",
 )
 @click.option(
     "--max-rooms",
     type=int,
-    default=int(1e9),
-    show_default=True,
-    help="The maximum number of rooms in the apartment.",
+    default=None,
+    help="The maximum number of rooms in the home.",
 )
 @click.option(
     "--min-size",
     type=int,
-    default=0,
-    show_default=True,
-    help="The minimum size of the apartment, in square meters.",
+    default=None,
+    help="The minimum size of the home, in square meters.",
 )
 @click.option(
     "--max-size",
     type=int,
-    default=int(1e9),
-    show_default=True,
-    help="The maximum size of the apartment, in square meters.",
+    default=None,
+    help="The maximum size of the home, in square meters.",
 )
 @click.option(
     "--query",
     "-q",
     multiple=True,
-    help="A keyword that the home description must contain.",
+    help="A keyword that the property description must contain.",
 )
 @click.option(
     "--property-type",
     "-t",
-    type=click.Choice(["ejerlejlighed", "andelslejlighed", "house"]),
+    type=click.Choice(
+        ["ejerlejlighed", "andelslejlighed", "house"], case_sensitive=False
+    ),
     multiple=True,
     default=None,
-    help="The type of property to search for. Default is only searching for "
-    "'ejerlejlighed'.",
+    help="The type of property to search for.",
 )
 @click.option(
     "--email",
     type=str,
     default=None,
-    show_default=True,
-    help="Email address to send the notification to, or None to print to stdout.",
+    help="Email address to send the notification to. Leave empty to print directly to "
+    "the console.",
 )
 @click.option(
     "--cache/--no-cache",
@@ -111,16 +93,16 @@ logger = logging.getLogger(__package__)
 )
 def main(
     city: list[str],
-    min_price: int,
-    max_price: int,
-    min_monthly_fee: int,
-    max_monthly_fee: int,
-    min_rooms: int,
-    max_rooms: int,
-    min_size: int,
-    max_size: int,
+    min_price: int | None,
+    max_price: int | None,
+    min_monthly_fee: int | None,
+    max_monthly_fee: int | None,
+    min_rooms: int | None,
+    max_rooms: int | None,
+    min_size: int | None,
+    max_size: int | None,
     query: list[str],
-    property_type: list[str],
+    property_type: list[str] | None,
     email: str | None,
     cache: bool,
 ) -> None:
@@ -144,7 +126,7 @@ def main(
         min_size=min_size,
         max_size=max_size,
         queries=query,
-        property_type=property_type or ["ejerlejlighed"],
+        property_type=property_type,
     )
     homes = scrape_results(search_query=search_query)
     if homes is None:
