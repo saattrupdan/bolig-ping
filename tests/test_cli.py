@@ -21,14 +21,14 @@ def runner() -> Generator[CliRunner, None, None]:
         ("--city københavn-n --city brøndby",),
         ("--city københavn-n --max-price 100",),
         ("--city københavn-n --city brøndby --max-price 100",),
-        ("",),
+        ("--max-price 100",),
     ],
     ids=[
         "city",
         "multiple-cities",
         "city-and-max-price",
         "multiple-cities-and-max-price",
-        "no-arguments",
+        "no-city",
     ],
 )
 def test_main(cli_args: str, runner: CliRunner) -> None:
