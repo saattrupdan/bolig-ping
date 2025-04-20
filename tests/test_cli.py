@@ -1,9 +1,17 @@
 """Tests for the `cli` module."""
 
+from collections.abc import Generator
+
 import pytest
 from click.testing import CliRunner
 
 from bolig_ping.cli import main
+
+
+@pytest.fixture(scope="module")
+def runner() -> Generator[CliRunner, None, None]:
+    """Fixture for the CLI runner."""
+    yield CliRunner()
 
 
 @pytest.mark.parametrize(
@@ -23,8 +31,7 @@ from bolig_ping.cli import main
         "no-arguments",
     ],
 )
-def test_main(cli_args: str) -> None:
+def test_main(cli_args: str, runner: CliRunner) -> None:
     """Test the main function."""
-    runner = CliRunner()
     result = runner.invoke(cli=main, args=cli_args)
     assert result.exit_code == 0
