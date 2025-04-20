@@ -629,8 +629,9 @@ running <code>which uvx</code> in your terminal.</p>
 <h2 id="all-options">All options</h2>
 <p>The following options are available:</p>
 <ul>
-<li><code>--city/-c</code> (required): The city you want to search in. This argument can be
-  used several times to search in multiple cities, e.g., <code>-c aarhus -c odense</code>.</li>
+<li><code>--city/-c</code>: The city you want to search in. This argument can be used several times
+  to search in multiple cities, e.g., <code>-c aarhus -c odense</code>. If you do not specify any
+  city then you'll be searching for homes in <em>all</em> of Denmark!</li>
 <li><code>--min-price</code>: The minimum price of the property, in DKK. Default is no minimum price.</li>
 <li><code>--max-price</code>: The maximum price of the property, in DKK. Default is no maximum price.</li>
 <li><code>--min-monthly-fee</code>: The minimum monthly fee of the property, in DKK. Default is no
@@ -659,6 +660,8 @@ running <code>which uvx</code> in your terminal.</p>
   but you can disable it by using the <code>--no-cache</code> flag. This is useful if you want to
   see all the results, and not just the new ones. The cache is stored in the
   <code>.boligping_cache</code> file in the current directory.</li>
+<li><code>--headless/--no-headless</code>: Whether to run the scraper in headless mode. Mostly used
+  for debugging.</li>
 </ul>
 
 
