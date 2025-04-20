@@ -114,17 +114,18 @@ class Home(BaseModel):
         Returns:
             The home as an HTML string.
         """
-        html = "\n".join(
-            [
-                f"<a href='{self.url}'>{self.address}</a>",
-                f"Price: {self.price:,} kr.",
-                f"Number of rooms: {self.num_rooms}",
-                f"Size: {self.size} m²",
-                f"Monthly fee: {self.monthly_fee:,} kr./md",
-                f"Year built: {self.year}",
-            ]
-        )
-        return html
+        components = [f"<a href='{self.url}'>{self.address}</a>"]
+        if self.price is not None:
+            components.append(f"Price: {self.price:,} kr.")
+        if self.num_rooms is not None:
+            components.append(f"Number of rooms: {self.num_rooms}")
+        if self.size is not None:
+            components.append(f"Size: {self.size} m²")
+        if self.monthly_fee is not None:
+            components.append(f"Monthly fee: {self.monthly_fee:,} kr./md")
+        if self.year is not None:
+            components.append(f"Year built: {self.year}")
+        return "\n".join(components)
 
     def to_text(self) -> str:
         """Get the home as a text string.
@@ -132,15 +133,15 @@ class Home(BaseModel):
         Returns:
             The home as a text string.
         """
-        text = "\n".join(
-            [
-                f"URL: {self.url}",
-                f"Address: {self.address}",
-                f"Price: {self.price:,} kr.",
-                f"Number of rooms: {self.num_rooms}",
-                f"Size: {self.size} m²",
-                f"Monthly fee: {self.monthly_fee:,} kr./md",
-                f"Year built: {self.year}",
-            ]
-        )
-        return text
+        components = [f"URL: {self.url}", f"Address: {self.address}"]
+        if self.price is not None:
+            components.append(f"Price: {self.price:,} kr.")
+        if self.num_rooms is not None:
+            components.append(f"Number of rooms: {self.num_rooms}")
+        if self.size is not None:
+            components.append(f"Size: {self.size} m²")
+        if self.monthly_fee is not None:
+            components.append(f"Monthly fee: {self.monthly_fee:,} kr./md")
+        if self.year is not None:
+            components.append(f"Year built: {self.year}")
+        return "\n".join(components)
