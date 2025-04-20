@@ -18,7 +18,12 @@ logger = logging.getLogger(__package__)
 
 @click.command("bolig_ping")
 @click.option(
-    "--city", "-c", type=str, multiple=True, help="The city to search for homes in."
+    "--city",
+    "-c",
+    type=str,
+    default=None,
+    multiple=True,
+    help="The city to search for homes in.",
 )
 @click.option(
     "--min-price", type=int, default=None, help="The minimum price of the home, in DKK."

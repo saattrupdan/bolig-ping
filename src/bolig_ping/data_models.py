@@ -31,7 +31,7 @@ class SearchQuery(BaseModel):
         Returns:
             The URL for the search query.
         """
-        if self.cities is not None:
+        if self.cities is not None and self.cities:
             url = "https://www.boligsiden.dk/by/{}/tilsalg".format(
                 ",".join(self.cities)
             )
