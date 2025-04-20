@@ -80,10 +80,10 @@ class TestHome:
         """Test the `to_html` method."""
         assert home.to_html() == (
             "<a href='https://some.url'>Some address</a>\n"
-            "Price: 1000 kr.\n"
-            "Rooms: 3\n"
+            "Price: 1,000 kr.\n"
+            "Number of rooms: 3\n"
             "Size: 100 m²\n"
-            "Monthly fee: 100 kr./md.\n"
+            "Monthly fee: 100 kr./md\n"
             "Year built: 2000"
         )
 
@@ -92,9 +92,9 @@ class TestHome:
         assert home.to_text() == (
             "URL: https://some.url\n"
             "Address: Some address\n"
-            "Price: 1000 kr.\n"
-            "Rooms: 3\n"
+            "Price: 1,000 kr.\n"
+            "Number of rooms: 3\n"
             "Size: 100 m²\n"
-            "Monthly fee: 100 kr./md.\n"
+            "Monthly fee: 100 kr./md\n"
             "Year built: 2000"
         )
