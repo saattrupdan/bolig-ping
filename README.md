@@ -89,7 +89,7 @@ The following options are available:
 - `--property-type/-t`: The type of property to search for. The available property
   types are `ejerlejlighed`, `andelslejlighed` and `house`. This argument can be used
   several times to search for multiple property types, e.g., `-t ejerlejlighed -t house`.
-  Default is only searching for `ejerlejlighed`.
+  Default is searching for all property types. 
 - `--email`: The email address you want to receive the ping on. Note that this needs to
   have the `GMAIL_EMAIL` and `GMAIL_PASSWORD` environment variables set, as described
   above. Default is to use no email address, and instead print the properties to the
