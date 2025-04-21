@@ -47,9 +47,10 @@ With this set up, you can now use the `--email` option to receive an email with 
 properties that match your search criteria:
 
 ```bash
-uvx bolig-ping --city københavn --email <your-email>
+uvx bolig-ping --city københavn --email <receiving-email>
 ```
 
+This will then send an email from your `GMAIL_EMAIL` to the `receiving-email` address.
 You can also set up a recurring search if you have a server available. In this case, you
 can add the following line to your [crontab](https://linuxhandbook.com/crontab/) on a
 server, to run the search every hour:
