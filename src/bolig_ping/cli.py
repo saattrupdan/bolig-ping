@@ -99,13 +99,6 @@ logger = logging.getLogger(__package__)
     show_default=True,
     help="Whether to run the scraper in headless mode. Mostly used for debugging.",
 )
-@click.option(
-    "--dotenv-path",
-    default=None,
-    type=click.Path(exists=True),
-    help="Path to the .env file to load. If not provided, the `dotenv` package will "
-    "look for a .env file in the current directory.",
-)
 def main(
     city: list[str],
     min_price: int | None,
@@ -121,10 +114,10 @@ def main(
     email: str | None,
     cache: bool,
     headless: bool,
-    dotenv_path: str | None,
 ) -> None:
     """Search for homes in Denmark."""
-    load_dotenv(dotenv_path=dotenv_path)
+    load_dotenv()
+    load_dotenv(dotenv_path=".env")
 
     # Check if the required environment variables are set
     if email is not None and "GMAIL_EMAIL" not in os.environ:
