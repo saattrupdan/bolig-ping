@@ -471,6 +471,29 @@
   
   
     <li class="md-nav__item">
+      <a href="api/bolig_ping/filtering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bolig_ping.filtering
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="api/bolig_ping/scraper/" class="md-nav__link">
         
   
@@ -652,7 +675,7 @@ running <code>which uvx</code> in your terminal.</p>
 <li><code>--property-type/-t</code>: The type of property to search for. The available property
   types are <code>ejerlejlighed</code>, <code>andelslejlighed</code> and <code>house</code>. This argument can be used
   several times to search for multiple property types, e.g., <code>-t ejerlejlighed -t house</code>.
-  Default is only searching for <code>ejerlejlighed</code>.</li>
+  Default is searching for all property types. </li>
 <li><code>--email</code>: The email address you want to receive the ping on. Note that this needs to
   have the <code>GMAIL_EMAIL</code> and <code>GMAIL_PASSWORD</code> environment variables set, as described
   above. Default is to use no email address, and instead print the properties to the

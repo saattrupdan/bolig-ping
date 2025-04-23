@@ -409,6 +409,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api/bolig_ping/filtering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bolig_ping.filtering
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api/bolig_ping/scraper/" class="md-nav__link">
         
   
@@ -586,17 +609,11 @@
 <span class="normal">50</span>
 <span class="normal">51</span>
 <span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Sending emails with home listings.&quot;&quot;&quot;</span>
+<span class="normal">53</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Sending emails with home listings.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">yagmail</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.data_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Home</span>
-
-<span class="n">load_dotenv</span><span class="p">()</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">compose_email</span><span class="p">(</span><span class="n">homes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Home</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span><div class="mkapi-source-link" id="bolig_ping.email.compose_email"><a href="../../../api/bolig_ping/email/#bolig_ping.email.compose_email" title="Go to docs">docs</a></div>

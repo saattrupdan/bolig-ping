@@ -409,6 +409,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api/bolig_ping/filtering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    bolig_ping.filtering
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api/bolig_ping/scraper/" class="md-nav__link">
         
   
@@ -737,36 +760,7 @@
 <span class="normal">192</span>
 <span class="normal">193</span>
 <span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span>
-<span class="normal">199</span>
-<span class="normal">200</span>
-<span class="normal">201</span>
-<span class="normal">202</span>
-<span class="normal">203</span>
-<span class="normal">204</span>
-<span class="normal">205</span>
-<span class="normal">206</span>
-<span class="normal">207</span>
-<span class="normal">208</span>
-<span class="normal">209</span>
-<span class="normal">210</span>
-<span class="normal">211</span>
-<span class="normal">212</span>
-<span class="normal">213</span>
-<span class="normal">214</span>
-<span class="normal">215</span>
-<span class="normal">216</span>
-<span class="normal">217</span>
-<span class="normal">218</span>
-<span class="normal">219</span>
-<span class="normal">220</span>
-<span class="normal">221</span>
-<span class="normal">222</span>
-<span class="normal">223</span>
-<span class="normal">224</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Scraping homes available satisfying the given criteria.&quot;&quot;&quot;</span>
+<span class="normal">195</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Scraping homes available satisfying the given criteria.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
@@ -883,35 +877,6 @@
 
         <span class="c1"># Ensure that the progress bar is at 100% at the end</span>
         <span class="n">pbar</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">pbar</span><span class="o">.</span><span class="n">total</span>
-
-    <span class="c1"># Filter the homes based on the monthly fee</span>
-    <span class="n">homes</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">home</span>
-        <span class="k">for</span> <span class="n">home</span> <span class="ow">in</span> <span class="n">homes</span>
-        <span class="k">if</span> <span class="n">home</span><span class="o">.</span><span class="n">monthly_fee</span> <span class="ow">is</span> <span class="kc">None</span>
-        <span class="ow">or</span> <span class="p">(</span>
-            <span class="p">(</span>
-                <span class="n">search_query</span><span class="o">.</span><span class="n">min_monthly_fee</span> <span class="ow">is</span> <span class="kc">None</span>
-                <span class="ow">or</span> <span class="n">home</span><span class="o">.</span><span class="n">monthly_fee</span> <span class="o">&gt;=</span> <span class="n">search_query</span><span class="o">.</span><span class="n">min_monthly_fee</span>
-            <span class="p">)</span>
-            <span class="ow">and</span> <span class="p">(</span>
-                <span class="n">search_query</span><span class="o">.</span><span class="n">max_monthly_fee</span> <span class="ow">is</span> <span class="kc">None</span>
-                <span class="ow">or</span> <span class="n">home</span><span class="o">.</span><span class="n">monthly_fee</span> <span class="o">&lt;=</span> <span class="n">search_query</span><span class="o">.</span><span class="n">max_monthly_fee</span>
-            <span class="p">)</span>
-        <span class="p">)</span>
-    <span class="p">]</span>
-
-    <span class="c1"># Filter the homes if any keyword queries were given</span>
-    <span class="k">if</span> <span class="n">search_query</span><span class="o">.</span><span class="n">queries</span><span class="p">:</span>
-        <span class="n">homes</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">home</span>
-            <span class="k">for</span> <span class="n">home</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">iterable</span><span class="o">=</span><span class="n">homes</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Filtering homes based on keywords&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">home</span><span class="o">.</span><span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span>
-                <span class="n">query</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">home</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-                <span class="k">for</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">search_query</span><span class="o">.</span><span class="n">queries</span>
-            <span class="p">)</span>
-        <span class="p">]</span>
 
     <span class="k">return</span> <span class="n">homes</span>
 
