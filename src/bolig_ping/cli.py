@@ -117,7 +117,6 @@ def main(
 ) -> None:
     """Search for homes in Denmark."""
     load_dotenv()
-    load_dotenv(dotenv_path=".env")
 
     # Check if the required environment variables are set
     if email is not None and "GMAIL_EMAIL" not in os.environ:
