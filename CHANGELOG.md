@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+
+
+
+## [v1.5.0] - 2025-04-23
 ### Added
 - Check whether the `GMAIL_EMAIL` and `GMAIL_PASSWORD` environment variables are set
   before doing anything.
