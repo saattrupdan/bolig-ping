@@ -17,6 +17,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__package__)
 
+load_dotenv(dotenv_path=".env")
+
 
 @click.command("bolig_ping")
 @click.option(
@@ -116,8 +118,6 @@ def main(
     headless: bool,
 ) -> None:
     """Search for homes in Denmark."""
-    load_dotenv()
-
     # Check if the required environment variables are set
     if email is not None and "GMAIL_EMAIL" not in os.environ:
         logger.error(
