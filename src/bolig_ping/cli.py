@@ -115,6 +115,20 @@ def main(
     headless: bool,
 ) -> None:
     """Search for homes in Denmark."""
+    # Check if the required environment variables are set
+    if email is not None and "GMAIL_EMAIL" not in os.environ:
+        logger.error(
+            "GMAIL_EMAIL environment variable is not set. Please set it to your "
+            "Gmail email address."
+        )
+        return
+    if email is not None and "GMAIL_PASSWORD" not in os.environ:
+        logger.error(
+            "GMAIL_PASSWORD environment variable is not set. Please set it to your "
+            "Gmail app password."
+        )
+        return
+
     cities = [
         c.replace(" ", "-")
         .replace("ø", "oe")
