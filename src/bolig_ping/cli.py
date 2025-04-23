@@ -4,6 +4,7 @@ import logging
 import os
 
 import click
+from dotenv import load_dotenv
 
 from .cache import remove_cached_homes, store_to_cache
 from .data_models import SearchQuery
@@ -15,6 +16,9 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s ⋅ %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
 )
 logger = logging.getLogger(__package__)
+
+
+load_dotenv()
 
 
 @click.command("bolig_ping")

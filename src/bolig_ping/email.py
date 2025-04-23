@@ -1,11 +1,8 @@
 """Sending emails with home listings."""
 
 import yagmail
-from dotenv import load_dotenv
 
 from .data_models import Home
-
-load_dotenv()
 
 
 def compose_email(homes: list[Home]) -> tuple[str, str]:
