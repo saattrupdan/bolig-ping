@@ -8,6 +8,7 @@ import click
 from .cache import remove_cached_homes, store_to_cache
 from .data_models import SearchQuery
 from .email import compose_email, send_email
+from .filtering import filter_results
 from .scraper import scrape_results
 
 logging.basicConfig(
@@ -150,9 +151,12 @@ def main(
             "spelling of the city name(s) and try again."
         )
         return
+
     if cache:
         homes = remove_cached_homes(homes=homes, email=email or "no-email")
+        store_to_cache(homes=homes, email=email or "no-email")
 
+    homes = filter_results(homes=homes, search_query=search_query)
     logger.info(f"Found {len(homes)} new homes that satisfy the search query.")
 
     if homes:
@@ -171,8 +175,6 @@ def main(
                 "No email provided, so printing the homes here:\n\n"
                 + "\n\n".join(home.to_text() for home in homes)
             )
-        if cache:
-            store_to_cache(homes=homes, email=email or "no-email")
 
 
 if __name__ == "__main__":

@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
-
+### Fixed
+- Optimised the caching, which now ensures that we do not have to check a property
+  listing twice. This was not always the case, as we only cached the ones that were sent
+  to the given email, and not the ones that were filtered out.
 
 
 ## [v1.4.0] - 2025-04-20
