@@ -453,9 +453,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bolig_ping.email.send_email" class="md-nav__link">
+  <a href="#bolig_ping.email.send_emails" class="md-nav__link">
     <span class="md-ellipsis">
-      send_email
+      send_emails
     </span>
   </a>
   
@@ -506,29 +506,6 @@
   
   <span class="md-ellipsis">
     bolig_ping.scraper
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../webdriver/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    bolig_ping.webdriver
     
   </span>
   
@@ -590,9 +567,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bolig_ping.email.send_email" class="md-nav__link">
+  <a href="#bolig_ping.email.send_emails" class="md-nav__link">
     <span class="md-ellipsis">
-      send_email
+      send_emails
     </span>
   </a>
   
@@ -643,7 +620,7 @@
 Compose an email with the given homes.</p>
 </li>
 <li>
-<p><span class="mkapi-item-name"><a href="./#bolig_ping.email.send_email" title="bolig_ping.email.send_email">send_email</a></span>
+<p><span class="mkapi-item-name"><a href="./#bolig_ping.email.send_emails" title="bolig_ping.email.send_emails">send_emails</a></span>
  <span class="mkapi-dash">&mdash;</span>
 Send an email with the given contents.</p>
 </li>
@@ -712,16 +689,16 @@ A pair (subject, contents) for the email.</p>
 </ul>
 </div>
 </div>
-<p class="mkapi-object mkapi-page-source" id="bolig_ping.email.send_email">
+<p class="mkapi-object mkapi-page-source" id="bolig_ping.email.send_emails">
 <span class="mkapi-object-link">
 
 
-<a href="../../../src/bolig_ping/email/#bolig_ping.email.send_email" title="Go to source">source</a>
+<a href="../../../src/bolig_ping/email/#bolig_ping.email.send_emails" title="Go to source">source</a>
 <span class="mkapi-document-toggle" title="Toggle all docs">
 <i class="fa-regular fa-square-minus"></i>
 </span>
 </span>
-<span class="mkapi-object-name"><a href="./#bolig_ping.email.send_email" title="bolig_ping.email.send_email">send_email</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">from_email</span><span class="mkapi-colon">: </span><span class="mkapi-ann">str</span><span class="mkapi-comma">, </span><span class="mkapi-arg">password</span><span class="mkapi-colon">: </span><span class="mkapi-ann">str</span><span class="mkapi-comma">, </span><span class="mkapi-arg">to_email</span><span class="mkapi-colon">: </span><span class="mkapi-ann">str</span><span class="mkapi-comma">, </span><span class="mkapi-arg">subject</span><span class="mkapi-colon">: </span><span class="mkapi-ann">str</span><span class="mkapi-comma">, </span><span class="mkapi-arg">contents</span><span class="mkapi-colon">: </span><span class="mkapi-ann">str</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">None</span></span>
+<span class="mkapi-object-name"><a href="./#bolig_ping.email.send_emails" title="bolig_ping.email.send_emails">send_emails</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">from_email</span><span class="mkapi-colon">: </span><span class="mkapi-ann">str</span><span class="mkapi-comma">, </span><span class="mkapi-arg">password</span><span class="mkapi-colon">: </span><span class="mkapi-ann">str</span><span class="mkapi-comma">, </span><span class="mkapi-arg">to_emails</span><span class="mkapi-colon">: </span><span class="mkapi-ann">list[str]</span><span class="mkapi-comma">, </span><span class="mkapi-arg">subject</span><span class="mkapi-colon">: </span><span class="mkapi-ann">str</span><span class="mkapi-comma">, </span><span class="mkapi-arg">contents</span><span class="mkapi-colon">: </span><span class="mkapi-ann">str</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">None</span></span>
 </p>
 <div class="mkapi-document">
 <p>Send an email with the given contents.</p>
@@ -746,9 +723,9 @@ The email to send the email from.</p>
 The password for the from email.</p>
 </li>
 <li>
-<p><span class="mkapi-item-name">to_email</span> : 
-<span class="mkapi-item-type">str</span> <span class="mkapi-dash">&mdash;</span>
-The email to send the email to.</p>
+<p><span class="mkapi-item-name">to_emails</span> : 
+<span class="mkapi-item-type">list[str]</span> <span class="mkapi-dash">&mdash;</span>
+The emails to send the email to.</p>
 </li>
 <li>
 <p><span class="mkapi-item-name">subject</span> : 

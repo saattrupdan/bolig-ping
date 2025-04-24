@@ -448,29 +448,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../api/bolig_ping/webdriver/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    bolig_ping.webdriver
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -776,7 +753,9 @@
 <span class="normal">160</span>
 <span class="normal">161</span>
 <span class="normal">162</span>
-<span class="normal">163</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Data models used in the project.&quot;&quot;&quot;</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Data models used in the project.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
@@ -819,43 +798,45 @@
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_size</span> <span class="ow">is</span> <span class="kc">None</span>
         <span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_url</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span><div class="mkapi-source-link" id="bolig_ping.data_models.SearchQuery.get_url"><a href="../../../api/bolig_ping/data_models/#bolig_ping.data_models.SearchQuery.get_url" title="Go to docs">docs</a></div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span><div class="mkapi-source-link" id="bolig_ping.data_models.SearchQuery.get_url"><a href="../../../api/bolig_ping/data_models/#bolig_ping.data_models.SearchQuery.get_url" title="Go to docs">docs</a></div>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the URL for the search query.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            page (optional):</span>
+<span class="sd">                The page number to get the URL for. Defaults to 1.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            The URL for the search query.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cities</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cities</span><span class="p">:</span>
-            <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://www.boligsiden.dk/by/</span><span class="si">{}</span><span class="s2">/tilsalg&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cities</span><span class="p">)</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://www.boligsiden.dk/tilsalg&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://api.boligsiden.dk/search/cases?page=</span><span class="si">{</span><span class="n">page</span><span class="si">}</span><span class="s2">&quot;</span>
 
+        <span class="n">property_type_names</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">property_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">property_type_names</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">if</span> <span class="s2">&quot;ejerlejlighed&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">property_type</span><span class="p">:</span>
-                <span class="n">property_type_names</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;ejerlejlighed&quot;</span><span class="p">,</span> <span class="s2">&quot;villalejlighed&quot;</span><span class="p">])</span>
+                <span class="n">property_type_names</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;condo&quot;</span><span class="p">,</span> <span class="s2">&quot;villa apartment&quot;</span><span class="p">])</span>
             <span class="k">if</span> <span class="s2">&quot;andelslejlighed&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">property_type</span><span class="p">:</span>
-                <span class="n">property_type_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;andelslejlighed&quot;</span><span class="p">)</span>
+                <span class="n">property_type_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;cooperative&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="s2">&quot;house&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">property_type</span><span class="p">:</span>
-                <span class="n">property_type_names</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;raekkehus&quot;</span><span class="p">,</span> <span class="s2">&quot;villa&quot;</span><span class="p">,</span> <span class="s2">&quot;landejendom&quot;</span><span class="p">])</span>
+                <span class="n">property_type_names</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;terraced house&quot;</span><span class="p">,</span> <span class="s2">&quot;villa&quot;</span><span class="p">,</span> <span class="s2">&quot;farm&quot;</span><span class="p">])</span>
             <span class="n">property_type_names</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">property_type_names</span><span class="p">))</span>
-            <span class="n">url</span> <span class="o">+=</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">property_type_names</span><span class="p">)</span>
 
         <span class="n">arguments</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">addressTypes</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">property_type_names</span><span class="p">)</span> <span class="k">if</span> <span class="n">property_type_names</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">cities</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cities</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cities</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">priceMin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_price</span><span class="p">,</span>
             <span class="n">priceMax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_price</span><span class="p">,</span>
             <span class="n">numberOfRoomsMin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_rooms</span><span class="p">,</span>
             <span class="n">numberOfRoomsMax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_rooms</span><span class="p">,</span>
             <span class="n">areaMin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_size</span><span class="p">,</span>
             <span class="n">areaMax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_size</span><span class="p">,</span>
+            <span class="n">monthlyExpenseMin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_monthly_fee</span><span class="p">,</span>
+            <span class="n">monthlyExpenseMax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_monthly_fee</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">non_trivial_arguments</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">arguments</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="p">}</span>
         <span class="k">if</span> <span class="n">non_trivial_arguments</span><span class="p">:</span>
-            <span class="n">url</span> <span class="o">+=</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="s2">&quot;&amp;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">url</span> <span class="o">+=</span> <span class="s2">&quot;&amp;&quot;</span> <span class="o">+</span> <span class="s2">&quot;&amp;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">non_trivial_arguments</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
             <span class="p">)</span>
 

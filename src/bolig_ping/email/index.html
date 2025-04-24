@@ -448,29 +448,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../api/bolig_ping/webdriver/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    bolig_ping.webdriver
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -522,9 +499,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bolig_ping.email.send_email" class="md-nav__link">
+  <a href="#bolig_ping.email.send_emails" class="md-nav__link">
     <span class="md-ellipsis">
-      send_email
+      send_emails
     </span>
   </a>
   
@@ -609,7 +586,8 @@
 <span class="normal">50</span>
 <span class="normal">51</span>
 <span class="normal">52</span>
-<span class="normal">53</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Sending emails with home listings.&quot;&quot;&quot;</span>
+<span class="normal">53</span>
+<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Sending emails with home listings.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">yagmail</span>
 
@@ -642,8 +620,8 @@
     <span class="k">return</span> <span class="n">subject</span><span class="p">,</span> <span class="n">contents</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">send_email</span><span class="p">(</span><div class="mkapi-source-link" id="bolig_ping.email.send_email"><a href="../../../api/bolig_ping/email/#bolig_ping.email.send_email" title="Go to docs">docs</a></div>
-    <span class="n">from_email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to_email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="nb">str</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">send_emails</span><span class="p">(</span><div class="mkapi-source-link" id="bolig_ping.email.send_emails"><a href="../../../api/bolig_ping/email/#bolig_ping.email.send_emails" title="Go to docs">docs</a></div>
+    <span class="n">from_email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to_emails</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">contents</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Send an email with the given contents.</span>
 
@@ -652,16 +630,17 @@
 <span class="sd">            The email to send the email from.</span>
 <span class="sd">        password:</span>
 <span class="sd">            The password for the from email.</span>
-<span class="sd">        to_email:</span>
-<span class="sd">            The email to send the email to.</span>
+<span class="sd">        to_emails:</span>
+<span class="sd">            The emails to send the email to.</span>
 <span class="sd">        subject:</span>
 <span class="sd">            The subject of the email.</span>
 <span class="sd">        contents:</span>
 <span class="sd">            The contents of the email.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">yagmail</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">from_email</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span>
-        <span class="n">to</span><span class="o">=</span><span class="n">to_email</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span> <span class="n">contents</span><span class="o">=</span><span class="n">contents</span>
-    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">to_email</span> <span class="ow">in</span> <span class="n">to_emails</span><span class="p">:</span>
+        <span class="n">yagmail</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">from_email</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">(</span>
+            <span class="n">to</span><span class="o">=</span><span class="n">to_email</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span> <span class="n">contents</span><span class="o">=</span><span class="n">contents</span>
+        <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 
 

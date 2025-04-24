@@ -516,29 +516,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../webdriver/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    bolig_ping.webdriver
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -659,7 +636,7 @@ Remove the cached homes from the list of homes.</p>
 <i class="fa-regular fa-square-minus"></i>
 </span>
 </span>
-<span class="mkapi-object-name"><a href="./#bolig_ping.cache.store_to_cache" title="bolig_ping.cache.store_to_cache">store_to_cache</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">homes</span><span class="mkapi-colon">: </span><span class="mkapi-ann">list[<a href="../data_models/#bolig_ping.data_models.Home" title="bolig_ping.data_models.Home">Home</a>]</span><span class="mkapi-comma">, </span><span class="mkapi-arg">email</span><span class="mkapi-colon">: </span><span class="mkapi-ann">str</span><span class="mkapi-comma">, </span><span class="mkapi-arg">cache_path</span><span class="mkapi-colon">: </span><span class="mkapi-ann"><span class="mkapi-tooltip" title="pathlib.Path">Path</span></span><span class="mkapi-equal"> = </span><span class="mkapi-default"><span class="mkapi-tooltip" title="pathlib.Path">Path</span>('.boligping_cache')</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">None</span></span>
+<span class="mkapi-object-name"><a href="./#bolig_ping.cache.store_to_cache" title="bolig_ping.cache.store_to_cache">store_to_cache</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">homes</span><span class="mkapi-colon">: </span><span class="mkapi-ann">list[<a href="../data_models/#bolig_ping.data_models.Home" title="bolig_ping.data_models.Home">Home</a>]</span><span class="mkapi-comma">, </span><span class="mkapi-arg">emails</span><span class="mkapi-colon">: </span><span class="mkapi-ann">list[str]</span><span class="mkapi-comma">, </span><span class="mkapi-arg">cache_path</span><span class="mkapi-colon">: </span><span class="mkapi-ann"><span class="mkapi-tooltip" title="pathlib.Path">Path</span></span><span class="mkapi-equal"> = </span><span class="mkapi-default"><span class="mkapi-tooltip" title="pathlib.Path">Path</span>('.bolig_ping_cache')</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">None</span></span>
 </p>
 <div class="mkapi-document">
 <p>Store the homes to the cache.</p>
@@ -679,14 +656,14 @@ Remove the cached homes from the list of homes.</p>
 The homes to store in the cache.</p>
 </li>
 <li>
-<p><span class="mkapi-item-name">email</span> : 
-<span class="mkapi-item-type">str</span> <span class="mkapi-dash">&mdash;</span>
-The receiver of the homes.</p>
+<p><span class="mkapi-item-name">emails</span> : 
+<span class="mkapi-item-type">list[str]</span> <span class="mkapi-dash">&mdash;</span>
+The receiver(s) of the homes.</p>
 </li>
 <li>
 <p><span class="mkapi-item-name">cache_path</span> : 
 <span class="mkapi-item-type">optional</span> <span class="mkapi-dash">&mdash;</span>
-The path to the cache file. Defaults to ".boligping_cache".</p>
+The path to the cache file. Defaults to ".bolig_ping_cache".</p>
 </li>
 </ul>
 </div>
@@ -700,7 +677,7 @@ The path to the cache file. Defaults to ".boligping_cache".</p>
 <i class="fa-regular fa-square-minus"></i>
 </span>
 </span>
-<span class="mkapi-object-name"><a href="./#bolig_ping.cache.remove_cached_homes" title="bolig_ping.cache.remove_cached_homes">remove_cached_homes</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">homes</span><span class="mkapi-colon">: </span><span class="mkapi-ann">list[<a href="../data_models/#bolig_ping.data_models.Home" title="bolig_ping.data_models.Home">Home</a>]</span><span class="mkapi-comma">, </span><span class="mkapi-arg">email</span><span class="mkapi-colon">: </span><span class="mkapi-ann">str</span><span class="mkapi-comma">, </span><span class="mkapi-arg">cache_path</span><span class="mkapi-colon">: </span><span class="mkapi-ann"><span class="mkapi-tooltip" title="pathlib.Path">Path</span></span><span class="mkapi-equal"> = </span><span class="mkapi-default"><span class="mkapi-tooltip" title="pathlib.Path">Path</span>('.boligping_cache')</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">list[<a href="../data_models/#bolig_ping.data_models.Home" title="bolig_ping.data_models.Home">Home</a>]</span></span>
+<span class="mkapi-object-name"><a href="./#bolig_ping.cache.remove_cached_homes" title="bolig_ping.cache.remove_cached_homes">remove_cached_homes</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">homes</span><span class="mkapi-colon">: </span><span class="mkapi-ann">list[<a href="../data_models/#bolig_ping.data_models.Home" title="bolig_ping.data_models.Home">Home</a>]</span><span class="mkapi-comma">, </span><span class="mkapi-arg">emails</span><span class="mkapi-colon">: </span><span class="mkapi-ann">list[str]</span><span class="mkapi-comma">, </span><span class="mkapi-arg">cache_path</span><span class="mkapi-colon">: </span><span class="mkapi-ann"><span class="mkapi-tooltip" title="pathlib.Path">Path</span></span><span class="mkapi-equal"> = </span><span class="mkapi-default"><span class="mkapi-tooltip" title="pathlib.Path">Path</span>('.bolig_ping_cache')</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">list[<a href="../data_models/#bolig_ping.data_models.Home" title="bolig_ping.data_models.Home">Home</a>]</span></span>
 </p>
 <div class="mkapi-document">
 <p>Remove the cached homes from the list of homes.</p>
@@ -720,14 +697,14 @@ The path to the cache file. Defaults to ".boligping_cache".</p>
 The homes to remove the cached homes from.</p>
 </li>
 <li>
-<p><span class="mkapi-item-name">email</span> : 
-<span class="mkapi-item-type">str</span> <span class="mkapi-dash">&mdash;</span>
-The receiver of the homes.</p>
+<p><span class="mkapi-item-name">emails</span> : 
+<span class="mkapi-item-type">list[str]</span> <span class="mkapi-dash">&mdash;</span>
+The receiver(s) of the homes.</p>
 </li>
 <li>
 <p><span class="mkapi-item-name">cache_path</span> : 
 <span class="mkapi-item-type">optional</span> <span class="mkapi-dash">&mdash;</span>
-The path to the cache file. Defaults to ".boligping_cache".</p>
+The path to the cache file. Defaults to ".bolig_ping_cache".</p>
 </li>
 </ul>
 </div>

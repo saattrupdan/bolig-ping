@@ -448,29 +448,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../api/bolig_ping/webdriver/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    bolig_ping.webdriver
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -739,23 +716,18 @@
 <span class="normal">189</span>
 <span class="normal">190</span>
 <span class="normal">191</span>
-<span class="normal">192</span>
-<span class="normal">193</span>
-<span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Command line interface for the project.&quot;&quot;&quot;</span>
+<span class="normal">192</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Command line interface for the project.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">click</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">remove_cached_homes</span><span class="p">,</span> <span class="n">store_to_cache</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.data_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">SearchQuery</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.email</span><span class="w"> </span><span class="kn">import</span> <span class="n">compose_email</span><span class="p">,</span> <span class="n">send_email</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.email</span><span class="w"> </span><span class="kn">import</span> <span class="n">compose_email</span><span class="p">,</span> <span class="n">send_emails</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.filtering</span><span class="w"> </span><span class="kn">import</span> <span class="n">filter_results</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.scraper</span><span class="w"> </span><span class="kn">import</span> <span class="n">scrape_results</span>
 
@@ -816,6 +788,7 @@
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
     <span class="s2">&quot;--query&quot;</span><span class="p">,</span>
     <span class="s2">&quot;-q&quot;</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
     <span class="n">multiple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">help</span><span class="o">=</span><span class="s2">&quot;A keyword that the property description must contain.&quot;</span><span class="p">,</span>
 <span class="p">)</span>
@@ -831,8 +804,9 @@
 <span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
     <span class="s2">&quot;--email&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;-e&quot;</span><span class="p">,</span>
     <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-    <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">multiple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Email address to send the notification to. Leave empty to print directly to &quot;</span>
     <span class="s2">&quot;the console.&quot;</span><span class="p">,</span>
 <span class="p">)</span>
@@ -841,12 +815,6 @@
     <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Whether to cache the homes that are found.&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
-    <span class="s2">&quot;--headless/--no-headless&quot;</span><span class="p">,</span>
-    <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">show_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Whether to run the scraper in headless mode. Mostly used for debugging.&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><div class="mkapi-source-link" id="bolig_ping.cli.main"><a href="../../../api/bolig_ping/cli/#bolig_ping.cli.main" title="Go to docs">docs</a></div>
     <span class="n">city</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
@@ -860,35 +828,35 @@
     <span class="n">max_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">query</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">property_type</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">email</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">email</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">cache</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="n">headless</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Search for homes in Denmark.&quot;&quot;&quot;</span>
     <span class="c1"># Check if the required environment variables are set</span>
-    <span class="k">if</span> <span class="n">email</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;GMAIL_EMAIL&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">email</span> <span class="ow">and</span> <span class="s2">&quot;GMAIL_EMAIL&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
             <span class="s2">&quot;GMAIL_EMAIL environment variable is not set. Please set it to your &quot;</span>
             <span class="s2">&quot;Gmail email address.&quot;</span>
         <span class="p">)</span>
         <span class="k">return</span>
-    <span class="k">if</span> <span class="n">email</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;GMAIL_PASSWORD&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">email</span> <span class="ow">and</span> <span class="s2">&quot;GMAIL_PASSWORD&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
             <span class="s2">&quot;GMAIL_PASSWORD environment variable is not set. Please set it to your &quot;</span>
             <span class="s2">&quot;Gmail app password.&quot;</span>
         <span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="n">cities</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">c</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;ø&quot;</span><span class="p">,</span> <span class="s2">&quot;oe&quot;</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;æ&quot;</span><span class="p">,</span> <span class="s2">&quot;ae&quot;</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;å&quot;</span><span class="p">,</span> <span class="s2">&quot;aa&quot;</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">city</span>
-    <span class="p">]</span>
+    <span class="c1"># Backwards compatibility of cache name</span>
+    <span class="n">old_cache_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.boligping_cache&quot;</span><span class="p">)</span>
+    <span class="n">new_cache_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.bolig_ping_cache&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">old_cache_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">new_cache_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">old_cache_path</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">new_cache_path</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="s2">&quot;Renamed the cache file from `.boligping_cache` to `.bolig_ping_cache`.&quot;</span>
+        <span class="p">)</span>
+
     <span class="n">search_query</span> <span class="o">=</span> <span class="n">SearchQuery</span><span class="p">(</span>
-        <span class="n">cities</span><span class="o">=</span><span class="n">cities</span><span class="p">,</span>
+        <span class="n">cities</span><span class="o">=</span><span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">city</span><span class="p">],</span>
         <span class="n">min_price</span><span class="o">=</span><span class="n">min_price</span><span class="p">,</span>
         <span class="n">max_price</span><span class="o">=</span><span class="n">max_price</span><span class="p">,</span>
         <span class="n">min_monthly_fee</span><span class="o">=</span><span class="n">min_monthly_fee</span><span class="p">,</span>
@@ -908,28 +876,25 @@
             <span class="s2">&quot;the arguments with `bolig-ping --help`.&quot;</span>
         <span class="p">)</span>
 
-    <span class="n">homes</span> <span class="o">=</span> <span class="n">scrape_results</span><span class="p">(</span><span class="n">search_query</span><span class="o">=</span><span class="n">search_query</span><span class="p">,</span> <span class="n">headless</span><span class="o">=</span><span class="n">headless</span><span class="p">)</span>
+    <span class="n">homes</span> <span class="o">=</span> <span class="n">scrape_results</span><span class="p">(</span><span class="n">search_query</span><span class="o">=</span><span class="n">search_query</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">homes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-            <span class="s2">&quot;Could not find the city that you requested. Please double check the &quot;</span>
-            <span class="s2">&quot;spelling of the city name(s) and try again.&quot;</span>
-        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No results found. Double check your search query.&quot;</span><span class="p">)</span>
         <span class="k">return</span>
 
     <span class="k">if</span> <span class="n">cache</span><span class="p">:</span>
-        <span class="n">homes</span> <span class="o">=</span> <span class="n">remove_cached_homes</span><span class="p">(</span><span class="n">homes</span><span class="o">=</span><span class="n">homes</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="n">email</span> <span class="ow">or</span> <span class="s2">&quot;no-email&quot;</span><span class="p">)</span>
-        <span class="n">store_to_cache</span><span class="p">(</span><span class="n">homes</span><span class="o">=</span><span class="n">homes</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="n">email</span> <span class="ow">or</span> <span class="s2">&quot;no-email&quot;</span><span class="p">)</span>
+        <span class="n">homes</span> <span class="o">=</span> <span class="n">remove_cached_homes</span><span class="p">(</span><span class="n">homes</span><span class="o">=</span><span class="n">homes</span><span class="p">,</span> <span class="n">emails</span><span class="o">=</span><span class="n">email</span> <span class="ow">or</span> <span class="p">[</span><span class="s2">&quot;no-email&quot;</span><span class="p">])</span>
+        <span class="n">store_to_cache</span><span class="p">(</span><span class="n">homes</span><span class="o">=</span><span class="n">homes</span><span class="p">,</span> <span class="n">emails</span><span class="o">=</span><span class="n">email</span> <span class="ow">or</span> <span class="p">[</span><span class="s2">&quot;no-email&quot;</span><span class="p">])</span>
 
     <span class="n">homes</span> <span class="o">=</span> <span class="n">filter_results</span><span class="p">(</span><span class="n">homes</span><span class="o">=</span><span class="n">homes</span><span class="p">,</span> <span class="n">search_query</span><span class="o">=</span><span class="n">search_query</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">homes</span><span class="p">)</span><span class="si">}</span><span class="s2"> new homes that satisfy the search query.&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">homes</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">email</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">email</span><span class="p">:</span>
             <span class="n">subject</span><span class="p">,</span> <span class="n">contents</span> <span class="o">=</span> <span class="n">compose_email</span><span class="p">(</span><span class="n">homes</span><span class="o">=</span><span class="n">homes</span><span class="p">)</span>
-            <span class="n">send_email</span><span class="p">(</span>
+            <span class="n">send_emails</span><span class="p">(</span>
                 <span class="n">from_email</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;GMAIL_EMAIL&quot;</span><span class="p">],</span>
                 <span class="n">password</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;GMAIL_PASSWORD&quot;</span><span class="p">],</span>
-                <span class="n">to_email</span><span class="o">=</span><span class="n">email</span><span class="p">,</span>
+                <span class="n">to_emails</span><span class="o">=</span><span class="n">email</span><span class="p">,</span>
                 <span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span>
                 <span class="n">contents</span><span class="o">=</span><span class="n">contents</span><span class="p">,</span>
             <span class="p">)</span>
