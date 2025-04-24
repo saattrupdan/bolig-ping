@@ -2,13 +2,14 @@
 
 import logging
 import os
+from pathlib import Path
 
 import click
 from dotenv import load_dotenv
 
 from .cache import remove_cached_homes, store_to_cache
 from .data_models import SearchQuery
-from .email import compose_email, send_email
+from .email import compose_email, send_emails
 from .filtering import filter_results
 from .scraper import scrape_results
 
@@ -69,6 +70,7 @@ load_dotenv(dotenv_path=".env")
 @click.option(
     "--query",
     "-q",
+    type=str,
     multiple=True,
     help="A keyword that the property description must contain.",
 )
@@ -84,8 +86,9 @@ load_dotenv(dotenv_path=".env")
 )
 @click.option(
     "--email",
+    "-e",
     type=str,
-    default=None,
+    multiple=True,
     help="Email address to send the notification to. Leave empty to print directly to "
     "the console.",
 )
@@ -113,24 +116,33 @@ def main(
     max_size: int | None,
     query: list[str],
     property_type: list[str] | None,
-    email: str | None,
+    email: list[str],
     cache: bool,
     headless: bool,
 ) -> None:
     """Search for homes in Denmark."""
     # Check if the required environment variables are set
-    if email is not None and "GMAIL_EMAIL" not in os.environ:
+    if email and "GMAIL_EMAIL" not in os.environ:
         logger.error(
             "GMAIL_EMAIL environment variable is not set. Please set it to your "
             "Gmail email address."
         )
         return
-    if email is not None and "GMAIL_PASSWORD" not in os.environ:
+    if email and "GMAIL_PASSWORD" not in os.environ:
         logger.error(
             "GMAIL_PASSWORD environment variable is not set. Please set it to your "
             "Gmail app password."
         )
         return
+
+    # Backwards compatibility of cache name
+    old_cache_path = Path(".boligping_cache")
+    new_cache_path = Path(".bolig_ping_cache")
+    if old_cache_path.exists() and not new_cache_path.exists():
+        old_cache_path.rename(new_cache_path)
+        logger.warning(
+            "Renamed the cache file from `.boligping_cache` to `.bolig_ping_cache`."
+        )
 
     cities = [
         c.replace(" ", "-")
@@ -170,19 +182,19 @@ def main(
         return
 
     if cache:
-        homes = remove_cached_homes(homes=homes, email=email or "no-email")
-        store_to_cache(homes=homes, email=email or "no-email")
+        homes = remove_cached_homes(homes=homes, emails=email or ["no-email"])
+        store_to_cache(homes=homes, emails=email or ["no-email"])
 
     homes = filter_results(homes=homes, search_query=search_query)
     logger.info(f"Found {len(homes)} new homes that satisfy the search query.")
 
     if homes:
-        if email is not None:
+        if email:
             subject, contents = compose_email(homes=homes)
-            send_email(
+            send_emails(
                 from_email=os.environ["GMAIL_EMAIL"],
                 password=os.environ["GMAIL_PASSWORD"],
-                to_email=email,
+                to_emails=email,
                 subject=subject,
                 contents=contents,
             )

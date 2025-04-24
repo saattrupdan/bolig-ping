@@ -41,7 +41,7 @@ class TestStoreToCache:
     def test_home_is_stored(self, home: Home) -> None:
         """Test that a home is stored."""
         cache_path = Path(".test_cache")
-        store_to_cache(homes=[home], email="no-email", cache_path=cache_path)
+        store_to_cache(homes=[home], emails=["no-email"], cache_path=cache_path)
         with cache_path.open() as file:
             assert file.read() == '{"id": "some.url", "email": "no-email"}\n'
         cache_path.unlink()
@@ -50,7 +50,7 @@ class TestStoreToCache:
         """Test that multiple homes are stored."""
         cache_path = Path(".test_cache")
         store_to_cache(
-            homes=[home, another_home], email="no-email", cache_path=cache_path
+            homes=[home, another_home], emails=["no-email"], cache_path=cache_path
         )
         with cache_path.open() as file:
             assert (
@@ -63,10 +63,10 @@ class TestStoreToCache:
     def test_no_duplicates_are_stored(self, home: Home) -> None:
         """Test that no duplicates are stored."""
         cache_path = Path(".test_cache")
-        store_to_cache(homes=[home, home], email="no-email", cache_path=cache_path)
+        store_to_cache(homes=[home, home], emails=["no-email"], cache_path=cache_path)
         with cache_path.open() as file:
             assert file.read() == '{"id": "some.url", "email": "no-email"}\n'
-        store_to_cache(homes=[home], email="no-email", cache_path=cache_path)
+        store_to_cache(homes=[home], emails=["no-email"], cache_path=cache_path)
         with cache_path.open() as file:
             assert file.read() == '{"id": "some.url", "email": "no-email"}\n'
         cache_path.unlink()

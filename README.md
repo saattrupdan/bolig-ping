@@ -3,7 +3,7 @@
 Get a ping when your dream home in Denmark becomes available on Boligsiden.dk.
 
 ______________________________________________________________________
-[![Code Coverage](https://img.shields.io/badge/Coverage-87%25-yellowgreen.svg)](https://github.com/saattrupdan/bolig-ping/tree/main/tests)
+[![Code Coverage](https://img.shields.io/badge/Coverage-86%25-yellowgreen.svg)](https://github.com/saattrupdan/bolig-ping/tree/main/tests)
 [![Documentation](https://img.shields.io/badge/docs-passing-green)](https://saattrupdan.github.io/bolig-ping)
 [![License](https://img.shields.io/github/license/saattrupdan/bolig-ping)](https://github.com/saattrupdan/bolig-ping/blob/main/LICENSE)
 [![LastCommit](https://img.shields.io/github/last-commit/saattrupdan/bolig-ping)](https://github.com/saattrupdan/bolig-ping/commits/main)
@@ -89,7 +89,7 @@ The following options are available:
 - `--property-type/-t`: The type of property to search for. The available property
   types are `ejerlejlighed`, `andelslejlighed` and `house`. This argument can be used
   several times to search for multiple property types, e.g., `-t ejerlejlighed -t house`.
-  Default is searching for all property types. 
+  Default is searching for all property types.
 - `--email`: The email address you want to receive the ping on. Note that this needs to
   have the `GMAIL_EMAIL` and `GMAIL_PASSWORD` environment variables set, as described
   above. Default is to use no email address, and instead print the properties to the

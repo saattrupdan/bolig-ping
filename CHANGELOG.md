@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+### Added
+- Now allows multiple emails with the `--email` (`-e`) argument.
 
+### Changed
+- The cache has been renamed to `.bolig_ping_cache` from `.boligping_cache`. To ensure
+  that this is backwards compatible, we will rename `.boligping_cache` to
+  `.bolig_ping_cache` if the former exists and not the latter.
 
 
 ## [v1.5.0] - 2025-04-23

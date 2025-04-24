@@ -31,8 +31,8 @@ def compose_email(homes: list[Home]) -> tuple[str, str]:
     return subject, contents
 
 
-def send_email(
-    from_email: str, password: str, to_email: str, subject: str, contents: str
+def send_emails(
+    from_email: str, password: str, to_emails: list[str], subject: str, contents: str
 ) -> None:
     """Send an email with the given contents.
 
@@ -41,13 +41,14 @@ def send_email(
             The email to send the email from.
         password:
             The password for the from email.
-        to_email:
-            The email to send the email to.
+        to_emails:
+            The emails to send the email to.
         subject:
             The subject of the email.
         contents:
             The contents of the email.
     """
-    yagmail.SMTP(user=from_email, password=password).send(
-        to=to_email, subject=subject, contents=contents
-    )
+    for to_email in to_emails:
+        yagmail.SMTP(user=from_email, password=password).send(
+            to=to_email, subject=subject, contents=contents
+        )
