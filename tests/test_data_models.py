@@ -24,23 +24,25 @@ from bolig_ping.data_models import Home, SearchQuery
                 queries=["badekar"],
                 property_type=["ejerlejlighed"],
             ),
-            "https://www.boligsiden.dk/by/københavn-n/tilsalg/ejerlejlighed,"
-            "villalejlighed?priceMin=100&priceMax=200&numberOfRoomsMin=3"
-            "&numberOfRoomsMax=5&areaMin=50&areaMax=100",
+            "https://api.boligsiden.dk/search/cases?page=1"
+            "&addressTypes=condo,villa apartment&cities=københavn-n&priceMin=100"
+            "&priceMax=200&numberOfRoomsMin=3&numberOfRoomsMax=5&areaMin=50"
+            "&areaMax=100&monthlyExpenseMin=100&monthlyExpenseMax=200",
         ),
         (
             SearchQuery(cities=["københavn-n"], min_price=100),
-            "https://www.boligsiden.dk/by/københavn-n/tilsalg?priceMin=100",
+            "https://api.boligsiden.dk/search/cases?page=1&cities=københavn-n"
+            "&priceMin=100",
         ),
         (
             SearchQuery(cities=["københavn-n"]),
-            "https://www.boligsiden.dk/by/københavn-n/tilsalg",
+            "https://api.boligsiden.dk/search/cases?page=1&cities=københavn-n",
         ),
         (
             SearchQuery(cities=["københavn-n", "brøndby"]),
-            "https://www.boligsiden.dk/by/københavn-n,brøndby/tilsalg",
+            "https://api.boligsiden.dk/search/cases?page=1&cities=københavn-n,brøndby",
         ),
-        (SearchQuery(), "https://www.boligsiden.dk/tilsalg"),
+        (SearchQuery(), "https://api.boligsiden.dk/search/cases?page=1"),
     ],
     ids=[
         "all-arguments",
