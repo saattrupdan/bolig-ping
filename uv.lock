@@ -69,7 +69,7 @@ wheels = [
 
 [[package]]
 name = "bolig-ping"
-version = "1.5.0.dev0"
+version = "1.6.0"
 source = { editable = "." }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -497,18 +497,6 @@ wheels = [
 ]
 
 [[package]]
-name = "markdown-it-py"
-version = "3.0.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "mdurl" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/38/71/3b932df36c1a044d397a1f92d1cf91ee0a503d91e470cbd670aa66b07ed0/markdown-it-py-3.0.0.tar.gz", hash = "sha256:e3f60a94fa066dc52ec76661e37c851cb232d92f9886b15cb560aaada2df8feb", size = 74596, upload_time = "2023-06-03T06:41:14.443Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/42/d7/1ec15b46af6af88f19b8e5ffea08fa375d433c998b8a7639e76935c14f1f/markdown_it_py-3.0.0-py3-none-any.whl", hash = "sha256:355216845c60bd96232cd8d8c40e8f9765cc86f46880e43a8fd22dc1a1a8cab1", size = 87528, upload_time = "2023-06-03T06:41:11.019Z" },
-]
-
-[[package]]
 name = "markupsafe"
 version = "3.0.2"
 source = { registry = "https://pypi.org/simple" }
@@ -557,15 +545,6 @@ wheels = [
 ]
 
 [[package]]
-name = "mdurl"
-version = "0.1.2"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/d6/54/cfe61301667036ec958cb99bd3efefba235e65cdeb9c84d24a8293ba1d90/mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba", size = 8729, upload_time = "2022-08-14T12:40:10.846Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8", size = 9979, upload_time = "2022-08-14T12:40:09.779Z" },
-]
-
-[[package]]
 name = "mergedeep"
 version = "1.3.4"
 source = { registry = "https://pypi.org/simple" }
@@ -576,18 +555,17 @@ wheels = [
 
 [[package]]
 name = "mkapi"
-version = "4.2.5"
+version = "4.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "astdoc" },
     { name = "jinja2" },
     { name = "mkdocs" },
     { name = "mkdocs-material" },
-    { name = "rich" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/df/4e/cc6744382beaa9526df25dbeb4a3036c5f13af620f6a44163dea66f960fa/mkapi-4.2.5.tar.gz", hash = "sha256:ea15fa850ad5e4ef2c7d199e4535cd3be9104fef29240a807da83f5eacacb9e6", size = 49258, upload_time = "2025-04-12T06:49:33.216Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7a/6a/c103986d3086df1b92f5057e53bfc050ddc2f568134c3a37101f707b1d05/mkapi-4.3.0.tar.gz", hash = "sha256:848e3f46df036f2ea515ad17a008fcaa40face2d833fd03b33a0b2abb03de93a", size = 49280, upload_time = "2025-04-23T23:57:13.958Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d1/9a/e48a832b27c5cbb0b081e83a45dba3d467be4727222d6725a74809846291/mkapi-4.2.5-py3-none-any.whl", hash = "sha256:cc9af27a9b1ff8fa0e1454f7d299bf5191baa96875a2df189e28614400586211", size = 28101, upload_time = "2025-04-12T06:49:31.812Z" },
+    { url = "https://files.pythonhosted.org/packages/10/f7/1116beb461bf55b88a37c210c17cd3c10b8e1b07ea89ceaaa6ba1ef22579/mkapi-4.3.0-py3-none-any.whl", hash = "sha256:0e882915b0c6e5467636d2088efdcceecbccfd8f097a35aec878743073b59167", size = 28090, upload_time = "2025-04-23T23:57:12.592Z" },
 ]
 
 [[package]]
@@ -1109,19 +1087,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/63/70/2bf7780ad2d390a8d301ad0b550f1581eadbd9a20f896afe06353c2a2913/requests-2.32.3.tar.gz", hash = "sha256:55365417734eb18255590a9ff9eb97e9e1da868d4ccd6402399eaf68af20a760", size = 131218, upload_time = "2024-05-29T15:37:49.536Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f9/9b/335f9764261e915ed497fcdeb11df5dfd6f7bf257d4a6a2a686d80da4d54/requests-2.32.3-py3-none-any.whl", hash = "sha256:70761cfe03c773ceb22aa2f671b4757976145175cdfca038c02654d061d6dcc6", size = 64928, upload_time = "2024-05-29T15:37:47.027Z" },
-]
-
-[[package]]
-name = "rich"
-version = "14.0.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "markdown-it-py" },
-    { name = "pygments" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/a1/53/830aa4c3066a8ab0ae9a9955976fb770fe9c6102117c8ec4ab3ea62d89e8/rich-14.0.0.tar.gz", hash = "sha256:82f1bc23a6a21ebca4ae0c45af9bdbc492ed20231dcb63f297d6d1021a9d5725", size = 224078, upload_time = "2025-03-30T14:15:14.23Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/0d/9b/63f4c7ebc259242c89b3acafdb37b41d1185c07ff0011164674e9076b491/rich-14.0.0-py3-none-any.whl", hash = "sha256:1c9491e1951aac09caffd42f448ee3d04e58923ffe14993f6e83068dc395d7e0", size = 243229, upload_time = "2025-03-30T14:15:12.283Z" },
 ]
 
 [[package]]
