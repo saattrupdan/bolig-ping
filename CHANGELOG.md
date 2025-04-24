@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+
+
+
+## [v1.6.1] - 2025-04-24
 ### Fixed
 - Fixed a bug when searching for multiple cities, as the API parameters require separate
   parameters for each city.
