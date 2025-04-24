@@ -41,43 +41,45 @@ class SearchQuery(BaseModel):
             and self.max_size is None
         )
 
-    def get_url(self) -> str:
+    def get_url(self, page: int = 1) -> str:
         """Get the URL for the search query.
+
+        Args:
+            page (optional):
+                The page number to get the URL for. Defaults to 1.
 
         Returns:
             The URL for the search query.
         """
-        if self.cities is not None and self.cities:
-            url = "https://www.boligsiden.dk/by/{}/tilsalg".format(
-                ",".join(self.cities)
-            )
-        else:
-            url = "https://www.boligsiden.dk/tilsalg"
+        url = f"https://api.boligsiden.dk/search/cases?page={page}"
 
+        property_type_names: list[str] = []
         if self.property_type is not None:
-            property_type_names: list[str] = []
             if "ejerlejlighed" in self.property_type:
-                property_type_names.extend(["ejerlejlighed", "villalejlighed"])
+                property_type_names.extend(["condo", "villa apartment"])
             if "andelslejlighed" in self.property_type:
-                property_type_names.append("andelslejlighed")
+                property_type_names.append("cooperative")
             if "house" in self.property_type:
-                property_type_names.extend(["raekkehus", "villa", "landejendom"])
+                property_type_names.extend(["terraced house", "villa", "farm"])
             property_type_names = sorted(set(property_type_names))
-            url += "/" + ",".join(property_type_names)
 
         arguments: dict[str, str | int | None] = dict(
+            addressTypes=",".join(property_type_names) if property_type_names else None,
+            cities=",".join(self.cities) if self.cities else None,
             priceMin=self.min_price,
             priceMax=self.max_price,
             numberOfRoomsMin=self.min_rooms,
             numberOfRoomsMax=self.max_rooms,
             areaMin=self.min_size,
             areaMax=self.max_size,
+            monthlyExpenseMin=self.min_monthly_fee,
+            monthlyExpenseMax=self.max_monthly_fee,
         )
         non_trivial_arguments = {
             key: value for key, value in arguments.items() if value is not None
         }
         if non_trivial_arguments:
-            url += "?" + "&".join(
+            url += "&" + "&".join(
                 f"{key}={value}" for key, value in non_trivial_arguments.items()
             )
 

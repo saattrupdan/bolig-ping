@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Now allows multiple emails with the `--email` (`-e`) argument.
 
 ### Changed
+- We now use the Boligsiden API instead of scraping the website. This makes the
+  application much faster and more reliable, as we no longer have to deal with
+  changes to the website layout. It also puts less load on the Boligsiden servers.
 - The cache has been renamed to `.bolig_ping_cache` from `.boligping_cache`. To ensure
   that this is backwards compatible, we will rename `.boligping_cache` to
   `.bolig_ping_cache` if the former exists and not the latter.

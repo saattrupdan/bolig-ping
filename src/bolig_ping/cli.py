@@ -98,12 +98,6 @@ load_dotenv(dotenv_path=".env")
     show_default=True,
     help="Whether to cache the homes that are found.",
 )
-@click.option(
-    "--headless/--no-headless",
-    default=True,
-    show_default=True,
-    help="Whether to run the scraper in headless mode. Mostly used for debugging.",
-)
 def main(
     city: list[str],
     min_price: int | None,
@@ -118,7 +112,6 @@ def main(
     property_type: list[str] | None,
     email: list[str],
     cache: bool,
-    headless: bool,
 ) -> None:
     """Search for homes in Denmark."""
     # Check if the required environment variables are set
@@ -144,16 +137,8 @@ def main(
             "Renamed the cache file from `.boligping_cache` to `.bolig_ping_cache`."
         )
 
-    cities = [
-        c.replace(" ", "-")
-        .replace("ø", "oe")
-        .replace("æ", "ae")
-        .replace("å", "aa")
-        .lower()
-        for c in city
-    ]
     search_query = SearchQuery(
-        cities=cities,
+        cities=[c.replace("-", " ").lower() for c in city],
         min_price=min_price,
         max_price=max_price,
         min_monthly_fee=min_monthly_fee,
@@ -173,12 +158,9 @@ def main(
             "the arguments with `bolig-ping --help`."
         )
 
-    homes = scrape_results(search_query=search_query, headless=headless)
+    homes = scrape_results(search_query=search_query)
     if homes is None:
-        logger.error(
-            "Could not find the city that you requested. Please double check the "
-            "spelling of the city name(s) and try again."
-        )
+        logger.warning("No results found. Double check your search query.")
         return
 
     if cache:
