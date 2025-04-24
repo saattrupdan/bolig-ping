@@ -2,6 +2,7 @@
 
 import logging
 from functools import cached_property
+from typing import Any
 
 import requests
 from bs4 import BeautifulSoup
@@ -63,9 +64,9 @@ class SearchQuery(BaseModel):
                 property_type_names.extend(["terraced house", "villa", "farm"])
             property_type_names = sorted(set(property_type_names))
 
-        arguments: dict[str, str | int | None] = dict(
+        arguments: dict[str, Any] = dict(
             addressTypes=",".join(property_type_names) if property_type_names else None,
-            cities=",".join(self.cities) if self.cities else None,
+            cities=self.cities or None,
             priceMin=self.min_price,
             priceMax=self.max_price,
             numberOfRoomsMin=self.min_rooms,
@@ -79,9 +80,11 @@ class SearchQuery(BaseModel):
             key: value for key, value in arguments.items() if value is not None
         }
         if non_trivial_arguments:
-            url += "&" + "&".join(
-                f"{key}={value}" for key, value in non_trivial_arguments.items()
-            )
+            for key, value in non_trivial_arguments.items():
+                if not isinstance(value, list):
+                    value = [value]
+                for item in value:
+                    url += f"&{key}={item}"
 
         return url
 

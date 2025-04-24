@@ -30,17 +30,18 @@ from bolig_ping.data_models import Home, SearchQuery
             "&areaMax=100&monthlyExpenseMin=100&monthlyExpenseMax=200",
         ),
         (
-            SearchQuery(cities=["københavn-n"], min_price=100),
-            "https://api.boligsiden.dk/search/cases?page=1&cities=københavn-n"
+            SearchQuery(cities=["københavn n"], min_price=100),
+            "https://api.boligsiden.dk/search/cases?page=1&cities=københavn n"
             "&priceMin=100",
         ),
         (
-            SearchQuery(cities=["københavn-n"]),
-            "https://api.boligsiden.dk/search/cases?page=1&cities=københavn-n",
+            SearchQuery(cities=["københavn n"]),
+            "https://api.boligsiden.dk/search/cases?page=1&cities=københavn n",
         ),
         (
-            SearchQuery(cities=["københavn-n", "brøndby"]),
-            "https://api.boligsiden.dk/search/cases?page=1&cities=københavn-n,brøndby",
+            SearchQuery(cities=["københavn n", "brøndby"]),
+            "https://api.boligsiden.dk/search/cases?page=1&cities=københavn n"
+            "&cities=brøndby",
         ),
         (SearchQuery(), "https://api.boligsiden.dk/search/cases?page=1"),
     ],
