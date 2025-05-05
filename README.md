@@ -97,6 +97,6 @@ The following options are available:
 - `--cache/--no-cache`: Whether to use the cache or not. Default is to use the cache,
   but you can disable it by using the `--no-cache` flag. This is useful if you want to
   see all the results, and not just the new ones. The cache is stored in the
-  `.boligping_cache` file in the current directory.
+  `.bolig_ping_cache` file in the current directory.
 - `--headless/--no-headless`: Whether to run the scraper in headless mode. Mostly used
   for debugging.
