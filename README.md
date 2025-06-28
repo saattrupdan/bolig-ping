@@ -11,7 +11,7 @@ ______________________________________________________________________
 
 Developer:
 
-- Dan Saattrup Nielsen (saattrupdan@gmail.com)
+- Dan Saattrup Smart (saattrupdan@gmail.com)
 
 
 ## Quickstart
